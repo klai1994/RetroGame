@@ -12,6 +12,7 @@ public class Player : Entity, IDirectable {
 
     // Use this for initialization
     void Start () {
+        currentHealth = maxHealth;
         rbody = GetComponent<Rigidbody2D>();
         directionMagnitudes = new Dictionary<Directions, Vector2>();
         directionMagnitudes.Add(Directions.Left, Vector2.left);

@@ -17,6 +17,7 @@ public class Enemy : Entity, IDirectable {
     // Use this for initialization
     void Start()
     {
+        currentHealth = maxHealth;
         target = GameObject.FindGameObjectWithTag("Player");
         rbody = GetComponent<Rigidbody2D>();
     }
