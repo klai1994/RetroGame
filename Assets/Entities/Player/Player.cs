@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class Player : Entity, IDirectable {
 
     [SerializeField] float speed = 3f;
     [SerializeField] Projectile projectilePrefab;
+    [SerializeField] Weapon weaponPrefab;
 
     private Rigidbody2D rbody;
     private float threshold = 0.2f;
@@ -24,14 +26,40 @@ public class Player : Entity, IDirectable {
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.V))
         {
             PlayerShoot();
         }
+        else if (Input.GetKeyDown(KeyCode.B))
+        {
+            PlayerAttack();
+        }
 
         Vector2 moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        rbody.MovePosition(rbody.position + moveDirection * speed * Time.deltaTime);
+        rbody.MovePosition(rbody.position + moveDirection * speed);
         GetDirection();
+    }
+
+    // TODO refactor into Entity class and make weapon not damage self if used by enemies
+    // TODO make Weapon self-containing
+    private void PlayerAttack()
+    {
+        Weapon weapon;
+        weapon = Instantiate(weaponPrefab, (transform.position + (Vector3)directionMagnitudes[direction]),
+            Quaternion.identity);
+        weapon.WeaponSwing = weapon.gameObject.GetComponent<CircleCollider2D>();
+        weapon.WeaponSwing.enabled = true;
+    }
+
+    void PlayerShoot()
+    {
+        Projectile projectile;
+        projectile = Instantiate(projectilePrefab, (transform.position +
+            (Vector3)directionMagnitudes[direction]), Quaternion.identity);
+
+        projectile.damage = damage;
+        projectile.GetComponent<Rigidbody2D>().velocity +=
+            directionMagnitudes[direction] * projectile.projectileSpeed;
     }
 
     public Directions GetDirection()
@@ -56,16 +84,5 @@ public class Player : Entity, IDirectable {
         {
             return direction;
         }
-    }
-
-    void PlayerShoot()
-    {
-        Projectile projectile;
-        projectile = Instantiate(projectilePrefab, (transform.position + 
-            (Vector3)directionMagnitudes[direction]), Quaternion.identity);
-
-        projectile.damage = damage;
-        projectile.GetComponent<Rigidbody2D>().velocity += 
-            directionMagnitudes[direction] * projectile.projectileSpeed;
     }
 }

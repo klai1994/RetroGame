@@ -10,7 +10,6 @@ public class Entity : MonoBehaviour {
     [SerializeField] internal float maxHealth = 100f;
     [SerializeField] internal float currentHealth = 100f;
     [SerializeField] internal float damage;
-    [SerializeField] internal float attackRange;
     [SerializeField] internal float attackDelay;
 
     internal Directions direction;

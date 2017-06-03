@@ -7,6 +7,8 @@ public class Enemy : Entity, IDirectable {
     [SerializeField] float aggroRange = 5;
     [SerializeField] float stoppingDistance = 0.1f;
     [SerializeField] float speed;
+    [SerializeField] float attackRange;
+
 
     private float distanceToTarget;
     private float threshold = 0.2f;
