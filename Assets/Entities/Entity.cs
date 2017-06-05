@@ -6,16 +6,18 @@ namespace Game.Entities
 {
     public class Entity : MonoBehaviour
     {
-
+        internal const float DIRECTION_THRESHOLD = 0.2f;
         public enum Directions { Up, Down, Left, Right };
 
         [SerializeField] internal float maxHealth = 100f;
         [SerializeField] internal float currentHealth = 100f;
         [SerializeField] internal float damage;
-        [SerializeField] internal float attackDelay;
+        [SerializeField] internal float attackDelay; 
+        [SerializeField] internal float movementSpeed = 1f;
 
         internal Directions direction;
         internal Dictionary<Directions, Vector2> directionMagnitudes;
+        internal Rigidbody2D rbody;
 
         public float HealthPercentage
         {
@@ -36,5 +38,17 @@ namespace Game.Entities
                 Destroy(gameObject);
             }
         }
+
+        public void OnEnable()
+        {
+            directionMagnitudes = new Dictionary<Directions, Vector2>
+            {
+                { Directions.Left, Vector2.left },
+                { Directions.Right, Vector2.right },
+                { Directions.Down, Vector2.down },
+                { Directions.Up, Vector2.up }
+            };
+        }
+
     }
 }

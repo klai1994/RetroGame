@@ -9,24 +9,26 @@ namespace Game.Entities
 {
     public class Player : Entity, IDirectable
     {
-
-        [SerializeField] float speed = 3f;
         [SerializeField] Projectile projectilePrefab;
         [SerializeField] Weapon weaponPrefab;
-
-        private Rigidbody2D rbody;
-        private float threshold = 0.2f;
 
         // Use this for initialization
         void Start()
         {
             currentHealth = maxHealth;
             rbody = GetComponent<Rigidbody2D>();
-            directionMagnitudes = new Dictionary<Directions, Vector2>();
-            directionMagnitudes.Add(Directions.Left, Vector2.left);
-            directionMagnitudes.Add(Directions.Right, Vector2.right);
-            directionMagnitudes.Add(Directions.Down, Vector2.down);
-            directionMagnitudes.Add(Directions.Up, Vector2.up);
+            SetUpDirections();
+        }
+
+        private void SetUpDirections()
+        {
+            directionMagnitudes = new Dictionary<Directions, Vector2>
+            {
+                { Directions.Left, Vector2.left },
+                { Directions.Right, Vector2.right },
+                { Directions.Down, Vector2.down },
+                { Directions.Up, Vector2.up }
+            };
         }
 
         // Update is called once per frame
@@ -42,21 +44,18 @@ namespace Game.Entities
             }
 
             MovePlayer();
-            GetDirection();
+            CheckDirectionFacing();
         }
 
         private void MovePlayer()
         {
             Vector2 moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            rbody.MovePosition(rbody.position + moveDirection * speed);
+            rbody.MovePosition(rbody.position + moveDirection * movementSpeed);
         }
 
-        // TODO refactor into Entity class and make weapon not damage self if used by enemies
         private void PlayerAttack()
         {
-            Weapon weapon;
-            weapon = Instantiate(weaponPrefab, (transform.position + 
-                (Vector3)directionMagnitudes[direction]), Quaternion.identity);
+            // TODO implement attack
         }
 
         void PlayerShoot()
@@ -70,27 +69,23 @@ namespace Game.Entities
                 directionMagnitudes[direction] * projectile.projectileSpeed;
         }
 
-        public Directions GetDirection()
+        public void CheckDirectionFacing()
         {
-            if (Input.GetAxisRaw("Horizontal") < -threshold)
+            if (Input.GetAxisRaw("Horizontal") < -DIRECTION_THRESHOLD)
             {
-                return direction = Directions.Left;
+                direction = Directions.Left;
             }
-            else if (Input.GetAxisRaw("Horizontal") > threshold)
+            else if (Input.GetAxisRaw("Horizontal") > DIRECTION_THRESHOLD)
             {
-                return direction = Directions.Right;
+                direction = Directions.Right;
             }
-            else if (Input.GetAxisRaw("Vertical") < -threshold)
+            else if (Input.GetAxisRaw("Vertical") < -DIRECTION_THRESHOLD)
             {
-                return direction = Directions.Down;
+                direction = Directions.Down;
             }
-            else if (Input.GetAxisRaw("Vertical") > threshold)
+            else if (Input.GetAxisRaw("Vertical") > DIRECTION_THRESHOLD)
             {
-                return direction = Directions.Up;
-            }
-            else
-            {
-                return direction;
+                direction = Directions.Up;
             }
         }
     }

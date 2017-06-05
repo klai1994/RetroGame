@@ -22,6 +22,11 @@ namespace Game.Entities
         // Update is called once per frame
         void Update()
         {
+            FillHealthBar();
+        }
+
+        private void FillHealthBar()
+        {
             float xValue = player.HealthPercentage - 0.5f;
             playerHealthBar.uvRect = new Rect(-xValue, 0f, 1f, 1f);
         }

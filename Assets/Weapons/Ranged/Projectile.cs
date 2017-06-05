@@ -8,11 +8,14 @@ namespace Game.Weapons
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] float timeBeforeDestruction;
-        [SerializeField] GameObject shooter;
+        const float CONTACT_DESTRUCTION_DELAY = 0.1f;
 
+        [SerializeField] float timeBeforeDestruction;
+        // TODO encapsulate
         public float projectileSpeed = 1f;
         public float damage;
+
+        GameObject shooter;
         float timeCreated;
 
         void Start()
@@ -34,10 +37,7 @@ namespace Game.Weapons
             if (enemy = col.gameObject.GetComponent<Enemy>())
             {
                 enemy.TakeDamage(damage);
-            }
-            if (col.gameObject != shooter)
-            {
-                Destroy(gameObject);
+                Destroy(gameObject, CONTACT_DESTRUCTION_DELAY);
             }
         }
     }

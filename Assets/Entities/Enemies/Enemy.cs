@@ -6,18 +6,13 @@ namespace Game.Entities
 {
     public class Enemy : Entity, IDirectable
     {
-
         [SerializeField] float aggroRange = 5;
         [SerializeField] float stoppingDistance = 0.1f;
-        [SerializeField] float speed;
         [SerializeField] float attackRange;
 
-
         private float distanceToTarget;
-        private float threshold = 0.2f;
         private bool isAttacking = false;
         private GameObject target;
-        private Rigidbody2D rbody;
 
         // Use this for initialization
         void Start()
@@ -35,10 +30,16 @@ namespace Game.Entities
             {
                 target = gameObject;
             }
-            distanceToTarget = Vector2.Distance(target.transform.position, transform.position);
 
+            GetDistanceToTarget();
             MoveToTarget();
+            CheckDirectionFacing();
             CheckIfCanAttack();
+        }
+
+        private void GetDistanceToTarget()
+        {
+            distanceToTarget = Vector2.Distance(target.transform.position, transform.position);
         }
 
         private void CheckIfCanAttack()
@@ -59,38 +60,12 @@ namespace Game.Entities
         {
             if (distanceToTarget < aggroRange && distanceToTarget > stoppingDistance)
             {
-                rbody.velocity = (target.transform.position - transform.position) * speed;
+                rbody.velocity = (target.transform.position - transform.position) * movementSpeed;
             }
             else
             {
                 rbody.velocity = Vector2.zero;
             }
-        }
-
-        // Determine direction based on movement
-        public Directions GetDirection()
-        {
-            if (rbody.velocity.x < -threshold)
-            {
-                return direction = Directions.Left;
-            }
-            else if (rbody.velocity.x > threshold)
-            {
-                return direction = Directions.Right;
-            }
-            if (rbody.velocity.y < -threshold)
-            {
-                return direction = Directions.Down;
-            }
-            else if (rbody.velocity.y > threshold)
-            {
-                return direction = Directions.Up;
-            }
-            else
-            {
-                return direction;
-            }
-
         }
 
         // Finds target's health and damages it
@@ -113,6 +88,27 @@ namespace Game.Entities
             Gizmos.DrawWireSphere(transform.position, aggroRange);
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackRange);
+        }
+
+        // Checks based on movement
+        public void CheckDirectionFacing()
+        {
+            if (rbody.velocity.x < -DIRECTION_THRESHOLD)
+            {
+                direction = Directions.Left;
+            }
+            else if (rbody.velocity.x > DIRECTION_THRESHOLD)
+            {
+                direction = Directions.Right;
+            }
+            if (rbody.velocity.y < -DIRECTION_THRESHOLD)
+            {
+                direction = Directions.Down;
+            }
+            else if (rbody.velocity.y > DIRECTION_THRESHOLD)
+            {
+                direction = Directions.Up;
+            }
         }
     }
 }
