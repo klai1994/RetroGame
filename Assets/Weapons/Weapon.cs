@@ -2,36 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour {
+using Game.Entities;
 
-    [SerializeField] float damage = 10f;
-    [SerializeField] float range = 2f;
-    CircleCollider2D weaponSwing;
-    GameObject weaponUser;
-
-    public float Damage
+namespace Game.Weapons
+{
+    public class Weapon : MonoBehaviour
     {
-        get; set;
-    }
 
-    public CircleCollider2D WeaponSwing
-    {
-        get; set;
-    }
-
-    // TODO enable collider
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        Enemy entity;
-        if (entity = col.gameObject.GetComponent<Enemy>())
+        [SerializeField] float damage = 10f;
+            
+        public float Damage
         {
-            entity.TakeDamage(damage);
+            get; set;
         }
-        // Destroy(gameObject, 0.1f);
-    }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, 1.5f);
+        public CircleCollider2D WeaponSwing
+        {
+            get; set;
+        }
+
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            Enemy enemy;
+            if (enemy = col.gameObject.GetComponent<Enemy>())
+            {
+                enemy.TakeDamage(damage);
+            }
+            Destroy(gameObject, 0.1f);
+        }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, 1.5f);
+        }
     }
 }

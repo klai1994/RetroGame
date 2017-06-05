@@ -2,33 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour {
+using Game.Entities;
 
-    public float projectileSpeed = 1f;
-    public float damage;
-    [SerializeField] float timeBeforeDestruction;
-    float timeCreated;
-
-    void Start()
+namespace Game.Weapons
+{
+    public class Projectile : MonoBehaviour
     {
-        timeCreated = Time.time;
-    }
+        [SerializeField] float timeBeforeDestruction;
+        [SerializeField] GameObject shooter;
 
-    void Update()
-    {
-        if (Time.time - timeCreated > timeBeforeDestruction)
+        public float projectileSpeed = 1f;
+        public float damage;
+        float timeCreated;
+
+        void Start()
         {
-            Destroy(gameObject);
+            timeCreated = Time.time;
         }
-    }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        Enemy entity;
-        if (entity = col.gameObject.GetComponent<Enemy>())
+        void Update()
         {
-            entity.TakeDamage(damage);
-            Destroy(gameObject, 0.1f);
+            if (Time.time - timeCreated > timeBeforeDestruction)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        void OnTriggerEnter2D(Collider2D col)
+        {
+            Enemy enemy;
+            if (enemy = col.gameObject.GetComponent<Enemy>())
+            {
+                enemy.TakeDamage(damage);
+            }
+            if (col.gameObject != shooter)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

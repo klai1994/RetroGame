@@ -1,5 +1,9 @@
 ﻿
-public interface IDirectable {
+namespace Game.Entities
+{
+    public interface IDirectable
+    {
 
-    Entity.Directions GetDirection();
+        Entity.Directions GetDirection();
+    }
 }
