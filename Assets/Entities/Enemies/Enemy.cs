@@ -76,7 +76,7 @@ namespace Game.Entities
             {
                 if (entity = target.GetComponent<Entity>())
                 {
-                    entity.TakeDamage(damage);
+                    entity.TakeDamage(baseDamage);
                 }
             }
         }

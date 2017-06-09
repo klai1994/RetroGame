@@ -11,7 +11,7 @@ namespace Game.Entities
 
         [SerializeField] internal float maxHealth = 100f;
         [SerializeField] internal float currentHealth = 100f;
-        [SerializeField] internal float damage;
+        [SerializeField] internal float baseDamage;
         [SerializeField] internal float attackDelay; 
         [SerializeField] internal float movementSpeed = 1f;
 

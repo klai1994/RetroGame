@@ -11,14 +11,25 @@ namespace Game.Weapons
         const float CONTACT_DESTRUCTION_DELAY = 0.1f;
 
         [SerializeField] float timeBeforeDestruction;
-        // TODO encapsulate
-        public float projectileSpeed = 1f;
-        public float damage;
-        float timeCreated;
+        [SerializeField] float projectileSpeed = 10f;
+        [SerializeField] float damage = 10f;
+        private float timeCreated;
+        private Vector2 direction;
+
+        public void AddDamageModifier(float damageModifier)
+        {
+            damage += damageModifier;
+        }
+
+        public void SetProjectileDirection(Vector2 direction)
+        {
+            this.direction = direction;
+        }
 
         void Start()
         {
             timeCreated = Time.time;
+            GetComponent<Rigidbody2D>().velocity += (direction * projectileSpeed);
         }
 
         void Update()

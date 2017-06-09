@@ -10,7 +10,7 @@ namespace Game.Entities
     public class Player : Entity, IDirectable
     {
         [SerializeField] Projectile projectilePrefab;
-        [SerializeField] Weapon weaponPrefab;
+        private float timeSinceLastHit;
 
         // Use this for initialization
         void Start()
@@ -34,13 +34,10 @@ namespace Game.Entities
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.V))
+
+            if (Input.GetKey(KeyCode.V))
             {
                 PlayerShoot();
-            }
-            else if (Input.GetKeyDown(KeyCode.B))
-            {
-                PlayerAttack();
             }
 
             MovePlayer();
@@ -53,20 +50,18 @@ namespace Game.Entities
             rbody.MovePosition(rbody.position + moveDirection * movementSpeed);
         }
 
-        private void PlayerAttack()
-        {
-            // TODO implement attack
-        }
-         
         void PlayerShoot()
         {
-            Projectile projectile;
-            projectile = Instantiate(projectilePrefab, (transform.position +
-                (Vector3)directionMagnitudes[direction]), Quaternion.identity);
+            if (Time.time - timeSinceLastHit > attackDelay)
+            {
+                timeSinceLastHit = Time.time;
+                Projectile projectile;
+                projectile = Instantiate(projectilePrefab, (transform.position +
+                    (Vector3)directionMagnitudes[direction]), Quaternion.identity);
 
-            projectile.damage = damage;
-            projectile.GetComponent<Rigidbody2D>().velocity +=
-                directionMagnitudes[direction] * projectile.projectileSpeed;
+                projectile.AddDamageModifier(baseDamage);
+                projectile.SetProjectileDirection(directionMagnitudes[direction]);
+            }
         }
 
         public override void CheckDirectionFacing()
