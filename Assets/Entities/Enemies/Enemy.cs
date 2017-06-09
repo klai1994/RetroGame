@@ -91,7 +91,7 @@ namespace Game.Entities
         }
 
         // Checks based on movement
-        public void CheckDirectionFacing()
+        public override void CheckDirectionFacing()
         {
             if (rbody.velocity.x < -DIRECTION_THRESHOLD)
             {

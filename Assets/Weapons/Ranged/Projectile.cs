@@ -14,8 +14,6 @@ namespace Game.Weapons
         // TODO encapsulate
         public float projectileSpeed = 1f;
         public float damage;
-
-        GameObject shooter;
         float timeCreated;
 
         void Start()

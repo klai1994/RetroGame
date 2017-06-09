@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Entities
 {
-    public class Entity : MonoBehaviour
+    public abstract class Entity : MonoBehaviour
     {
         internal const float DIRECTION_THRESHOLD = 0.2f;
         public enum Directions { Up, Down, Left, Right };
@@ -18,6 +18,8 @@ namespace Game.Entities
         internal Directions direction;
         internal Dictionary<Directions, Vector2> directionMagnitudes;
         internal Rigidbody2D rbody;
+
+        public abstract void CheckDirectionFacing();
 
         public float HealthPercentage
         {

@@ -57,7 +57,7 @@ namespace Game.Entities
         {
             // TODO implement attack
         }
-
+         
         void PlayerShoot()
         {
             Projectile projectile;
@@ -69,7 +69,7 @@ namespace Game.Entities
                 directionMagnitudes[direction] * projectile.projectileSpeed;
         }
 
-        public void CheckDirectionFacing()
+        public override void CheckDirectionFacing()
         {
             if (Input.GetAxisRaw("Horizontal") < -DIRECTION_THRESHOLD)
             {
