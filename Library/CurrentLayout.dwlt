@@ -105,8 +105,8 @@ MonoBehaviour:
     y: 30
     width: 1600
     height: 767
-  m_MinSize: {x: 583, y: 492}
-  m_MaxSize: {x: 14004, y: 14042}
+  m_MinSize: {x: 581, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 1
   controlID: 49
 --- !u!114 &6
@@ -129,8 +129,8 @@ MonoBehaviour:
     y: 0
     width: 1600
     height: 767
-  m_MinSize: {x: 583, y: 492}
-  m_MaxSize: {x: 14004, y: 14042}
+  m_MinSize: {x: 581, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
   controlID: 50
 --- !u!114 &7
@@ -232,7 +232,7 @@ MonoBehaviour:
   - {fileID: 16}
   - {fileID: 13}
   m_Selected: 0
-  m_LastSelected: 2
+  m_LastSelected: 1
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -278,8 +278,8 @@ MonoBehaviour:
     y: 0
     width: 280
     height: 767
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -391,7 +391,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: e4fbffff00000000
+    m_ExpandedIDs: 4a5effffba5effff805fffff9062ffff0063ffffca63ffffccbcffff40bdffff0abeffffbcdcffff0eddffffd8ddffffe4fbfffff4ffffff000000001c3f00005c540000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -441,14 +441,14 @@ MonoBehaviour:
     width: 850
     height: 475
   m_SceneLighting: 0
-  lastFramingTime: 9207.87742328136
+  lastFramingTime: 4994.389411611361
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -5.750121, y: -7.6618376, z: 0}
+    m_Target: {x: 425, y: 384.125, z: 0}
     speed: 2
-    m_Value: {x: -5.750121, y: -7.6618376, z: 0}
+    m_Value: {x: 425, y: 384.125, z: 0}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -475,9 +475,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 12.960812
+    m_Target: 277.3502
     speed: 2
-    m_Value: 12.960812
+    m_Value: 277.3502
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
   m_LastLockedObject: {fileID: 0}
-  m_ViewIsLockedToObject: 0
+  m_ViewIsLockedToObject: 1
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -596,18 +596,18 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Weapons
+    - Assets
   m_ViewMode: 1
   m_StartGridSize: 96
   m_LastFolders:
-  - Assets/Weapons
+  - Assets
   m_LastFoldersGridSize: 96
   m_LastProjectPath: C:\Users\Kevin\Downloads\Game Projects\Unity\Arena
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 39}
-    m_SelectedIDs: 72250000
-    m_LastClickedID: 9586
+    scrollPos: {x: 0, y: 75}
+    m_SelectedIDs: fc240000
+    m_LastClickedID: 9468
     m_ExpandedIDs: 00000000c41d0000ca1d0000ce1d0000e21d0000001e0000bc1e0000c01e00007c1f0000b822000014230000262300003623000052230000782300007c2300008823000098230000ca230000f82300007224000090240000aa240000ac240000b0240000ba240000c0240000c2240000c8240000d2240000da240000e6240000ea240000ee240000f2240000fc240000502500006e25000072250000ae250000c4250000d02600005427000056270000582700005a2700005c2700005e27000060270000622700006427000066270000682700006a2700006c2700006e27000070270000722700007427000076270000782700007a2700007c2700007e27000080270000822700008427000086270000882700008a2700008c2700008e27000090270000922700009427000096270000982700009a2700009c2700009e270000a0270000a2270000a4270000a6270000a8270000aa270000ac270000ae270000b0270000b2270000b4270000b6270000b8270000ba270000bc270000be270000c0270000c2270000c4270000c6270000c8270000ca270000cc270000ce270000d0270000d2270000d4270000d6270000d8270000da270000dc270000de270000e0270000e2270000e4270000e6270000e8270000ea270000ec270000ee270000f0270000f2270000f427000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -663,7 +663,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 081a0000760000008c1a00008c1e00002600000038000000aa29ffff481d0000da1c0000081d0000061d00002a1d0000241d00002c01000046000000240100008a0100006c0600007e6e0000581e0000380600009c36000000060000ac6600008e6b0000966d0000980600009a56010070060000a8210000086afcffb4060000e6e3ffff5a210000d81e00008a3f00008a050000e2060000ce27ffff56220000aa060000dc290000ec06000062620000f82e00007806000074050000a80600003692ffff962900000229000004290000062400006024000056240000ae27000000000000a6880000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

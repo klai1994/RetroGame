@@ -9,17 +9,17 @@ namespace Game.Dialogue
 {
     public class JsonReader
     {
-        public static Dictionary<int, string> localPathTable = new Dictionary<int, string>
-            {
-                {1, "/Dialogue/TestEvent.json" }
-            };
+        public static Object[] dialogueEvents;
 
-        public static DialogueEventHolder ConvertJsonToDialogueEvent(int filePathId)
+        static void LoadDialogueEvents()
         {
-            string localPath = localPathTable[filePathId];
-            string jsonContent = File.ReadAllText(Application.dataPath + localPath);
+            dialogueEvents = Resources.LoadAll<Object>("DialogueEvents");
+        }
 
-            return JsonMapper.ToObject<DialogueEventHolder>(jsonContent);
+        public static DialogueEventHolder ConvertJsonToDialogueEvent(int dialogueEventId)
+        {
+            LoadDialogueEvents();
+            return JsonMapper.ToObject<DialogueEventHolder>(dialogueEvents[dialogueEventId].ToString());
         }
 
     }

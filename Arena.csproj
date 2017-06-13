@@ -85,14 +85,15 @@
     <Compile Include="Assets\Actors\Enemies\Enemy.cs" />
     <Compile Include="Assets\Actors\Enemies\EnemyHealthBar.cs" />
     <Compile Include="Assets\Actors\IDirectable.cs" />
+    <Compile Include="Assets\Actors\NPC\TestTriggerDialogue.cs" />
     <Compile Include="Assets\Actors\Player\Player.cs" />
     <Compile Include="Assets\Actors\Player\PlayerHealthBar.cs" />
     <Compile Include="Assets\CameraUI\CameraFollow.cs" />
     <Compile Include="Assets\Dialogue\DialogueEventHolder.cs" />
+    <Compile Include="Assets\Dialogue\DialogueEventList.cs" />
     <Compile Include="Assets\Dialogue\DialogueHandler.cs" />
     <Compile Include="Assets\Dialogue\DialoguePanelManager.cs" />
     <Compile Include="Assets\Dialogue\JsonReader.cs" />
-    <Compile Include="Assets\Dialogue\Test.cs" />
     <Compile Include="Assets\Weapons\Ranged\Projectile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

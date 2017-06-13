@@ -1,0 +1,10 @@
+{
+	"dialogueEvents":[
+		{
+			"characterName": "Solaris",
+			"characterPortrait": "solaris",
+			"dialogueText": "Hello world!"
+		}
+	]
+
+}

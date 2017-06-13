@@ -14,12 +14,12 @@
 		{
 			"characterName": "Solaris",
 			"characterPortrait": "solaris",
-			"dialogueText": "It appears we are in a nondescript field filled with spiders!"
+			"dialogueText": "It appears we are in a nondescript field filled with spiders..."
 		},
 		{
 			"characterName": "Ava",
 			"characterPortrait": "ava",
-			"dialogueText": "Indeed we are. How quaint!"
+			"dialogueText": "Indeed we are. How quaint."
 		},
 		{
 			"characterName": "Solaris",
@@ -29,7 +29,7 @@
 		{
 			"characterName": "Ava",
 			"characterPortrait": "ava",
-			"dialogueText": "Go brother! For the glory of RPG tropes!"
+			"dialogueText": "Wonderful! Go forth, for the glory of RPG tropes!"
 		}
 	]
 }

@@ -22,6 +22,9 @@ namespace Game.Dialogue
         {
             currentEvent = JsonReader.ConvertJsonToDialogueEvent(dialogueScene);
             dialogueStage = 0;
+
+            DialoguePanelManager.manager.ConfigurePanel(currentEvent, dialogueStage);
+            dialogueStage++;
         }
 
         private void ProgressDialogue()
