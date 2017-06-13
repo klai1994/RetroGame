@@ -4,22 +4,19 @@ using UnityEngine;
 
 namespace Game.Entities
 {
-    public class Enemy : Entity, IDirectable
+    public class Enemy : Actor, IDirectable
     {
         [SerializeField] float aggroRange = 5;
         [SerializeField] float stoppingDistance = 0.1f;
         [SerializeField] float attackRange;
+        [SerializeField] GameObject target;
 
         private float distanceToTarget;
         private bool isAttacking = false;
-        private GameObject target;
 
-        // Use this for initialization
         void Start()
         {
-            currentHealth = maxHealth;
             target = GameObject.FindGameObjectWithTag("Player");
-            rbody = GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
@@ -71,13 +68,10 @@ namespace Game.Entities
         // Finds target's health and damages it
         void Attack()
         {
-            Entity entity;
-            if (target != gameObject)
+            Actor actor;
+            if (actor = target.GetComponent<Actor>())
             {
-                if (entity = target.GetComponent<Entity>())
-                {
-                    entity.TakeDamage(baseDamage);
-                }
+                actor.TakeDamage(baseDamage);
             }
         }
 

@@ -4,20 +4,19 @@ using UnityEngine;
 
 namespace Game.Entities
 {
-    public abstract class Entity : MonoBehaviour
+    public abstract class Actor : MonoBehaviour
     {
-        internal const float DIRECTION_THRESHOLD = 0.2f;
+        [SerializeField] protected float maxHealth = 100f;
+        [SerializeField] protected float currentHealth = 100f;
+        [SerializeField] protected float baseDamage = 0;
+        [SerializeField] protected float attackDelay = 1f; 
+        [SerializeField] protected float movementSpeed = 1f;
+
         public enum Directions { Up, Down, Left, Right };
-
-        [SerializeField] internal float maxHealth = 100f;
-        [SerializeField] internal float currentHealth = 100f;
-        [SerializeField] internal float baseDamage;
-        [SerializeField] internal float attackDelay; 
-        [SerializeField] internal float movementSpeed = 1f;
-
-        internal Directions direction;
-        internal Dictionary<Directions, Vector2> directionMagnitudes;
-        internal Rigidbody2D rbody;
+        protected const float DIRECTION_THRESHOLD = 0.2f;
+        protected Directions direction;
+        protected Dictionary<Directions, Vector2> directionMagnitudes;
+        protected Rigidbody2D rbody;
 
         public abstract void CheckDirectionFacing();
 
@@ -27,8 +26,7 @@ namespace Game.Entities
             {
                 if (currentHealth > maxHealth) { return 1; }
                 if (currentHealth < 0) { return 0; }
-                else
-                    return currentHealth / maxHealth;
+                else return currentHealth / maxHealth;
             }
         }
 
@@ -50,6 +48,8 @@ namespace Game.Entities
                 { Directions.Down, Vector2.down },
                 { Directions.Up, Vector2.up }
             };
+            rbody = GetComponent<Rigidbody2D>();
+            currentHealth = maxHealth;
         }
 
     }

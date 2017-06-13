@@ -10,13 +10,13 @@ namespace Game.Entities
     {
 
         RawImage enemyHealthBar;
-        Entity enemy;
+        Enemy enemy;
 
         // Use this for initialization
         void Start()
         {
             enemyHealthBar = GetComponent<RawImage>();
-            enemy = GetComponentInParent<Entity>();
+            enemy = GetComponentInParent<Enemy>();
         }
 
         // Update is called once per frame

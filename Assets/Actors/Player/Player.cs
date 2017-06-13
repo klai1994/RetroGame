@@ -7,29 +7,10 @@ using Game.Weapons;
 
 namespace Game.Entities
 {
-    public class Player : Entity, IDirectable
+    public class Player : Actor, IDirectable
     {
         [SerializeField] Projectile projectilePrefab;
         private float timeSinceLastHit;
-
-        // Use this for initialization
-        void Start()
-        {
-            currentHealth = maxHealth;
-            rbody = GetComponent<Rigidbody2D>();
-            SetUpDirections();
-        }
-
-        private void SetUpDirections()
-        {
-            directionMagnitudes = new Dictionary<Directions, Vector2>
-            {
-                { Directions.Left, Vector2.left },
-                { Directions.Right, Vector2.right },
-                { Directions.Down, Vector2.down },
-                { Directions.Up, Vector2.up }
-            };
-        }
 
         // Update is called once per frame
         void Update()
