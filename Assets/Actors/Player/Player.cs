@@ -11,6 +11,12 @@ namespace Game.Entities
     {
         [SerializeField] Projectile projectilePrefab;
         private float timeSinceLastHit;
+        private Animator animator;
+
+        void Start()
+        {
+            animator = GetComponent<Animator>();
+        }
 
         // Update is called once per frame
         void Update()
@@ -28,7 +34,18 @@ namespace Game.Entities
         private void MovePlayer()
         {
             Vector2 moveDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-            rbody.MovePosition(rbody.position + moveDirection * movementSpeed);
+
+            if (moveDirection != Vector2.zero)
+            {
+                animator.SetBool("isWalking", true);
+                animator.SetFloat("input_x", moveDirection.x);
+                animator.SetFloat("input_y", moveDirection.y);
+                rbody.MovePosition(rbody.position + moveDirection * movementSpeed);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+            }
         }
 
         void PlayerShoot()

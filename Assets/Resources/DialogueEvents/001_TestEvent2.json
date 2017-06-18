@@ -3,7 +3,7 @@
 		{
 			"characterName": "Solaris",
 			"characterPortrait": "solaris",
-			"dialogueText": "Hello world!"
+			"dialogueText": "Yup, the second event works."
 		}
 	]
 
