@@ -39,13 +39,13 @@ namespace Game.CameraUI
             switch (zoom)
             {
                 case 0:
-                    Camera.main.orthographicSize = worldUnitHeight / 8;
+                    Camera.main.orthographicSize = (int)(worldUnitHeight / 8);
                     return;
                 case 1:
-                    Camera.main.orthographicSize = worldUnitHeight / 4;
+                    Camera.main.orthographicSize = (int)(worldUnitHeight / 4);
                     return;
                 default:
-                    Camera.main.orthographicSize = worldUnitHeight / 2;
+                    Camera.main.orthographicSize = (int)(worldUnitHeight / 2);
                     return;
             }
         }
