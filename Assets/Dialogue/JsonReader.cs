@@ -18,7 +18,10 @@ namespace Game.Dialogue
 
         public static DialogueEventHolder ConvertJsonToDialogueEvent(int dialogueEventId)
         {
+            if (dialogueEvents == null)
+            {
             LoadDialogueEvents();
+            }
             return JsonMapper.ToObject<DialogueEventHolder>(dialogueEvents[dialogueEventId].ToString());
         }
 

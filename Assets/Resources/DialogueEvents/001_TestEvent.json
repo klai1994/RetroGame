@@ -1,0 +1,30 @@
+{
+	"dialogueEvents": 
+	[
+		{
+			"characterName": "Ava",
+			"characterPortrait": "ava",
+			"dialogueText": "Brother!"
+		},
+    {
+      "characterName": "Ava",
+      "characterPortrait": "ava",
+      "dialogueText": "It appears we are in a nondescript field filled with spiders..."
+    },
+		{
+			"characterName": "Ava",
+			"characterPortrait": "ava",
+			"dialogueText": "Hm. How quaint."
+		},
+    {
+      "characterName": "Ava",
+      "characterPortrait": "ava",
+      "dialogueText": "No matter. I am sure you shall squash them beneath your pixellated boot heel!"
+    },
+		{
+			"characterName": "Ava",
+			"characterPortrait": "ava",
+			"dialogueText": "Go forth, for the glory of RPG tropes!"
+		}
+	]
+}

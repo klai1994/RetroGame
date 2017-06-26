@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Levels/Sandbox.unity
+- path: Assets/Levels/Prologue/Prologue.unity
   isLoaded: 1
   isActive: 1

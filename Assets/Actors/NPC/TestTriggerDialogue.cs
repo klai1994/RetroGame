@@ -8,6 +8,6 @@ public class TestTriggerDialogue : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        DialogueHandler.InitializeEvent((int)DialogueEventName.TestEvent1);
+        DialogueHandler.InitializeEvent(DialogueEventName.TestEvent);
     }
 }
