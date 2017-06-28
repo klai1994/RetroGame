@@ -13,9 +13,12 @@ namespace Game.Entities
         private float timeSinceLastHit;
         private Animator animator;
 
+        public static string playerName;
+
         void Start()
         {
             animator = GetComponent<Animator>();
+            
             // Starts the player facing down
             animator.SetFloat("input_y", -1);
         }

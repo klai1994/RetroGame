@@ -95,7 +95,8 @@
     <Compile Include="Assets\Dialogue\DialoguePanelManager.cs" />
     <Compile Include="Assets\Dialogue\JsonReader.cs" />
     <Compile Include="Assets\Dialogue\LetterboxManager.cs" />
-    <Compile Include="Assets\Levels\Prologue\Prologue.cs" />
+    <Compile Include="Assets\Levels\Prologue\NameSelect.cs" />
+    <Compile Include="Assets\Levels\Prologue\PrologueManager.cs" />
     <Compile Include="Assets\Weapons\Ranged\Projectile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
