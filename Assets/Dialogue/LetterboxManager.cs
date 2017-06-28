@@ -7,7 +7,6 @@ namespace Game.Dialogue
 {
     public class LetterboxManager : MonoBehaviour
     {
-
         [SerializeField] protected Text letterboxText;
         public float textSpeed = 0.5f;
         protected bool textSegmentEnded = false;
@@ -26,7 +25,7 @@ namespace Game.Dialogue
             }
             else
             {
-                DialogueHandler.currentEvent = null;
+                DialogueControlHandler.currentEvent = null;
             }
         }
 

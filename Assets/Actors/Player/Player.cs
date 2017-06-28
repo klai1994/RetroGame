@@ -16,6 +16,8 @@ namespace Game.Entities
         void Start()
         {
             animator = GetComponent<Animator>();
+            // Starts the player facing down
+            animator.SetFloat("input_y", -1);
         }
 
         // Update is called once per frame

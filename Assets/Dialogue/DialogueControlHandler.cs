@@ -9,7 +9,7 @@ namespace Game.Dialogue
     /// This class provides the user a means to control progression of dialogue.
     /// </summary>
     [RequireComponent(typeof(LetterboxManager))]
-    public class DialogueHandler : MonoBehaviour
+    public class DialogueControlHandler : MonoBehaviour
     {
         public static DialogueEventHolder currentEvent = null;
         private static LetterboxManager manager;

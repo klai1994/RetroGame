@@ -8,14 +8,17 @@ using System;
 
 namespace Game.Dialogue
 {
-    [RequireComponent(typeof(DialogueHandler))]
+    /// <summary>
+    /// Attach this class to the SceneManager for general dialogue that may or may not use
+    /// character portraits and where text is skippable. Use the LetterboxManager for more 
+    /// cinematic dialogue.
+    /// </summary>
     public class DialoguePanelManager : LetterboxManager
     {
         private Sprite[] dialoguePortraits;
 
         [SerializeField] GameObject dialoguePanel;
         [SerializeField] Image characterPortrait;
-        [SerializeField] Text characterNameText;
 
         void Awake()
         {
@@ -29,16 +32,22 @@ namespace Game.Dialogue
                 textSegmentEnded = false;
                 dialoguePanel.SetActive(true);
 
-                characterPortrait.sprite = QueryForPortrait
-                    (dialogueEventHolder.dialogueEvents[dialogueStage].characterPortrait);
-
-                characterNameText.text = dialogueEventHolder.dialogueEvents[dialogueStage].characterName;
+                string portrait = dialogueEventHolder.dialogueEvents[dialogueStage].characterPortrait;
+                if (portrait != "")
+                {
+                    characterPortrait.gameObject.SetActive(true);
+                    characterPortrait.sprite = QueryForPortrait(portrait);
+                }
+                else 
+                {
+                    characterPortrait.gameObject.SetActive(false);
+                }
 
                 StartCoroutine(AnimateText(dialogueEventHolder.dialogueEvents[dialogueStage].dialogueText));
             }
             else
             {
-                DialogueHandler.currentEvent = null;
+                DialogueControlHandler.currentEvent = null;
                 dialoguePanel.SetActive(false);
             }
         }

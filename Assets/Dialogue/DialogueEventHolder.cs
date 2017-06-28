@@ -13,7 +13,6 @@ namespace Game.Dialogue
 
     public struct DialogueEventInfo
     {
-        public string characterName;
         public string characterPortrait;
         public string dialogueText;
     }

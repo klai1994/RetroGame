@@ -5,21 +5,15 @@ namespace Game.CameraUI
     public class CameraFollow : MonoBehaviour
     {
         // Screen height divded by pixels per unit sprites for consistent camera size
-        private float worldUnitHeight = Screen.height / 16.0f;
-        public int zoom = 1;
-
         [SerializeField] Transform target;
-        public Transform Target
-        {
-            get; set;
-        }
+        [SerializeField] int initialZoom = 4;
 
         // Use this for initialization
         void Start()
         {
-            ChangeZoom(zoom);
+            SetCameraZoom(initialZoom);
         }
-    
+       
         // Update is called once per frame
         void Update()
         {
@@ -29,25 +23,15 @@ namespace Game.CameraUI
             }
         }
 
+        public void SetCameraZoom(int zoomLevel)
+        {
+            int cameraZoom = Screen.height / 16 / zoomLevel;
+            Camera.main.orthographicSize = cameraZoom;
+        }
+
         private void SetCameraPosition()
         {
             transform.position = target.transform.position + new Vector3(0.0f, 0.0f, -10.0f);
-        }
-
-        public void ChangeZoom(int zoom)
-        {
-            switch (zoom)
-            {
-                case 0:
-                    Camera.main.orthographicSize = (int)(worldUnitHeight / 8);
-                    return;
-                case 1:
-                    Camera.main.orthographicSize = (int)(worldUnitHeight / 4);
-                    return;
-                default:
-                    Camera.main.orthographicSize = (int)(worldUnitHeight / 2);
-                    return;
-            }
         }
     }
 }

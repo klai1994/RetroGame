@@ -1,49 +1,64 @@
 {
   "dialogueEvents": [
     {
-      "characterName": "",
       "characterPortrait": "",
       "dialogueText": "There was a time long ago, when dragons soared high above humans in the skies of Abaddon."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "The dragons grew to loathe the humans, seeing them spread amongst the land as they encroached upon their territory, stole their treasures and trampled over their precious eggs."
+      "dialogueText": "The dragons grew to loathe the humans, seeing them spread amongst the land as they encroached upon their territory, establishing homes in the shadows of their wings."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "In anger, they began to attack human villages, setting them ablaze in unstoppable infernos and slaughtering the helpless villagers."
+      "dialogueText": "In anger, they began to attack the human villages, plunging them deep within wild infernos and slaughtering the helpless people within."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "Humanity begged and prayed, but their pleas were answered only with ashes and despair."
+      "dialogueText": "The scorched earth left behind no trace of the hopes, dreams and ambitions of the people who lived there."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "Left with no choice, some fought back."
+      "dialogueText": "One by one, the villages fell, drawing humanity closer and closer to oblivion."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "As fate cast a dark shadow over their future, terror gave way to courage."
+      "dialogueText": "The living begged and prayed, but their pleas were answered only with ashes and despair. It seemed their destiny was set."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "Brave warriors arose from all over the land, repelling the dragons and chasing them back to their roosts."
+      "dialogueText": "Fear consumed them all. The dragons, so powerful and ferocious, wielded incredible magic. They seemed invincible."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "From there emerged the first Dragon Slayers."
+      "dialogueText": "However, some did not accept this."
     },
     {
-      "characterName": "",
       "characterPortrait": "",
-      "dialogueText": "The Dragon Slayers took back the tails of the dragons they had defeated to bring hope to their people, a sign of a new age to come for humanity. Their future glimmered, if only briefly..."
+      "dialogueText": "Some looked past the raging flames, and saw a glimpse of what their future could be, if they stood defiant."
+    },
+    {
+      "characterPortrait": "",
+      "dialogueText": "As fate cast a dark shadow over them, terror gave way to courage."
+    },
+    {
+      "characterPortrait": "",
+      "dialogueText": "One brotherhood of brave warriors rose from the dust of their ruined village..."
+    },
+    {
+      "characterPortrait": "",
+      "dialogueText": "Carrying valor in their hearts and with magic of their own, they fought back, repelling the dragons and chased them back to their roosts."
+    },
+    {
+      "characterPortrait": "",
+      "dialogueText": "From there emerged the First Dragon Hunters."
+    },
+    {
+      "characterPortrait": "",
+      "dialogueText": "These noble heroes took back the heads of the dragons they had defeated to bring hope to the other villages, a sign of a new age to come for humanity."
+    },
+    {
+      "characterPortrait": "",
+      "dialogueText": "A future without fear, without ruin. Hope glimmered, even if only briefly..."
     }
   ]
 
