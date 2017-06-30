@@ -8,9 +8,10 @@ namespace Game.Dialogue
     public class LetterboxManager : MonoBehaviour
     {
         [SerializeField] protected Text letterboxText;
+        [SerializeField] protected Font font;
         public float textSpeed = 0.5f;
         protected bool textSegmentEnded = false;
-
+       
         public bool GetTextSegmentEnded()
         {
             return textSegmentEnded;
@@ -18,6 +19,8 @@ namespace Game.Dialogue
 
         public virtual void ConfigurePanel(DialogueEventHolder dialogueEventHolder, int dialogueStage)
         {
+            letterboxText.font = font;
+
             if (dialogueStage < dialogueEventHolder.dialogueEvents.Count)
             {
                 textSegmentEnded = false;
@@ -34,7 +37,7 @@ namespace Game.Dialogue
             this.letterboxText.text = "";
             foreach (char letter in text)
             {
-                // TODO remove if statement
+                // TODO delete this line
                 if (Input.GetKey(KeyCode.X))
                 {
                     break;
@@ -42,6 +45,7 @@ namespace Game.Dialogue
                 this.letterboxText.text += letter;
                 yield return new WaitForSeconds(textSpeed);
             }
+            // TODO delete this line
             this.letterboxText.text = text;
             textSegmentEnded = true;
         }

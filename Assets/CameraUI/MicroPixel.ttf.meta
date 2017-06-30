@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: fed04245df094b143b4bef202acf630c
-timeCreated: 1497315534
+guid: 065ec9bc85b6a8f4d9616a14dbd0a886
+timeCreated: 1498707262
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -9,9 +9,9 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: ISL_NANO
+  fontName: Picopixel
   fontNames:
-  - ISL_NANO
+  - Picopixel
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

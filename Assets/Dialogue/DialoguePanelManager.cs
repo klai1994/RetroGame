@@ -27,6 +27,8 @@ namespace Game.Dialogue
 
         public override void ConfigurePanel(DialogueEventHolder dialogueEventHolder, int dialogueStage)
         {
+            letterboxText.font = font;
+
             if (dialogueStage < dialogueEventHolder.dialogueEvents.Count)
             {
                 textSegmentEnded = false;
