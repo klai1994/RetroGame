@@ -1,4 +1,9 @@
-Library/
-Temp/
-obj/
+[Ll]brary/
+[Tt]emp/
+[Oo]bj/
+
+# Auto-generated VS solution and project files
 .vs/
+*.csproj
+*.sln
+*.userprefs
