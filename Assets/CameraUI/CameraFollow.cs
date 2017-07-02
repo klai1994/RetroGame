@@ -6,12 +6,25 @@ namespace Game.CameraUI
     {
         // Screen height divded by pixels per unit sprites for consistent camera size
         [SerializeField] Transform target;
-        [SerializeField] int initialZoom = 4;
+        int initialZoom = 6;
+
+        public int InitialZoom
+        {
+            get
+            {
+                return initialZoom;
+            }
+
+            set
+            {
+                initialZoom = value;
+            }
+        }
 
         // Use this for initialization
         void Start()
         {
-            SetCameraZoom(initialZoom);
+            SetCameraZoom(InitialZoom);
         }
        
         // Update is called once per frame

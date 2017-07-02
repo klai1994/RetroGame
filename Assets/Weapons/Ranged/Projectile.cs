@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Game.Entities;
+using Game.Actors;
 
 namespace Game.Weapons
 {

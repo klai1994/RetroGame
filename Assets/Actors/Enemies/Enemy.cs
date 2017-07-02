@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Entities
+namespace Game.Actors
 {
     public class Enemy : Actor, IDirectable
     {

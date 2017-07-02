@@ -16,7 +16,6 @@ namespace Game.Dialogue
     public class DialoguePanelManager : LetterboxManager
     {
         private Sprite[] dialoguePortraits;
-
         [SerializeField] GameObject dialoguePanel;
         [SerializeField] Image characterPortrait;
 
@@ -70,6 +69,7 @@ namespace Game.Dialogue
         public override IEnumerator AnimateText(string text)
         {
             this.letterboxText.text = "";
+
             foreach (char letter in text)
             {
                 if (Input.GetKey(KeyCode.X))
@@ -77,6 +77,7 @@ namespace Game.Dialogue
                     break;
                 }
                 this.letterboxText.text += letter;
+
                 yield return new WaitForSeconds(textSpeed);
             }
             this.letterboxText.text = text;

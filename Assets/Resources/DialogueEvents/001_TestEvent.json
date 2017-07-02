@@ -3,23 +3,23 @@
 	[
 		{
 			"characterPortrait": "",
-			"dialogueText": "Brother!"
+      "dialogueText": "You there!"
 		},
     {
-      "characterPortrait": "ava",
+      "characterPortrait": "sword",
       "dialogueText": "It appears we are in a nondescript field filled with spiders..."
     },
-		{
-			"characterPortrait": "ava",
-			"dialogueText": "Hm. How quaint."
-		},
     {
-      "characterPortrait": "ava",
+      "characterPortrait": "sword",
+      "dialogueText": "Hm. How quaint."
+    },
+    {
+      "characterPortrait": "sword",
       "dialogueText": "No matter. I am sure you shall squash them beneath your pixellated boot heel!"
     },
-		{
-			"characterPortrait": "ava",
-			"dialogueText": "Go forth, for the glory of RPG tropes!"
-		}
+    {
+      "characterPortrait": "sword",
+      "dialogueText": "Go forth, for the glory of RPG tropes!"
+    }
 	]
 }

@@ -32,10 +32,20 @@ namespace Game.Dialogue
 
         public static void InitializeEvent(DialogueEventName dialogueScene)
         {
-            int sceneIndex = (int)dialogueScene;
-            currentEvent = JsonReader.ConvertJsonToDialogueEvent(sceneIndex);
-            dialogueStage = 0;
-            ProgressDialogue();
+            if (currentEvent == null)
+            {
+                // TODO progress dialogue/reach repeatable dialogue
+                if (DialogueEventList.triggeredDialogue.Contains(dialogueScene))
+                {
+                    return;
+                }
+
+                DialogueEventList.triggeredDialogue.Add(dialogueScene);
+                int sceneIndex = (int)dialogueScene;
+                currentEvent = JsonReader.ConvertJsonToDialogueEvent(sceneIndex);
+                dialogueStage = 0;
+                ProgressDialogue();
+            }
         }
 
         private static void ProgressDialogue()

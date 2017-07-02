@@ -1,4 +1,4 @@
-﻿namespace Game.Entities
+﻿namespace Game.Actors
 {
     public interface IDirectable
     {

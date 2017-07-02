@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Entities
+namespace Game.Actors
 {
     [RequireComponent(typeof(RawImage))]
     public class EnemyHealthBar : MonoBehaviour

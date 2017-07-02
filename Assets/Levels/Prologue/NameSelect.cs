@@ -240,7 +240,7 @@ namespace Game.Levels.Prologue
                 return;
             }
 
-            Game.Entities.Player.playerName = selectedName;
+            Game.Actors.Player.PlayerName = selectedName;
             PlayAudio(SelectionSounds.Confirm);
 
             prologueManager.StartFade(false);
