@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Game.Dialogue
 {
     /// <summary>
-    /// This class provides the user a means to control progression of dialogue.
+    /// This class provides the user the means to control progression of dialogue.
     /// </summary>
     [RequireComponent(typeof(LetterboxManager))]
     public class DialogueControlHandler : MonoBehaviour
@@ -14,7 +14,7 @@ namespace Game.Dialogue
         public static DialogueEventHolder currentEvent = null;
         private static LetterboxManager manager;
         private static int dialogueStage;
-            
+
         // Use this for initialization
         void Awake()
         {
@@ -35,14 +35,15 @@ namespace Game.Dialogue
             if (currentEvent == null)
             {
                 // TODO progress dialogue/reach repeatable dialogue
-                if (DialogueEventList.triggeredDialogue.Contains(dialogueScene))
+                if (DialogueEventAtlas.triggeredDialogue.Contains(dialogueScene))
                 {
                     return;
                 }
+                DialogueEventAtlas.triggeredDialogue.Add(dialogueScene);
 
-                DialogueEventList.triggeredDialogue.Add(dialogueScene);
                 int sceneIndex = (int)dialogueScene;
                 currentEvent = JsonReader.ConvertJsonToDialogueEvent(sceneIndex);
+
                 dialogueStage = 0;
                 ProgressDialogue();
             }

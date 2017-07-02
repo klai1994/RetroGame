@@ -1,13 +1,13 @@
 {
-	"dialogueEvents": 
+	"eventInfoList": 
 	[
 		{
 			"characterPortrait": "",
-      "dialogueText": "You there!"
+      "dialogueText": "You there! @, are you not?"
 		},
     {
       "characterPortrait": "sword",
-      "dialogueText": "It appears we are in a nondescript field filled with spiders..."
+      "dialogueText": "It appears we are in a nondescript field filled with your dopplegangers..."
     },
     {
       "characterPortrait": "sword",
@@ -15,11 +15,11 @@
     },
     {
       "characterPortrait": "sword",
-      "dialogueText": "No matter. I am sure you shall squash them beneath your pixellated boot heel!"
+      "dialogueText": "No matter. I am sure you shall squash them beneath your walking contraptions!"
     },
     {
       "characterPortrait": "sword",
-      "dialogueText": "Go forth, for the glory of RPG tropes!"
+      "dialogueText": "Onward! To victory!"
     }
 	]
 }

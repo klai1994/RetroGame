@@ -21,10 +21,10 @@ namespace Game.Dialogue
         {
             letterboxText.font = font;
 
-            if (dialogueStage < dialogueEventHolder.dialogueEvents.Count)
+            if (dialogueStage < dialogueEventHolder.eventInfoList.Count)
             {
                 textSegmentEnded = false;
-                StartCoroutine(AnimateText(dialogueEventHolder.dialogueEvents[dialogueStage].dialogueText));
+                StartCoroutine(AnimateText(dialogueEventHolder.eventInfoList[dialogueStage].DialogueText));
             }
             else
             {

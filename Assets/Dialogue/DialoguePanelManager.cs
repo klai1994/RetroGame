@@ -28,12 +28,12 @@ namespace Game.Dialogue
         {
             letterboxText.font = font;
 
-            if (dialogueStage < dialogueEventHolder.dialogueEvents.Count)
+            if (dialogueStage < dialogueEventHolder.eventInfoList.Count)
             {
                 textSegmentEnded = false;
                 dialoguePanel.SetActive(true);
 
-                string portrait = dialogueEventHolder.dialogueEvents[dialogueStage].characterPortrait;
+                string portrait = dialogueEventHolder.eventInfoList[dialogueStage].characterPortrait;
                 if (portrait != "")
                 {
                     characterPortrait.gameObject.SetActive(true);
@@ -44,7 +44,7 @@ namespace Game.Dialogue
                     characterPortrait.gameObject.SetActive(false);
                 }
 
-                StartCoroutine(AnimateText(dialogueEventHolder.dialogueEvents[dialogueStage].dialogueText));
+                StartCoroutine(AnimateText(dialogueEventHolder.eventInfoList[dialogueStage].DialogueText));
             }
             else
             {

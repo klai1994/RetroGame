@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Game.Actors.Overworld;
 namespace Game.Levels.Prologue
 {
     public class NameSelect : MonoBehaviour
@@ -240,7 +241,7 @@ namespace Game.Levels.Prologue
                 return;
             }
 
-            Game.Actors.Player.PlayerName = selectedName;
+            Player.PlayerName = selectedName;
             PlayAudio(SelectionSounds.Confirm);
 
             prologueManager.StartFade(false);
