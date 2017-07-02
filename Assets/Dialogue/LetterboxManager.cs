@@ -37,7 +37,7 @@ namespace Game.Dialogue
             this.letterboxText.text = "";
             foreach (char letter in text)
             {
-                // TODO delete this line
+                // TODO delete after demo
                 if (Input.GetKey(KeyCode.X))
                 {
                     break;
@@ -45,7 +45,7 @@ namespace Game.Dialogue
                 this.letterboxText.text += letter;
                 yield return new WaitForSeconds(textSpeed);
             }
-            // TODO delete this line
+            // TODO delete after demo
             this.letterboxText.text = text;
             textSegmentEnded = true;
         }

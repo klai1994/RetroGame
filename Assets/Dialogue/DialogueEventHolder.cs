@@ -7,7 +7,6 @@ namespace Game.Dialogue
 {
     public class DialogueEventHolder
     {
-        // TODO replace dialogue text occurances of @ with player name
         // Name must match root node in .json file
         public List<DialogueEventInfo> eventInfoList;
     }

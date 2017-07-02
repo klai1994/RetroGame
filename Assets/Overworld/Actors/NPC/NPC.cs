@@ -30,7 +30,10 @@ namespace Game.Actors.Overworld
 
         void Start()
         {
-            // TODO delete this line
+            // Starts the NPC facing down
+            animator.SetFloat(MOVEMENT_Y, -1);
+
+            // TODO delete after demo
             ChaseTarget(FindObjectOfType<Player>().gameObject);    
         }
 

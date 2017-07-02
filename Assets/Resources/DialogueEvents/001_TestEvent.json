@@ -1,25 +1,24 @@
 {
-	"eventInfoList": 
-	[
-		{
-			"characterPortrait": "",
+  "eventInfoList": [
+    {
+      "characterPortrait": "",
       "dialogueText": "You there! @, are you not?"
-		},
-    {
-      "characterPortrait": "npc",
-      "dialogueText": "It appears we are in a nondescript field filled with your dopplegangers..."
     },
     {
-      "characterPortrait": "npc",
-      "dialogueText": "Hm. How quaint."
+      "characterPortrait": "",
+      "dialogueText": "Hmm? Who am I? Well, I'm just Steve."
     },
     {
-      "characterPortrait": "npc",
-      "dialogueText": "No matter. I am sure you shall squash them beneath your walking contraptions!"
+      "characterPortrait": "steve",
+      "dialogueText": "So, it appears we are in a nondescript room filled with your dopplegangers..."
     },
     {
-      "characterPortrait": "npc",
-      "dialogueText": "Onward! To victory!"
+      "characterPortrait": "steve",
+      "dialogueText": "Hm. What a conundrum."
+    },
+    {
+      "characterPortrait": "steve",
+      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob. But I'm with you in spirit!"
     }
-	]
+  ]
 }
