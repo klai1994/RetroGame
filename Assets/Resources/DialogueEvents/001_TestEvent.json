@@ -6,19 +6,19 @@
       "dialogueText": "You there! @, are you not?"
 		},
     {
-      "characterPortrait": "sword",
+      "characterPortrait": "npc",
       "dialogueText": "It appears we are in a nondescript field filled with your dopplegangers..."
     },
     {
-      "characterPortrait": "sword",
+      "characterPortrait": "npc",
       "dialogueText": "Hm. How quaint."
     },
     {
-      "characterPortrait": "sword",
+      "characterPortrait": "npc",
       "dialogueText": "No matter. I am sure you shall squash them beneath your walking contraptions!"
     },
     {
-      "characterPortrait": "sword",
+      "characterPortrait": "npc",
       "dialogueText": "Onward! To victory!"
     }
 	]

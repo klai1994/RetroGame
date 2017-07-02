@@ -96,6 +96,7 @@ namespace Game.Actors.Overworld
             }
             else
             {
+                rbody.velocity = Vector2.zero;
                 animator.SetBool(ANIM_IS_WALKING, false);
             }
         }

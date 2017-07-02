@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 952f596b5edcdd34a8e7f398f381d8f2
-timeCreated: 1497762869
+timeCreated: 1499024044
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -91,7 +91,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 48
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -102,9 +102,9 @@ TextureImporter:
       name: player_1
       rect:
         serializedVersion: 2
-        x: 16
+        x: 12
         y: 48
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -115,9 +115,9 @@ TextureImporter:
       name: player_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 24
         y: 48
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -128,9 +128,9 @@ TextureImporter:
       name: player_3
       rect:
         serializedVersion: 2
-        x: 48
+        x: 36
         y: 48
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -143,7 +143,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 32
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -154,9 +154,9 @@ TextureImporter:
       name: player_5
       rect:
         serializedVersion: 2
-        x: 16
+        x: 12
         y: 32
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -167,9 +167,9 @@ TextureImporter:
       name: player_6
       rect:
         serializedVersion: 2
-        x: 32
+        x: 24
         y: 32
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -180,9 +180,9 @@ TextureImporter:
       name: player_7
       rect:
         serializedVersion: 2
-        x: 48
+        x: 36
         y: 32
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -195,7 +195,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 16
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -206,9 +206,9 @@ TextureImporter:
       name: player_9
       rect:
         serializedVersion: 2
-        x: 16
+        x: 12
         y: 16
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -219,9 +219,9 @@ TextureImporter:
       name: player_10
       rect:
         serializedVersion: 2
-        x: 32
+        x: 24
         y: 16
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -232,9 +232,9 @@ TextureImporter:
       name: player_11
       rect:
         serializedVersion: 2
-        x: 48
+        x: 36
         y: 16
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -247,7 +247,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -258,9 +258,9 @@ TextureImporter:
       name: player_13
       rect:
         serializedVersion: 2
-        x: 16
+        x: 12
         y: 0
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -271,9 +271,9 @@ TextureImporter:
       name: player_14
       rect:
         serializedVersion: 2
-        x: 32
+        x: 24
         y: 0
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -284,9 +284,9 @@ TextureImporter:
       name: player_15
       rect:
         serializedVersion: 2
-        x: 48
+        x: 36
         y: 0
-        width: 16
+        width: 12
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
