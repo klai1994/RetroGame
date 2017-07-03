@@ -34,12 +34,12 @@ namespace Game.Levels.Prologue
 
         enum SelectionSounds
         {
-            Select,
-            CannotSelect,
-            Move,
-            Confirm
+            Select = 0,
+            CannotSelect = 1,
+            Move = 2,
+            Confirm = 3,
+            Default = 4
         }
-        Dictionary<SelectionSounds, int> selectionSounds;
 
         // Use this for initialization
         void Start()
@@ -50,7 +50,6 @@ namespace Game.Levels.Prologue
             PopulateLetterGrid();
             selectedLetter = textGrid[0, 0];
 
-            InitializeSounds();
             audioSource = GetComponent<AudioSource>();
             arrowSelectIndex = Vector2.zero;
         }
@@ -128,6 +127,11 @@ namespace Game.Levels.Prologue
 
             #region Commands
 
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                SelectDefaultName();
+            }
+
             if (Input.GetKeyDown(KeyCode.C))
             {
                 SelectCharacter();
@@ -197,6 +201,12 @@ namespace Game.Levels.Prologue
             return textGrid[x, y];
         }
 
+        private void SelectDefaultName()
+        {
+            PlayAudio(SelectionSounds.Default);
+            username.text = "Mason";
+        }
+
         void SelectCharacter()
         {
             if (username.text.Length < MAX_NAME_LENGTH)
@@ -254,19 +264,9 @@ namespace Game.Levels.Prologue
             timePassedSinceKey += Time.deltaTime;
         }
 
-        void InitializeSounds()
-        {
-            selectionSounds = new Dictionary<SelectionSounds, int> {
-                { SelectionSounds.Select, 0 },
-                { SelectionSounds.CannotSelect, 1 },
-                { SelectionSounds.Move, 2 },
-                { SelectionSounds.Confirm, 3 }
-            };
-        }
-
         void PlayAudio(SelectionSounds soundToPlay)
         {
-            audioSource.clip = clip[selectionSounds[soundToPlay]];
+            audioSource.clip = clip[(int)soundToPlay];
             audioSource.Play();
         }
 
