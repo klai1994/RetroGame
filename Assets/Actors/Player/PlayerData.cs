@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Game.Actors
 {
+    // TODO make static
     public class PlayerData : MonoBehaviour
     {
 

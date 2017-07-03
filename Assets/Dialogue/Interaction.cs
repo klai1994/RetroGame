@@ -21,7 +21,7 @@ namespace Game.Dialogue
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.C) && GetDistanceToPlayer() < interactionDistance)
+            if (Input.GetKeyDown(KeyCode.C) && GetDistanceToPlayer() < interactionDistance && !player.StartedDialogue)
             {
                 Interact();
             }
