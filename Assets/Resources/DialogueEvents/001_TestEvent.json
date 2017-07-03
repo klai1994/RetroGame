@@ -2,27 +2,33 @@
   "eventInfoList": [
     {
       "characterPortrait": "",
-      "dialogueText": "You there! @, are you not?"
+      "dialogueText": "You there! @, are you not?",
+      "voice":  "blob"
     },
     {
       "characterPortrait": "",
-      "dialogueText": "Hmm? Who am I? Well, I'm just Steve."
+      "dialogueText": "Hmm? Who am I? Well, I'm just Steve.",
+      "voice": "blob"
     },
     {
       "characterPortrait": "blob",
-      "dialogueText": "So, it appears we are in a nondescript room filled with your dopplegangers..."
+      "dialogueText": "So, it appears we are in a nondescript room filled with your dopplegangers...",
+      "voice": "blob"
     },
     {
       "characterPortrait": "blob",
-      "dialogueText": "Hm. What a conundrum."
+      "dialogueText": "Hm. What a conundrum.",
+      "voice": "blob"
     },
     {
       "characterPortrait": "blob",
-      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob and"
+      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob and cannot do things",
+      "voice": "blob"
     },
     {
       "characterPortrait": "blob",
-      "dialogueText": "cannot do things that non-amorphous blobs such as yourself can. But I'm with you in spirit!"
+      "dialogueText": "that non-amorphous blobs such as yourself can. But I'm with you in spirit!",
+      "voice": "blob"
     }
   ]
 }

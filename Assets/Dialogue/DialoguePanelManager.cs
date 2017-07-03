@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 using UnityEngine.UI;
 using System;
@@ -15,13 +14,21 @@ namespace Game.Dialogue
     /// </summary>
     public class DialoguePanelManager : LetterboxManager
     {
-        private Sprite[] dialoguePortraits;
+        Sprite[] dialoguePortraits;
         [SerializeField] GameObject dialoguePanel;
         [SerializeField] Image characterPortrait;
 
+        AudioClip[] voices;
+        AudioClip currentVoice;
+        AudioSource audioSource;
+
+        public int voiceFrequency = 3;
+
         void Awake()
         {
+            audioSource = GetComponent<AudioSource>();
             dialoguePortraits = Resources.LoadAll<Sprite>("DialoguePortraits");
+            voices = Resources.LoadAll<AudioClip>("Voices");
         }
 
         public override void ConfigurePanel(DialogueEventHolder dialogueEventHolder, int dialogueStage)
@@ -44,6 +51,17 @@ namespace Game.Dialogue
                     characterPortrait.gameObject.SetActive(false);
                 }
 
+                string voice = dialogueEventHolder.eventInfoList[dialogueStage].voice;
+                if (voice != "")
+                {
+                    currentVoice = QueryForVoice(voice);
+                    audioSource.clip = currentVoice;
+                }
+                else
+                {
+                    currentVoice = null;
+                }
+
                 StartCoroutine(AnimateText(dialogueEventHolder.eventInfoList[dialogueStage].DialogueText));
             }
             else
@@ -55,7 +73,6 @@ namespace Game.Dialogue
 
         private Sprite QueryForPortrait(string portraitFileName)
         {
-
             foreach (Sprite portrait in dialoguePortraits)
             {
                 if (portrait.name == portraitFileName)
@@ -66,9 +83,22 @@ namespace Game.Dialogue
             throw new Exception("The specified portrait filename was not found.");
         }
 
+        private AudioClip QueryForVoice(string voiceFileName)
+        {
+            foreach (AudioClip voice in voices)
+            {
+                if (voice.name == voiceFileName)
+                {
+                    return voice;
+                }
+            }
+            throw new Exception("The specified voice filename was not found.");
+        }
+
         public override IEnumerator AnimateText(string text)
         {
             this.letterboxText.text = "";
+            float rand;
 
             foreach (char letter in text)
             {
@@ -77,6 +107,15 @@ namespace Game.Dialogue
                     break;
                 }
                 this.letterboxText.text += letter;
+
+                if (currentVoice != null)
+                {
+                    rand = UnityEngine.Random.Range(0, voiceFrequency);
+                    if (rand == 0)
+                    {
+                        audioSource.Play();
+                    }
+                }
 
                 yield return new WaitForSeconds(textSpeed);
             }

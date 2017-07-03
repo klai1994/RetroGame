@@ -2,7 +2,8 @@
   "eventInfoList": [
     {
       "characterPortrait": "",
-      "dialogueText": "Steve is with you in spirit."
+      "dialogueText": "Steve is with you in spirit.",
+      "voice": "default"
     }
   ]
 }

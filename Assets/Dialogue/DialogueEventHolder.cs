@@ -14,6 +14,7 @@ namespace Game.Dialogue
     {
         public string characterPortrait;
         public string dialogueText;
+        public string voice;
 
         public string DialogueText
         {
