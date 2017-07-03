@@ -1,11 +1,15 @@
-﻿    using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Actors.Overworld
+namespace Game.Actors
 {
-    public class NPC : Actor, IDirectable
+    public class NPC : MonoBehaviour
     {
+        [SerializeField] float movementSpeed = 1f;
+        Rigidbody2D rbody;
+        Animator animator;
+
         private const string ANIM_IS_WALKING = "isWalking";
         private const string MOVEMENT_X = "movement_x";
         private const string MOVEMENT_Y = "movement_y";
@@ -30,6 +34,9 @@ namespace Game.Actors.Overworld
 
         void Start()
         {
+            rbody = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+
             // Starts the NPC facing down
             animator.SetFloat(MOVEMENT_Y, -1);
 
@@ -44,7 +51,6 @@ namespace Game.Actors.Overworld
             {
                 GetDistanceToTarget();
                 MoveToTarget();
-                CheckDirectionFacing();
             }
         }
 
@@ -87,27 +93,6 @@ namespace Game.Actors.Overworld
         public void StopChase()
         {
             this.target = gameObject;
-        }
-
-        // Checks based on movement
-        public override void CheckDirectionFacing()
-        {
-            if (rbody.velocity.x < -DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Left;
-            }
-            else if (rbody.velocity.x > DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Right;
-            }
-            if (rbody.velocity.y < -DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Down;
-            }
-            else if (rbody.velocity.y > DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Up;
-            }
         }
     }
 }

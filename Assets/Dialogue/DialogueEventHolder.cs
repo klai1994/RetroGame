@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Game.Actors.Overworld;
 namespace Game.Dialogue
 {
     public class DialogueEventHolder
@@ -20,7 +19,7 @@ namespace Game.Dialogue
         {
             get
             {
-                return dialogueText.Replace("@", Player.PlayerName);
+                return dialogueText.Replace("@", Game.Actors.Player.PlayerName);
             }
         }
     }

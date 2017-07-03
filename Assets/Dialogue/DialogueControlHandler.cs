@@ -34,13 +34,6 @@ namespace Game.Dialogue
         {
             if (currentEvent == null)
             {
-                // TODO progress dialogue/reach repeatable dialogue
-                if (DialogueEventAtlas.triggeredDialogue.Contains(dialogueScene))
-                {
-                    return;
-                }
-                DialogueEventAtlas.triggeredDialogue.Add(dialogueScene);
-
                 int sceneIndex = (int)dialogueScene;
                 currentEvent = JsonReader.ConvertJsonToDialogueEvent(sceneIndex);
 

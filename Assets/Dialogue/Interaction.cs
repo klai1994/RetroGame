@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using Game.Dialogue;
+using Game.Actors;
 
-namespace Game.Actors.Overworld
+namespace Game.Dialogue
 {
     public class Interaction : MonoBehaviour
     {
 
-        [SerializeField] DialogueEventName eventName;
+        [SerializeField] DialogueEventName[] eventNames;
+        [SerializeField] float interactionDistance = 2.5f;
+        int interactionIndex = 0;
         Player player;
 
         // Use this for initialization
@@ -18,18 +20,36 @@ namespace Game.Actors.Overworld
             player = FindObjectOfType<Player>();
         }
 
-        // Update is called once per frame
         void Update()
         {
-            if (player.IsInDialogue == true)
+            if (Input.GetKeyDown(KeyCode.C) && GetDistanceToPlayer() < interactionDistance)
             {
-                DialogueControlHandler.InitializeEvent(eventName);
-
-                if (DialogueControlHandler.currentEvent == null)
-                {
-                    player.IsInDialogue = false;
-                }
+                Interact();
             }
         }
+
+        void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, interactionDistance);    
+        }
+
+        float GetDistanceToPlayer ()
+        {
+            return (player.transform.position - transform.position).magnitude;
+        }
+
+        public void Interact()
+        {
+            player.StartedDialogue = true;
+            player.FaceDirection(transform.position);
+
+            DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
+
+            if (interactionIndex < eventNames.Length - 1)
+            {
+                interactionIndex++;
+            }
+        }
+
     }
 }

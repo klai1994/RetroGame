@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Actors.Overworld
+namespace Game.Actors
 {
-    public class Player : Actor, IDirectable
+    public class Player : MonoBehaviour
     {
+        [SerializeField] float movementSpeed = 1f;
+        Rigidbody2D rbody;
+        Animator animator;
+
         private const string HORIZONTAL_AXIS = "Horizontal";
         private const string VERTICAL_AXIS = "Vertical";
         private const string ANIM_IS_WALKING = "isWalking";
@@ -26,60 +30,47 @@ namespace Game.Actors.Overworld
                 playerName = value;
             }
         }
-        bool isInDialogue;
-        public bool IsInDialogue
+        bool startedDialogue;
+        public bool StartedDialogue
         {
             get
             {
-                return isInDialogue;
+                return startedDialogue;
             }
 
             set
             {
-                isInDialogue = value;
+                startedDialogue = value;
             }
         }
 
-        [SerializeField] GameObject[] directionTriggers;
-        Dictionary<Directions, GameObject> directionTriggerMap;
-
-
         void Start()
         {
+            rbody = GetComponent<Rigidbody2D>();
+            animator = GetComponent<Animator>();
+
             // Starts the player facing down
             animator.SetFloat(INPUT_Y, -1);
 
-            IsInDialogue = false;
-            directionTriggerMap = new Dictionary<Directions, GameObject>
-            {
-                {   Directions.Left, directionTriggers[0]  },
-                {   Directions.Right, directionTriggers[1] },
-                {   Directions.Up, directionTriggers[2]    },
-                {   Directions.Down, directionTriggers[3]  },
-            };
+            startedDialogue = false;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (!IsInDialogue)
+            if (!StartedDialogue)
             {
-                TryStartDialogue();
                 MovePlayer();
-                CheckDirectionFacing();
             }
 
             else
             {
-                animator.SetBool(ANIM_IS_WALKING, false);
-            }
-        }
+                if (Game.Dialogue.DialogueControlHandler.currentEvent == null)
+                {
+                    startedDialogue = false;
+                }
 
-        private void TryStartDialogue()
-        {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                directionTriggerMap[direction].SetActive(true);
+                animator.SetBool(ANIM_IS_WALKING, false);
             }
         }
 
@@ -101,24 +92,12 @@ namespace Game.Actors.Overworld
             }
         }
 
-        public override void CheckDirectionFacing()
+        public void FaceDirection(Vector3 target)
         {
-            if (Input.GetAxisRaw(HORIZONTAL_AXIS) < -DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Left;
-            }
-            else if (Input.GetAxisRaw(HORIZONTAL_AXIS) > DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Right;
-            }
-            else if (Input.GetAxisRaw(VERTICAL_AXIS) < -DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Down;
-            }
-            else if (Input.GetAxisRaw(VERTICAL_AXIS) > DIRECTION_THRESHOLD)
-            {
-                direction = Directions.Up;
-            }
+            Vector3 direction = (target - transform.position).normalized;
+
+            animator.SetFloat(INPUT_X, direction.x);
+            animator.SetFloat(INPUT_Y, direction.y);
         }
     }
 }

@@ -18,7 +18,11 @@
     },
     {
       "characterPortrait": "steve",
-      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob. But I'm with you in spirit!"
+      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob and"
+    },
+    {
+      "characterPortrait": "steve",
+      "dialogueText": "cannot do things that non-amorphous blobs such as yourself can. But I'm with you in spirit!"
     }
   ]
 }

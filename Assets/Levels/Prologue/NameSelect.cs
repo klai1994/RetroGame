@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-using Game.Actors.Overworld;
+using Game.Actors;
 namespace Game.Levels.Prologue
 {
     public class NameSelect : MonoBehaviour
