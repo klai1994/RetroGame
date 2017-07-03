@@ -19,7 +19,7 @@ namespace Game.Dialogue
         {
             get
             {
-                return dialogueText.Replace("@", Game.Actors.Player.PlayerName);
+                return dialogueText.Replace("@", Game.Actors.PlayerData.PlayerName);
             }
         }
     }

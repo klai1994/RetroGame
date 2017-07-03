@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Actors
 {
-    public class NPC : MonoBehaviour
+    public class NPCAvatar : MonoBehaviour
     {
         [SerializeField] float movementSpeed = 1f;
         Rigidbody2D rbody;
@@ -41,7 +41,7 @@ namespace Game.Actors
             animator.SetFloat(MOVEMENT_Y, -1);
 
             // TODO delete after demo
-            ChaseTarget(FindObjectOfType<Player>().gameObject);    
+            ChaseTarget(FindObjectOfType<PlayerAvatar>().gameObject);    
         }
 
         // Update is called once per frame

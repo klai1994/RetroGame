@@ -8,16 +8,15 @@ namespace Game.Dialogue
 {
     public class Interaction : MonoBehaviour
     {
-
         [SerializeField] DialogueEventName[] eventNames;
         [SerializeField] float interactionDistance = 2.5f;
         int interactionIndex = 0;
-        Player player;
+        PlayerAvatar player;
 
         // Use this for initialization
         void Start()
         {
-            player = FindObjectOfType<Player>();
+            player = FindObjectOfType<PlayerAvatar>();
         }
 
         void Update()

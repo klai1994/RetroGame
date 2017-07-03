@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Game.Actors
 {
-    public class Player : MonoBehaviour
+    public class PlayerAvatar : MonoBehaviour
     {
         [SerializeField] float movementSpeed = 1f;
         Rigidbody2D rbody;
@@ -16,20 +16,7 @@ namespace Game.Actors
         private const string ANIM_IS_WALKING = "isWalking";
         private const string INPUT_Y = "input_y";
         private const string INPUT_X = "input_x";
-
-        static string playerName;
-        public static string PlayerName
-        {
-            get
-            {
-                return playerName;
-            }
-
-            set
-            {
-                playerName = value;
-            }
-        }
+      
         bool startedDialogue;
         public bool StartedDialogue
         {
@@ -51,7 +38,6 @@ namespace Game.Actors
 
             // Starts the player facing down
             animator.SetFloat(INPUT_Y, -1);
-
             startedDialogue = false;
         }
 
