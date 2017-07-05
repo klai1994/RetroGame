@@ -1,73 +1,85 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-using Game.Dialogue;
-using System;
 using UnityEngine.SceneManagement;
 
-namespace Game.Levels.Prologue
+using Game.Dialogue;
+using Game.Audio;
+
+namespace Game.Levels
 {
     public class PrologueManager : MonoBehaviour
     {
         [SerializeField] Image fadePanel;
         [SerializeField] LetterboxManager letterBoxManager;
+        NameSelect nameselect;
 
         const int INTRO_SCENE_ID = 1;
         const float FADE_INCREMENT = 0.2f;
         const float FADE_START_DELAY = 5f;
+        const float MUSIC_FADE = 0.1f;
+
         bool sceneStarted = false;
+        float alphaFade;
+
+        void Start()
+        {
+            nameselect = FindObjectOfType<NameSelect>();
+            nameselect.broadcastNameSelect += StartPrologue;
+        }
 
         void Update()
         {
             if (sceneStarted == true && DialogueControlHandler.currentEvent == null)
             {
-                StartCoroutine(FadeScreen(sceneStarted));
-                
+                StartCoroutine(FadeOut());
+
                 // Prevents coroutine from being called multiple times
                 sceneStarted = !sceneStarted;
             }
         }
-
-        // Prevents calling object from having to be responsible for coroutine
-        public void StartFade(bool prologueCompleted)
+        
+        private void StartPrologue()
         {
-            StartCoroutine(FadeScreen(prologueCompleted));
+            StartCoroutine(FadeIn());
         }
 
-        public IEnumerator FadeScreen(bool prologueCompleted)
+        // Delays fade, then fades in panel and music, finally starting introduction
+        public IEnumerator FadeIn()
         {
-            float alphaFade;
+            yield return new WaitForSeconds(FADE_START_DELAY);
+            MusicManager.Instance().PlayMusic(MusicName.LightIntro, MUSIC_FADE);
+            letterBoxManager.gameObject.SetActive(true);
+            alphaFade = 1;
 
-            if (prologueCompleted)
+            while (fadePanel.color.a > 0)
             {
-                alphaFade = 0;
-                while (fadePanel.color.a < 1)
-                {
-                    alphaFade += FADE_INCREMENT;
-                    fadePanel.color = new Color(0, 0, 0, alphaFade);
-                    yield return new WaitForSeconds(1f);
-                }
-                yield return new WaitForSeconds(FADE_START_DELAY);
-                SceneManager.LoadScene(INTRO_SCENE_ID);
+                alphaFade -= FADE_INCREMENT;
+                fadePanel.color = new Color(0, 0, 0, alphaFade);
+                yield return new WaitForSeconds(1f);
+
             }
 
-            else
-            {
-                yield return new WaitForSeconds(FADE_START_DELAY);
-                letterBoxManager.gameObject.SetActive(true);
-
-                alphaFade = 1;
-                while (fadePanel.color.a > 0)
-                {
-                    alphaFade -= FADE_INCREMENT;
-                    fadePanel.color = new Color(0, 0, 0, alphaFade);
-                    yield return new WaitForSeconds(1f);
-                }
-                DialogueControlHandler.InitializeEvent(DialogueEventName.Prologue);
-                sceneStarted = true;
-            }
+            DialogueControlHandler.InitializeEvent(DialogueEventName.Prologue);
+            sceneStarted = true;
         }
+
+        // Fades music, then panel, delays scene load then loads scene
+        public IEnumerator FadeOut()
+        {
+            MusicManager.Instance().StopMusic(MUSIC_FADE);
+            alphaFade = 0;
+
+            while (fadePanel.color.a < 1)
+            {
+                alphaFade += FADE_INCREMENT;
+                fadePanel.color = new Color(0, 0, 0, alphaFade);
+                yield return new WaitForSeconds(1f);
+            }
+
+            yield return new WaitForSeconds(FADE_START_DELAY);
+            SceneManager.LoadScene(INTRO_SCENE_ID);
+        }
+
     }
 }

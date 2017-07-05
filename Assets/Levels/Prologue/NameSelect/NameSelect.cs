@@ -4,12 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Game.Actors;
-namespace Game.Levels.Prologue
+namespace Game.Levels
 {
     public class NameSelect : MonoBehaviour
     {
-        [SerializeField] Text username;
-        PrologueManager prologueManager;
+        public delegate void BroadcastNameSelected();
+        public event BroadcastNameSelected broadcastNameSelect;
+
+        [SerializeField] Text userNameSelection;
+        [SerializeField] string defaultNameSelection;
 
         [SerializeField] Text letterPrefab;
         [SerializeField] GameObject letterGrid;
@@ -44,8 +47,6 @@ namespace Game.Levels.Prologue
         // Use this for initialization
         void Start()
         {
-            prologueManager = FindObjectOfType<PrologueManager>();
-
             textGrid = new Text[LETTER_GRID_X, LETTER_GRID_Y];
             PopulateLetterGrid();
             selectedLetter = textGrid[0, 0];
@@ -204,16 +205,16 @@ namespace Game.Levels.Prologue
         private void SelectDefaultName()
         {
             PlayAudio(SelectionSounds.Default);
-            username.text = "Mason";
+            userNameSelection.text = defaultNameSelection;
         }
 
         void SelectCharacter()
         {
-            if (username.text.Length < MAX_NAME_LENGTH)
+            if (userNameSelection.text.Length < MAX_NAME_LENGTH)
             {
                 PlayAudio(SelectionSounds.Select);
 
-                username.text += selectedLetter.text;
+                userNameSelection.text += selectedLetter.text;
                 arrowAnimator.SetTrigger(SELECT_TRIGGER);
             }
             else
@@ -225,9 +226,9 @@ namespace Game.Levels.Prologue
         void BackSpace()
         {
             PlayAudio(SelectionSounds.CannotSelect);
-            if (username.text != "")
+            if (userNameSelection.text != "")
             {
-                username.text = username.text.Substring(0, username.text.Length - 1);
+                userNameSelection.text = userNameSelection.text.Substring(0, userNameSelection.text.Length - 1);
             }
         }
 
@@ -243,19 +244,19 @@ namespace Game.Levels.Prologue
 
         void ConfirmNameSelection()
         {
-            string selectedName = username.text.Trim();
+            string selectedName = userNameSelection.text.Trim();
             if (selectedName == "")
             {
                 PlayAudio(SelectionSounds.CannotSelect);
-                username.text = "";
+                userNameSelection.text = "";
                 return;
             }
 
             PlayerData.PlayerName = selectedName;
             PlayAudio(SelectionSounds.Confirm);
 
-            prologueManager.StartFade(false);
-            gameObject.transform.SetParent(prologueManager.transform);
+            broadcastNameSelect();
+            gameObject.transform.SetParent(Camera.main.transform);
             Destroy(this);
         }
 

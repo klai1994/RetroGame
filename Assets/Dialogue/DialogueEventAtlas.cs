@@ -4,6 +4,7 @@ using System.Collections.Generic;
 namespace Game.Dialogue
 {
     // Values MUST correlate directly with files found in Resources/DialogueEvents
+    // TODO populate atlas using Dictionary/Set instead
     public enum DialogueEventName
     {
         Prologue = 0,

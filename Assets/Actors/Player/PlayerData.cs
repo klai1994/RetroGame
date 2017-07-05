@@ -1,13 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-namespace Game.Actors
+﻿namespace Game.Actors
 {
-    // TODO make static
-    public class PlayerData : MonoBehaviour
+    public static class PlayerData
     {
-
+        
         static string playerName;
         public static string PlayerName
         {
