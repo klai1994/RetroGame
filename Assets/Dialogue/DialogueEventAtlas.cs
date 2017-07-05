@@ -7,8 +7,13 @@ namespace Game.Dialogue
     public enum DialogueEventName
     {
         Prologue = 0,
-        TestEvent1 = 1,
-        TestEvent2 = 2,
-        TestEvent3 = 3
+
+        #region Sandbox Events
+        SandboxEvent1 = 1,
+        SandboxEvent2 = 2,
+        SandboxEvent3 = 3,
+        SandboxEvent4 = 4,
+        SandboxEvent5 = 5
+        #endregion
     }
 }

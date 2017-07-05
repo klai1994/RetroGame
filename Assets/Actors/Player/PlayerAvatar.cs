@@ -14,11 +14,12 @@ namespace Game.Actors
         private const string HORIZONTAL_AXIS = "Horizontal";
         private const string VERTICAL_AXIS = "Vertical";
         private const string ANIM_IS_WALKING = "isWalking";
+
         private const string INPUT_Y = "input_y";
         private const string INPUT_X = "input_x";
       
         bool startedDialogue;
-        public bool StartedDialogue
+        public bool InDialogue
         {
             get
             {
@@ -44,7 +45,7 @@ namespace Game.Actors
         // Update is called once per frame
         void Update()
         {
-            if (!StartedDialogue)
+            if (!InDialogue)
             {
                 MovePlayer();
             }
@@ -56,8 +57,13 @@ namespace Game.Actors
                     startedDialogue = false;
                 }
 
-                animator.SetBool(ANIM_IS_WALKING, false);
             }
+        }
+
+        private void SetAnimatorDirection(Vector2 direction)
+        {
+            animator.SetFloat(INPUT_X, direction.x);
+            animator.SetFloat(INPUT_Y, direction.y);
         }
 
         private void MovePlayer()
@@ -67,8 +73,7 @@ namespace Game.Actors
             if (moveDirection != Vector2.zero)
             {
                 animator.SetBool(ANIM_IS_WALKING, true);
-                animator.SetFloat(INPUT_X, moveDirection.x);
-                animator.SetFloat(INPUT_Y, moveDirection.y);
+                SetAnimatorDirection(moveDirection);
                 rbody.MovePosition(rbody.position + moveDirection * movementSpeed);
             }
             else
@@ -82,8 +87,8 @@ namespace Game.Actors
         {
             Vector3 direction = (target - transform.position).normalized;
 
-            animator.SetFloat(INPUT_X, direction.x);
-            animator.SetFloat(INPUT_Y, direction.y);
+            animator.SetBool(ANIM_IS_WALKING, false);
+            SetAnimatorDirection(direction);
         }
     }
 }

@@ -22,12 +22,12 @@
     },
     {
       "characterPortrait": "blob",
-      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob and cannot do things",
+      "dialogueText": "I will leave you to sort out this issue, for I am merely an amorphous blob and cannot do things that non-amorphous blobs such",
       "voice": "blob"
     },
     {
       "characterPortrait": "blob",
-      "dialogueText": "that non-amorphous blobs such as yourself can. But I'm with you in spirit!",
+      "dialogueText": "as yourself can. But I'm with you in spirit!",
       "voice": "blob"
     }
   ]

@@ -17,20 +17,9 @@ namespace Game.Actors
         [SerializeField] float maxChaseDistance = 5;
         [SerializeField] float stoppingDistance = 0.1f;
 
-        private float distanceToTarget;
-        private GameObject target;
-        public GameObject Target
-        {
-            get
-            {
-                return target;
-            }
-
-            set
-            {
-                target = value;
-            }
-        }
+        [SerializeField] bool inPursuit;
+        public GameObject target;
+        
 
         void Start()
         {
@@ -40,8 +29,10 @@ namespace Game.Actors
             // Starts the NPC facing down
             animator.SetFloat(MOVEMENT_Y, -1);
 
-            // TODO delete after demo
-            ChaseTarget(FindObjectOfType<PlayerAvatar>().gameObject);    
+            if (inPursuit)
+            {
+                ChaseTarget(target);
+            }
         }
 
         // Update is called once per frame
@@ -56,9 +47,17 @@ namespace Game.Actors
 
         private void MoveToTarget()
         {
-            if (distanceToTarget < maxChaseDistance && distanceToTarget > stoppingDistance)
+            if (GetDistanceToTarget() < maxChaseDistance && GetDistanceToTarget() > stoppingDistance)
             {
-                MoveNPC();
+                rbody.velocity = (target.transform.position - transform.position) * movementSpeed;
+                Vector2 moveDirection = rbody.velocity;
+
+                if (moveDirection != Vector2.zero)
+                {
+                    animator.SetBool(ANIM_IS_WALKING, true);
+                    animator.SetFloat(MOVEMENT_X, moveDirection.x);
+                    animator.SetFloat(MOVEMENT_Y, moveDirection.y);
+                }
             }
             else
             {
@@ -67,22 +66,9 @@ namespace Game.Actors
             }
         }
 
-        private void MoveNPC()
+        private float GetDistanceToTarget()
         {
-            rbody.velocity = (Target.transform.position - transform.position) * movementSpeed;
-            Vector2 moveDirection = rbody.velocity;
-
-            if (moveDirection != Vector2.zero)
-            {
-                animator.SetBool(ANIM_IS_WALKING, true);
-                animator.SetFloat(MOVEMENT_X, moveDirection.x);
-                animator.SetFloat(MOVEMENT_Y, moveDirection.y);
-            }
-        }
-
-        private void GetDistanceToTarget()
-        {
-            distanceToTarget = Vector2.Distance(Target.transform.position, transform.position);
+            return Vector2.Distance(target.transform.position, transform.position);
         }
 
         public void ChaseTarget(GameObject target)
