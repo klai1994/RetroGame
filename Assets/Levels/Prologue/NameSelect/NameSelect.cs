@@ -59,9 +59,35 @@ namespace Game.Levels
         void Update()
         {
             DelayArrow();
+            ProcessArrowInput();
+            ProcessCommandInput();
+        }
 
-            #region Move Arrow
+        private void ProcessCommandInput()
+        {
+            if (Input.GetKeyDown(KeyCode.V))
+            {
+                SelectDefaultName();
+            }
 
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                SelectCharacter();
+            }
+
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                BackSpace();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                ConfirmNameSelection();
+            }
+        }
+
+        private void ProcessArrowInput()
+        {
             // Y values are reversed because the grid opens downwards
             if (timePassedSinceKey > KEY_DELAY)
             {
@@ -123,33 +149,6 @@ namespace Game.Levels
                     MoveArrow();
                 }
             }
-
-            #endregion
-
-            #region Commands
-
-            if (Input.GetKeyDown(KeyCode.V))
-            {
-                SelectDefaultName();
-            }
-
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                SelectCharacter();
-            }
-
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                BackSpace();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                ConfirmNameSelection();
-            }
-
-            #endregion
-
         }
 
         void PopulateLetterGrid()

@@ -7,7 +7,12 @@
     },
     {
       "characterPortrait": "",
-      "dialogueText": "Super intently.",
+      "dialogueText": "Like, really intently.",
+      "voice": "default"
+    },
+	{
+      "characterPortrait": "",
+      "dialogueText": "Super duper intently.",
       "voice": "default"
     },
     {
