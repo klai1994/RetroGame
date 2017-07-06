@@ -11,7 +11,7 @@ namespace Game.Dialogue
     [RequireComponent(typeof(LetterboxManager))]
     public class DialogueControlHandler : MonoBehaviour
     {
-        public static DialogueEventHolder currentEvent = null;
+        public static DialogueEventHolder currentEvent;
         private static LetterboxManager manager;
         private static int dialogueStage;
 
@@ -34,7 +34,7 @@ namespace Game.Dialogue
         {
             if (currentEvent == null)
             {
-                int sceneIndex = (int)dialogueScene;
+                int sceneIndex = DialogueEventAtlas.Atlas()[dialogueScene.ToString()];
                 currentEvent = JsonReader.ConvertJsonToDialogueEvent(sceneIndex);
 
                 dialogueStage = 0;

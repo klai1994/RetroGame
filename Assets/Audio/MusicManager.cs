@@ -10,7 +10,7 @@ namespace Game.Audio
         float maxVolume = 0.5f;
 
         static MusicManager musicManager;
-        AudioClip[] musicList;
+        Dictionary<string, AudioClip> musicAtlas;
         AudioSource audioSource;
 
         public static MusicManager Instance()
@@ -31,7 +31,14 @@ namespace Game.Audio
         void Start()
         {
             audioSource = GetComponent<AudioSource>();
-            musicList = Resources.LoadAll<AudioClip>("Music");
+
+            AudioClip[] musicList = Resources.LoadAll<AudioClip>("Music");
+            musicAtlas = new Dictionary<string, AudioClip>();
+
+            for (int i = 0; i < musicList.Length; i++)
+            {
+                musicAtlas.Add(musicList[i].name, musicList[i]);
+            }
         }
 
         public void SetVolume(float volume)
@@ -42,7 +49,7 @@ namespace Game.Audio
         // To start music without fade simply set fadeSpeed to maxVolume
         public void PlayMusic(MusicName musicName, float fadeSpeed)
         {
-            audioSource.clip = musicList[(int)musicName];
+            audioSource.clip = musicAtlas[musicName.ToString()];
             SetVolume(0);
             audioSource.Play();
             StartCoroutine(FadeInMusic(fadeSpeed));
@@ -88,5 +95,5 @@ namespace Game.Audio
 
 public enum MusicName
 {
-    LightIntro = 0
+    LightIntro
 }
