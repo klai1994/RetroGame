@@ -12,6 +12,8 @@ namespace Game.Dialogue
         protected bool textSegmentEnded = false;
 
         public float textSpeed = 0.5f;
+        public delegate void TextSegmentEnded();
+        public TextSegmentEnded notifyTextSegmentEnded;
 
         public bool GetTextSegmentEnded()
         {

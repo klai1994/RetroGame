@@ -48,7 +48,6 @@ namespace Game.Levels
         public IEnumerator FadeIn()
         {
             yield return new WaitForSeconds(FADE_START_DELAY);
-            MusicManager.Instance().PlayMusic(MusicName.LightIntro, MUSIC_FADE);
             letterBoxManager.gameObject.SetActive(true);
             alphaFade = 1;
 
@@ -67,7 +66,6 @@ namespace Game.Levels
         // Fades music, then panel, delays scene load then loads scene
         public IEnumerator FadeOut()
         {
-            MusicManager.Instance().StopMusic(MUSIC_FADE);
             alphaFade = 0;
 
             while (fadePanel.color.a < 1)

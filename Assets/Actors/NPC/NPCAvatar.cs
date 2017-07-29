@@ -16,10 +16,8 @@ namespace Game.Actors
 
         [SerializeField] float maxChaseDistance = 5;
         [SerializeField] float stoppingDistance = 0.1f;
-
-        [SerializeField] bool inPursuit;
         public GameObject target;
-        
+        public bool isIdle = false;
 
         void Start()
         {
@@ -28,11 +26,9 @@ namespace Game.Actors
 
             // Starts the NPC facing down
             animator.SetFloat(MOVEMENT_Y, -1);
+            ChaseTarget(target);
 
-            if (inPursuit)
-            {
-                ChaseTarget(target);
-            }
+            StartCoroutine(IdleActions());
         }
 
         // Update is called once per frame
@@ -43,6 +39,19 @@ namespace Game.Actors
                 GetDistanceToTarget();
                 MoveToTarget();
             }
+        }
+
+        private IEnumerator IdleActions()
+        {
+            while (isIdle) {
+                animator.SetBool(ANIM_IS_WALKING, true);
+                animator.SetFloat(MOVEMENT_X, Random.Range(-1, 1));
+                animator.SetFloat(MOVEMENT_Y, Random.Range(-1, 1));
+                yield return new WaitForSeconds(Random.Range(0, 3));
+            }
+
+            animator.SetBool(ANIM_IS_WALKING, false);
+            yield return null;
         }
 
         private void MoveToTarget()
