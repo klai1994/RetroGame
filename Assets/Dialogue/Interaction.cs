@@ -53,10 +53,6 @@ namespace Game.Dialogue
             {
                 FacePlayer();
             }
-            if (GetComponent<NPCAvatar>())
-            {
-                GetComponent<NPCAvatar>().isIdle = false;
-            }
 
             DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
 

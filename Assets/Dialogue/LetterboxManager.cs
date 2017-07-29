@@ -10,10 +10,7 @@ namespace Game.Dialogue
         [SerializeField] protected Text letterboxText;
         [SerializeField] protected Font font;
         protected bool textSegmentEnded = false;
-
         public float textSpeed = 0.5f;
-        public delegate void TextSegmentEnded();
-        public TextSegmentEnded notifyTextSegmentEnded;
 
         public bool GetTextSegmentEnded()
         {

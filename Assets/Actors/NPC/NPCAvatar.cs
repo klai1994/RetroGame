@@ -16,19 +16,21 @@ namespace Game.Actors
 
         [SerializeField] float maxChaseDistance = 5;
         [SerializeField] float stoppingDistance = 0.1f;
-        public GameObject target;
-        public bool isIdle = false;
+        [SerializeField] GameObject target;
+
+        [SerializeField] bool isIdle = false;
+        [SerializeField] float idleTurnRate = 3f;
 
         void Start()
         {
             rbody = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
+            animator.SetFloat(MOVEMENT_Y, -1f);      // Starts the NPC facing down
 
-            // Starts the NPC facing down
-            animator.SetFloat(MOVEMENT_Y, -1);
-            ChaseTarget(target);
-
-            StartCoroutine(IdleActions());
+            if (isIdle)
+            {
+                StartCoroutine(IdleActions());
+            }
         }
 
         // Update is called once per frame
@@ -36,27 +38,34 @@ namespace Game.Actors
         {
             if (target)
             {
-                GetDistanceToTarget();
                 MoveToTarget();
             }
         }
 
         private IEnumerator IdleActions()
         {
-            while (isIdle) {
-                animator.SetBool(ANIM_IS_WALKING, true);
-                animator.SetFloat(MOVEMENT_X, Random.Range(-1, 1));
-                animator.SetFloat(MOVEMENT_Y, Random.Range(-1, 1));
-                yield return new WaitForSeconds(Random.Range(0, 3));
+            PlayerAvatar player = FindObjectOfType<PlayerAvatar>();
+
+            while (isIdle)
+            {
+                if (!player.InDialogue && rbody.velocity == Vector2.zero)
+                {
+                    animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
+                    animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
+                    yield return new WaitForSeconds(Random.Range(1, idleTurnRate));
+                }
+
+                else
+                {
+                    yield return new WaitForEndOfFrame();
+                }
             }
 
-            animator.SetBool(ANIM_IS_WALKING, false);
-            yield return null;
         }
 
         private void MoveToTarget()
         {
-            if (GetDistanceToTarget() < maxChaseDistance && GetDistanceToTarget() > stoppingDistance)
+            if (GetTargetDistance() < maxChaseDistance && GetTargetDistance() > stoppingDistance)
             {
                 rbody.velocity = (target.transform.position - transform.position) * movementSpeed;
                 Vector2 moveDirection = rbody.velocity;
@@ -75,7 +84,8 @@ namespace Game.Actors
             }
         }
 
-        private float GetDistanceToTarget()
+        // If target is too far away, delete this object
+        private float GetTargetDistance()
         {
             return Vector2.Distance(target.transform.position, transform.position);
         }

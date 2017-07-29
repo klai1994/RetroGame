@@ -38,7 +38,7 @@ namespace Game.Actors
             animator = GetComponent<Animator>();
 
             // Starts the player facing down
-            animator.SetFloat(INPUT_Y, -1);
+            animator.SetFloat(INPUT_Y, -1f);
             startedDialogue = false;
         }
 
@@ -56,7 +56,6 @@ namespace Game.Actors
                 {
                     startedDialogue = false;
                 }
-
             }
         }
 
