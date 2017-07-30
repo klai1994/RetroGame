@@ -12,6 +12,8 @@ namespace Game.Levels
     {
         [SerializeField] Image fadePanel;
         [SerializeField] LetterboxManager letterBoxManager;
+        [SerializeField] Actors.NPCAvatar officer;
+        [SerializeField] GameObject targetExit;
         NameSelect nameselect;
 
         const int INTRO_SCENE_ID = 1;
@@ -32,6 +34,8 @@ namespace Game.Levels
         {
             if (sceneStarted == true && DialogueControlHandler.currentEvent == null)
             {
+                // Cues officer to leave scene.
+                officer.SetTarget(targetExit);
                 StartCoroutine(FadeOut());
 
                 // Prevents coroutine from being called multiple times
@@ -63,9 +67,10 @@ namespace Game.Levels
             sceneStarted = true;
         }
 
-        // Fades music, then panel, delays scene load then loads scene
+        // Fades music, then panel, delays scene load then loads scene.
         public IEnumerator FadeOut()
         {
+            yield return new WaitForSeconds(FADE_START_DELAY);
             alphaFade = 0;
 
             while (fadePanel.color.a < 1)

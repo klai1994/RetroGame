@@ -88,12 +88,12 @@ namespace Game.Actors
             }
         }
 
-        public void ChaseTarget(GameObject target)
+        public void SetTarget(GameObject target)
         {
             this.target = target;
         }
 
-        public void StopChase()
+        public void Untarget()
         {
             this.target = gameObject;
         }
