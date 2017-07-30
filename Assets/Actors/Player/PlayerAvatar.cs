@@ -32,6 +32,19 @@ namespace Game.Actors
             }
         }
 
+        public delegate void PlayerInteracted();
+        public static event PlayerInteracted BroadcastPlayerInteraction;
+        static PlayerAvatar playerInstance;
+
+        public static PlayerAvatar GetPlayerInstance()
+        {
+            if (!playerInstance)
+            {
+                playerInstance = FindObjectOfType<PlayerAvatar>();
+            }
+            return playerInstance;
+        }
+
         void Start()
         {
             rbody = GetComponent<Rigidbody2D>();
@@ -45,6 +58,11 @@ namespace Game.Actors
         // Update is called once per frame
         void Update()
         {
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                BroadcastPlayerInteraction();
+            }
+
             if (!InDialogue)
             {
                 MovePlayer();

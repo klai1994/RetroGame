@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Actors
 {
-    public class NPCAvatar : MonoBehaviour
+    public class NPCAvatar : MonoBehaviour, IRangeable
     {
         [SerializeField] float movementSpeed = 1f;
         Rigidbody2D rbody;
@@ -44,11 +44,9 @@ namespace Game.Actors
 
         private IEnumerator IdleActions()
         {
-            PlayerAvatar player = FindObjectOfType<PlayerAvatar>();
-
             while (isIdle)
             {
-                if (!player.InDialogue && rbody.velocity == Vector2.zero)
+                if (!PlayerAvatar.GetPlayerInstance().InDialogue && rbody.velocity == Vector2.zero)
                 {
                     animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
                     animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
@@ -61,6 +59,12 @@ namespace Game.Actors
                 }
             }
 
+        }
+
+        public float GetTargetDistance()
+        {
+            // TODO delete this object after player is a certain distance away
+            return Vector2.Distance(target.transform.position, transform.position);
         }
 
         private void MoveToTarget()
@@ -82,12 +86,6 @@ namespace Game.Actors
                 rbody.velocity = Vector2.zero;  
                 animator.SetBool(ANIM_IS_WALKING, false);
             }
-        }
-
-        // If target is too far away, delete this object
-        private float GetTargetDistance()
-        {
-            return Vector2.Distance(target.transform.position, transform.position);
         }
 
         public void ChaseTarget(GameObject target)

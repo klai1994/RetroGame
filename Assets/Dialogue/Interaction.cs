@@ -6,7 +6,7 @@ using Game.Actors;
 
 namespace Game.Dialogue
 {
-    public class Interaction : MonoBehaviour
+    public class Interaction : MonoBehaviour, IRangeable
     {
         [SerializeField] DialogueEventName[] eventNames;
         [SerializeField] float interactionDistance = 2.5f;
@@ -20,20 +20,13 @@ namespace Game.Dialogue
         // Use this for initialization
         void Start()
         {
-            player = FindObjectOfType<PlayerAvatar>();
+            PlayerAvatar.BroadcastPlayerInteraction += Interact;
+            player = PlayerAvatar.GetPlayerInstance();
         }
 
-        void Update()
+        public float GetTargetDistance()
         {
-            if (Input.GetKeyDown(KeyCode.C) && GetDistanceToPlayer() < interactionDistance && !player.InDialogue)
-            {
-                Interact();
-            }
-        }
-
-        float GetDistanceToPlayer ()
-        {
-            return (player.transform.position - transform.position).magnitude;
+            return Vector2.Distance(player.transform.position, transform.position);
         }
 
         public void FacePlayer()
@@ -46,19 +39,22 @@ namespace Game.Dialogue
 
         public void Interact()
         {
-            player.InDialogue = true;
-            player.FaceDirection(transform.position);
-
-            if (animator = GetComponent<Animator>())
+            if (GetTargetDistance() < interactionDistance && !player.InDialogue)
             {
-                FacePlayer();
-            }
+                player.InDialogue = true;
+                player.FaceDirection(transform.position);
 
-            DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
+                if (animator = GetComponent<Animator>())
+                {
+                    FacePlayer();
+                }
 
-            if (interactionIndex < eventNames.Length - 1)
-            {
-                interactionIndex++;
+                DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
+
+                if (interactionIndex < eventNames.Length - 1)
+                {
+                    interactionIndex++;
+                }
             }
         }
 
