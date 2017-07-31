@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Game.Actors;
 namespace Game.Inventory
-{
+{ 
     public class Item : MonoBehaviour, IRangeable
     {
         Sprite itemIcon;

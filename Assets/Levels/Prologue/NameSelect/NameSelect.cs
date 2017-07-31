@@ -1,35 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-using Game.Actors;
 namespace Game.Levels
 {
     public class NameSelect : MonoBehaviour
     {
+        SelectionArrow selectionArrow;
+
         public delegate void BroadcastNameSelected();
         public event BroadcastNameSelected broadcastNameSelect;
 
         [SerializeField] Text userNameSelection;
         [SerializeField] string defaultNameSelection;
+        const int MAX_NAME_LENGTH = 13;
 
         [SerializeField] Text letterPrefab;
         [SerializeField] GameObject letterGrid;
         Text selectedLetter;
         Text[,] textGrid;
+        const int LETTER_GRID_X = 7;
+        const int LETTER_GRID_Y = 8;
 
         [SerializeField] GameObject arrowObject;
-        [SerializeField] Vector3 arrowOffset;
+        [SerializeField] Vector3 arrowOffset = new Vector3(-30f, -5f, 0);
         [SerializeField] Animator arrowAnimator;
         Vector2 arrowSelectIndex;
 
         float timePassedSinceKey = 0;
         const float KEY_DELAY = 0.2f;
-
-        const int LETTER_GRID_X = 7;
-        const int LETTER_GRID_Y = 8;
-        const int MAX_NAME_LENGTH = 13;
         const string SELECT_TRIGGER = "Select";
 
         [SerializeField] AudioClip[] clip;
@@ -251,7 +249,7 @@ namespace Game.Levels
                 return;
             }
 
-            PlayerData.PlayerName = selectedName;
+            Game.Actors.PlayerData.PlayerName = selectedName;
             PlayAudio(SelectionSounds.Confirm);
 
             broadcastNameSelect();

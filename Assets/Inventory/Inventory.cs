@@ -8,7 +8,7 @@ namespace Game.Inventory
     {
 
         private const int INVENTORY_SLOTS = 10;
-        private Item[] inventoryItems = new Item[INVENTORY_SLOTS];
+        //private Item[] inventoryItems = new Item[INVENTORY_SLOTS];
 
         // Use this for initialization
         void Start()
