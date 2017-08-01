@@ -27,7 +27,7 @@ namespace Game.Levels
         void Start()
         {
             nameselect = FindObjectOfType<NameSelect>();
-            nameselect.broadcastNameSelect += StartPrologue;
+            nameselect.NotifyNameSelected += StartPrologue;
         }
 
         void Update()

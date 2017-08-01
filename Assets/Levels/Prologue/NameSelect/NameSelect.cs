@@ -1,62 +1,37 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
+using Game.CameraUI;
 namespace Game.Levels
 {
+    [RequireComponent(typeof(SelectionCursor))]
     public class NameSelect : MonoBehaviour
     {
-        SelectionArrow selectionArrow;
+        [SerializeField] SelectionCursor selectionArrow;
 
         public delegate void BroadcastNameSelected();
-        public event BroadcastNameSelected broadcastNameSelect;
+        public event BroadcastNameSelected NotifyNameSelected;
 
         [SerializeField] Text userNameSelection;
-        [SerializeField] string defaultNameSelection;
+        const string DEFAULT_NAME = "Mason";
         const int MAX_NAME_LENGTH = 13;
 
+        Text selectedLetter;
         [SerializeField] Text letterPrefab;
         [SerializeField] GameObject letterGrid;
-        Text selectedLetter;
-        Text[,] textGrid;
+
         const int LETTER_GRID_X = 7;
         const int LETTER_GRID_Y = 8;
+        Text[,] textGrid = new Text[LETTER_GRID_X, LETTER_GRID_Y];
 
-        [SerializeField] GameObject arrowObject;
-        [SerializeField] Vector3 arrowOffset = new Vector3(-30f, -5f, 0);
-        [SerializeField] Animator arrowAnimator;
-        Vector2 arrowSelectIndex;
-
-        float timePassedSinceKey = 0;
-        const float KEY_DELAY = 0.2f;
-        const string SELECT_TRIGGER = "Select";
-
-        [SerializeField] AudioClip[] clip;
-        AudioSource audioSource;
-
-        enum SelectionSounds
-        {
-            Select = 0,
-            CannotSelect = 1,
-            Move = 2,
-            Confirm = 3,
-            Default = 4
-        }
-
-        // Use this for initialization
         void Start()
         {
-            textGrid = new Text[LETTER_GRID_X, LETTER_GRID_Y];
             PopulateLetterGrid();
             selectedLetter = textGrid[0, 0];
-
-            audioSource = GetComponent<AudioSource>();
-            arrowSelectIndex = Vector2.zero;
         }
 
-        // Update is called once per frame
         void Update()
         {
-            DelayArrow();
             ProcessArrowInput();
             ProcessCommandInput();
         }
@@ -87,17 +62,17 @@ namespace Game.Levels
         private void ProcessArrowInput()
         {
             // Y values are reversed because the grid opens downwards
-            if (timePassedSinceKey > KEY_DELAY)
+            if (selectionArrow.TimePassedSinceKey > SelectionCursor.KEY_DELAY)
             {
                 if (Input.GetKey(KeyCode.W))
                 {
-                    if (arrowSelectIndex.y > 0)
+                    if (selectionArrow.SelectIndex.y > 0)
                     {
-                        arrowSelectIndex.y -= 1;
+                        selectionArrow.SelectIndex.y -= 1;
                     }
                     else
                     {
-                        arrowSelectIndex.y = LETTER_GRID_Y - 1;
+                        selectionArrow.SelectIndex.y = LETTER_GRID_Y - 1;
                     }
 
                     MoveArrow();
@@ -105,13 +80,13 @@ namespace Game.Levels
 
                 else if (Input.GetKey(KeyCode.S))
                 {
-                    if (arrowSelectIndex.y < LETTER_GRID_Y - 1)
+                    if (selectionArrow.SelectIndex.y < LETTER_GRID_Y - 1)
                     {
-                        arrowSelectIndex.y += 1;
+                        selectionArrow.SelectIndex.y += 1;
                     }
                     else
                     {
-                        arrowSelectIndex.y = 0;
+                        selectionArrow.SelectIndex.y = 0;
                     }
 
                     MoveArrow();
@@ -119,14 +94,14 @@ namespace Game.Levels
 
                 else if (Input.GetKey(KeyCode.D))
                 {
-                    if (arrowSelectIndex.x < LETTER_GRID_X - 1)
+                    if (selectionArrow.SelectIndex.x < LETTER_GRID_X - 1)
                     {
-                        arrowSelectIndex.x += 1;
+                        selectionArrow.SelectIndex.x += 1;
                     }
                     else
                     {
-                        arrowSelectIndex.x = 0;
-                        if (arrowSelectIndex.y < LETTER_GRID_Y - 1) arrowSelectIndex.y += 1;
+                        selectionArrow.SelectIndex.x = 0;
+                        if (selectionArrow.SelectIndex.y < LETTER_GRID_Y - 1) selectionArrow.SelectIndex.y += 1;
                     }
 
                     MoveArrow();
@@ -134,14 +109,14 @@ namespace Game.Levels
 
                 else if (Input.GetKey(KeyCode.A))
                 {
-                    if (arrowSelectIndex.x > 0)
+                    if (selectionArrow.SelectIndex.x > 0)
                     {
-                        arrowSelectIndex.x -= 1;
+                        selectionArrow.SelectIndex.x -= 1;
                     }
                     else
                     {
-                        arrowSelectIndex.x = LETTER_GRID_X - 1;
-                        if (arrowSelectIndex.y > 0) arrowSelectIndex.y -= 1;
+                        selectionArrow.SelectIndex.x = LETTER_GRID_X - 1;
+                        if (selectionArrow.SelectIndex.y > 0) selectionArrow.SelectIndex.y -= 1;
                     }
 
                     MoveArrow();
@@ -201,28 +176,29 @@ namespace Game.Levels
 
         private void SelectDefaultName()
         {
-            PlayAudio(SelectionSounds.Default);
-            userNameSelection.text = defaultNameSelection;
+            selectionArrow.PlayAudio(SelectionCursor.CursorSounds.Default);
+            userNameSelection.text = DEFAULT_NAME;
         }
 
         void SelectCharacter()
         {
             if (userNameSelection.text.Length < MAX_NAME_LENGTH)
             {
-                PlayAudio(SelectionSounds.Select);
+                selectionArrow.PlayAudio(SelectionCursor.CursorSounds.Select);
 
                 userNameSelection.text += selectedLetter.text;
-                arrowAnimator.SetTrigger(SELECT_TRIGGER);
+                selectionArrow.GetAnimator().SetTrigger(SelectionCursor.SELECT_TRIGGER);
             }
             else
             {
-                PlayAudio(SelectionSounds.CannotSelect);
+                selectionArrow.PlayAudio(SelectionCursor.CursorSounds.CannotSelect);
             }
         }
 
         void BackSpace()
         {
-            PlayAudio(SelectionSounds.CannotSelect);
+            selectionArrow.PlayAudio(SelectionCursor.CursorSounds.CannotSelect);
+
             if (userNameSelection.text != "")
             {
                 userNameSelection.text = userNameSelection.text.Substring(0, userNameSelection.text.Length - 1);
@@ -231,11 +207,12 @@ namespace Game.Levels
 
         void MoveArrow()
         {
-            timePassedSinceKey = 0;
-            PlayAudio(SelectionSounds.Move);
+            selectionArrow.TimePassedSinceKey = 0;
+            selectionArrow.PlayAudio(SelectionCursor.CursorSounds.Move);
 
-            Text highlightedLetter = textGrid[(int)arrowSelectIndex.x, (int)arrowSelectIndex.y];
-            arrowObject.transform.position = highlightedLetter.transform.position + arrowOffset;
+            Text highlightedLetter = textGrid[(int)selectionArrow.SelectIndex.x, 
+                (int)selectionArrow.SelectIndex.y];
+            selectionArrow.transform.position = highlightedLetter.transform.position + selectionArrow.GetOffset();
             selectedLetter = highlightedLetter;
         }
 
@@ -244,28 +221,17 @@ namespace Game.Levels
             string selectedName = userNameSelection.text.Trim();
             if (selectedName == "")
             {
-                PlayAudio(SelectionSounds.CannotSelect);
+                selectionArrow.PlayAudio(SelectionCursor.CursorSounds.CannotSelect);
                 userNameSelection.text = "";
                 return;
             }
 
             Game.Actors.PlayerData.PlayerName = selectedName;
-            PlayAudio(SelectionSounds.Confirm);
+            selectionArrow.PlayAudio(SelectionCursor.CursorSounds.Confirm);
 
-            broadcastNameSelect();
+            NotifyNameSelected();
             gameObject.transform.SetParent(Camera.main.transform);
             Destroy(this);
-        }
-
-        void DelayArrow()
-        {
-            timePassedSinceKey += Time.deltaTime;
-        }
-
-        void PlayAudio(SelectionSounds soundToPlay)
-        {
-            audioSource.clip = clip[(int)soundToPlay];
-            audioSource.Play();
         }
 
     }
