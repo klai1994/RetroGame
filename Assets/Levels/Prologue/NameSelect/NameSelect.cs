@@ -119,9 +119,9 @@ namespace Game.Levels
                     // If uppercase letters filled in, complete last row with spaces
                     if (charIndex > UPPER_END && charIndex < LOWER_START)
                     {
-                        AddItemToMenu(x, y, SPACE);
+                        AddItemToMenu(x, y, SPACE, letterPrefab);
                         x++;
-                        AddItemToMenu(x, y, SPACE);
+                        AddItemToMenu(x, y, SPACE, letterPrefab);
                         charIndex = LOWER_START;
                         continue;
                     }
@@ -132,7 +132,7 @@ namespace Game.Levels
                         charIndex = SPACE;
                     }
 
-                    AddItemToMenu(x, y, charIndex);
+                    AddItemToMenu(x, y, charIndex, letterPrefab);
 
                     // Stop incrementing char index after lowercase letters completed
                     if (charIndex != SPACE)
@@ -141,13 +141,6 @@ namespace Game.Levels
                     }
                 }
             }
-        }
-
-        protected override void AddItemToMenu(int x, int y, int index)
-        {
-            // In this case index is used as a char
-            menuGrid[x, y] = Instantiate(letterPrefab, menuUIFrame.transform);
-            ((Text)menuGrid[x, y]).text += (char)index;
         }
 
     }

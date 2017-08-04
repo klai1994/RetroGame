@@ -131,7 +131,11 @@ namespace Game.CameraUI {
 
         protected abstract void ProcessCommandInput();
 
-        protected abstract void AddItemToMenu(int x, int y, int index);
-
+        protected void AddItemToMenu(int x, int y, int index, MaskableGraphic menuItemPrefab)
+        {
+            // In this case index is used as a char
+            menuGrid[x, y] = Instantiate(menuItemPrefab, menuUIFrame.transform);
+            ((Text)menuGrid[x, y]).text += (char)index;
+        }
     }
 }

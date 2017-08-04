@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Game.Actors;
-namespace Game.Inventory
+namespace Game.Items
 { 
     public class Item : MonoBehaviour, IRangeable
     {

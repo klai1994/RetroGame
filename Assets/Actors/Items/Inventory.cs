@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.Inventory
+using Game.CameraUI;
+namespace Game.Items
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : Menu
     {
 
         private const int INVENTORY_SLOTS = 10;
@@ -18,6 +19,11 @@ namespace Game.Inventory
 
         // Update is called once per frame
         void Update()
+        {
+            ProcessCommandInput();
+        }
+
+        protected override void ProcessCommandInput()
         {
 
         }
