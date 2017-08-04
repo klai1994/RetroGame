@@ -1,9 +1,8 @@
-[Ll]ibrary/
-[Tt]emp/
-[Oo]bj/
+Library/
+Temp/
+Obj/
 
-[Aa]ssets/
-[Uu]tility/[Tt]iled2Unity
+Assets/Utility/Tiled2Unity
 # Auto-generated VS solution and project files
 .vs/
 *.csproj

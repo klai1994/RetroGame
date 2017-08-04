@@ -4,11 +4,8 @@ using UnityEngine.UI;
 using Game.CameraUI;
 namespace Game.Levels
 {
-    [RequireComponent(typeof(SelectionCursor))]
-    public class NameSelect : MonoBehaviour
+    public class NameSelect : Menu
     {
-        [SerializeField] SelectionCursor selectionCursor;
-
         public delegate void BroadcastNameSelected();
         public event BroadcastNameSelected NotifyNameSelected;
 
@@ -17,24 +14,23 @@ namespace Game.Levels
         const int MAX_NAME_LENGTH = 13;
 
         [SerializeField] Text letterPrefab;
-        [SerializeField] GameObject letterGrid;
-
         const int LETTER_GRID_X = 7;
         const int LETTER_GRID_Y = 8;
 
         void Start()
         {
-            selectionCursor.MenuGrid = new Text[LETTER_GRID_X, LETTER_GRID_Y];
+            menuGrid = new Text[LETTER_GRID_X, LETTER_GRID_Y];
             PopulateLetterGrid();
-            selectionCursor.SelectedMenuItem = selectionCursor.MenuGrid[0, 0];
+            InitializeCursor();
         }
 
         void Update()
         {
+            ProcessCursorInput();
             ProcessCommandInput();
         }
 
-        void ProcessCommandInput()
+        protected override void ProcessCommandInput()
         {
             if (Input.GetKeyDown(KeyCode.V))
             {
@@ -59,7 +55,7 @@ namespace Game.Levels
 
         void SelectDefaultName()
         {
-            selectionCursor.PlayAudio(SelectionCursor.CursorSounds.Default);
+            PlayAudio(Menu.CursorSounds.Default);
             userNameSelection.text = DEFAULT_NAME;
         }
 
@@ -67,20 +63,19 @@ namespace Game.Levels
         {
             if (userNameSelection.text.Length < MAX_NAME_LENGTH)
             {
-                selectionCursor.PlayAudio(SelectionCursor.CursorSounds.Select);
-
-                userNameSelection.text += ((Text)selectionCursor.SelectedMenuItem).text;
-                selectionCursor.GetAnimator().SetTrigger(SelectionCursor.SELECT_TRIGGER);
+                PlayAudio(Menu.CursorSounds.Select);
+                userNameSelection.text += ((Text)selectedMenuItem).text;
+                animator.SetTrigger(SELECT_TRIGGER);
             }
             else
             {
-                selectionCursor.PlayAudio(SelectionCursor.CursorSounds.CannotSelect);
+                PlayAudio(Menu.CursorSounds.CannotSelect);
             }
         }
 
         void BackSpace()
         {
-            selectionCursor.PlayAudio(SelectionCursor.CursorSounds.CannotSelect);
+            PlayAudio(Menu.CursorSounds.CannotSelect);
 
             if (userNameSelection.text != "")
             {
@@ -93,13 +88,13 @@ namespace Game.Levels
             string selectedName = userNameSelection.text.Trim();
             if (selectedName == "")
             {
-                selectionCursor.PlayAudio(SelectionCursor.CursorSounds.CannotSelect);
+                PlayAudio(Menu.CursorSounds.CannotSelect);
                 userNameSelection.text = "";
                 return;
             }
 
-            Game.Actors.PlayerData.PlayerName = selectedName;
-            selectionCursor.PlayAudio(SelectionCursor.CursorSounds.Confirm);
+            Actors.PlayerData.PlayerName = selectedName;
+            PlayAudio(Menu.CursorSounds.Confirm);
 
             NotifyNameSelected();
             gameObject.transform.SetParent(Camera.main.transform);
@@ -124,9 +119,9 @@ namespace Game.Levels
                     // If uppercase letters filled in, complete last row with spaces
                     if (charIndex > UPPER_END && charIndex < LOWER_START)
                     {
-                        AddCharToGrid(x, y, SPACE);
+                        AddItemToMenu(x, y, SPACE);
                         x++;
-                        AddCharToGrid(x, y, SPACE);
+                        AddItemToMenu(x, y, SPACE);
                         charIndex = LOWER_START;
                         continue;
                     }
@@ -137,7 +132,7 @@ namespace Game.Levels
                         charIndex = SPACE;
                     }
 
-                    AddCharToGrid(x, y, charIndex);
+                    AddItemToMenu(x, y, charIndex);
 
                     // Stop incrementing char index after lowercase letters completed
                     if (charIndex != SPACE)
@@ -148,12 +143,11 @@ namespace Game.Levels
             }
         }
 
-        Text AddCharToGrid(int x, int y, int charIndex)
+        protected override void AddItemToMenu(int x, int y, int index)
         {
-            char charToAdd = (char)charIndex;
-            selectionCursor.MenuGrid[x, y] = Instantiate(letterPrefab, letterGrid.transform);
-            ((Text)selectionCursor.MenuGrid[x, y]).text += charToAdd;
-            return ((Text)selectionCursor.MenuGrid[x, y]);
+            // In this case index is used as a char
+            menuGrid[x, y] = Instantiate(letterPrefab, menuUIFrame.transform);
+            ((Text)menuGrid[x, y]).text += (char)index;
         }
 
     }
