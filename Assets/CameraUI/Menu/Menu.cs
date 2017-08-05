@@ -1,10 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game.CameraUI {
     [RequireComponent(typeof(AudioSource))]
     public abstract class Menu : MonoBehaviour
     {
+        [SerializeField] protected GameObject menuUIFrame;
+        [SerializeField] protected MaskableGraphic menuItemPrefab;
+        protected MaskableGraphic[,] menuGrid;
+        protected MaskableGraphic selectedMenuItem;
+
         protected float timePassedSinceKey = 0;
         // Delay between items during auto scroll
         protected const float KEY_DELAY = 0.2f;
@@ -17,10 +24,6 @@ namespace Game.CameraUI {
         // Offset from cursor object to item in menu
         protected Animator animator;
         [SerializeField] protected GameObject cursorHandler;
-
-        [SerializeField] protected GameObject menuUIFrame;
-        protected MaskableGraphic[,] menuGrid;
-        protected MaskableGraphic selectedMenuItem;
 
         [SerializeField] protected AudioClip[] soundEffects;
         protected AudioSource audioSource;
@@ -53,11 +56,17 @@ namespace Game.CameraUI {
             cursorHandler.transform.position = selectedMenuItem.transform.position + cursorOffset;
         }
 
-        protected void InitializeCursor()
+        protected void InitializeMenu(int menuGridX, int menuGridY, UnityAction populateAction = null)
         {
-            audioSource = GetComponent<AudioSource>();
+            menuGrid = new MaskableGraphic[menuGridX, menuGridY];
+            if (populateAction != null)
+            {
+                populateAction();
+            }
+            selectedMenuItem = menuGrid[0, 0];
+
             animator = GetComponentInChildren<Animator>();
-            selectedMenuItem = menuGrid[(int)selectIndex.x, (int)selectIndex.y];
+            audioSource = GetComponent<AudioSource>();
         }
 
         protected void ProcessCursorInput()
@@ -75,7 +84,6 @@ namespace Game.CameraUI {
                     {
                         selectIndex.y = menuGrid.GetLength(1) - 1;
                     }
-
                     MoveArrow();
                 }
 
@@ -129,13 +137,8 @@ namespace Game.CameraUI {
             }
         }
 
-        protected abstract void ProcessCommandInput();
+        protected abstract void AddItemToMenu(int x, int y, int index);
 
-        protected void AddItemToMenu(int x, int y, int index, MaskableGraphic menuItemPrefab)
-        {
-            // In this case index is used as a char
-            menuGrid[x, y] = Instantiate(menuItemPrefab, menuUIFrame.transform);
-            ((Text)menuGrid[x, y]).text += (char)index;
-        }
+        protected abstract void ProcessCommandInput();
     }
 }

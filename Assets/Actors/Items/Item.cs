@@ -7,10 +7,10 @@ namespace Game.Items
 { 
     public class Item : MonoBehaviour, IRangeable
     {
-        Sprite itemIcon;
-        Sprite worldIcon;
-        bool isDiscardable;
-        bool inInventory;
+        //Sprite uiSprite;
+        //Sprite worldSprite;
+        //bool isDiscardable = false;
+        //bool inInventory = false;
 
         public void Use()
         {

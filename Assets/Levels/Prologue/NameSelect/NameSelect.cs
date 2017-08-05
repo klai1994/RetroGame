@@ -2,6 +2,8 @@
 using UnityEngine.UI;
 
 using Game.CameraUI;
+using System;
+
 namespace Game.Levels
 {
     public class NameSelect : Menu
@@ -13,15 +15,12 @@ namespace Game.Levels
         const string DEFAULT_NAME = "Mason";
         const int MAX_NAME_LENGTH = 13;
 
-        [SerializeField] Text letterPrefab;
         const int LETTER_GRID_X = 7;
         const int LETTER_GRID_Y = 8;
 
         void Start()
         {
-            menuGrid = new Text[LETTER_GRID_X, LETTER_GRID_Y];
-            PopulateLetterGrid();
-            InitializeCursor();
+            InitializeMenu(LETTER_GRID_X, LETTER_GRID_Y, PopulateLetterGrid);
         }
 
         void Update()
@@ -51,6 +50,13 @@ namespace Game.Levels
             {
                 ConfirmNameSelection();
             }
+        }
+
+        protected override void AddItemToMenu(int x, int y, int index)
+        {
+            // In this case index is used as a char
+            menuGrid[x, y] = Instantiate(menuItemPrefab, menuUIFrame.transform);
+            ((Text)menuGrid[x, y]).text += (char)index;
         }
 
         void SelectDefaultName()
@@ -119,9 +125,9 @@ namespace Game.Levels
                     // If uppercase letters filled in, complete last row with spaces
                     if (charIndex > UPPER_END && charIndex < LOWER_START)
                     {
-                        AddItemToMenu(x, y, SPACE, letterPrefab);
+                        AddItemToMenu(x, y, SPACE);
                         x++;
-                        AddItemToMenu(x, y, SPACE, letterPrefab);
+                        AddItemToMenu(x, y, SPACE);
                         charIndex = LOWER_START;
                         continue;
                     }
@@ -132,7 +138,7 @@ namespace Game.Levels
                         charIndex = SPACE;
                     }
 
-                    AddItemToMenu(x, y, charIndex, letterPrefab);
+                    AddItemToMenu(x, y, charIndex);
 
                     // Stop incrementing char index after lowercase letters completed
                     if (charIndex != SPACE)
