@@ -30,7 +30,7 @@ namespace Game.Items
             //
         }
 
-        protected override void AddItemToMenu(int x, int y, int index)
+        protected override void AddGridMenuItem(int x, int y, int index)
         {
             //
         }
