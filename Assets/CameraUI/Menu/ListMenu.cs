@@ -8,15 +8,15 @@ namespace Game.CameraUI
     public abstract class ListMenu : Menu
     {
         protected MaskableGraphic[] menuList;
-        int selectIndexPointer = 0;
-
-        protected abstract void AddListItemToMenu(int index);
+        protected int selectIndexPointer = 0;
 
         public enum ListMenuConfig
         {
             Horizontal, Vertical
         }
         ListMenuConfig config;
+
+        protected abstract void AddListItemToMenu(int index);
 
         protected void InitializeListMenu(int size, ListMenuConfig config, UnityAction populateAction = null)
         {

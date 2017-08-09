@@ -7,19 +7,18 @@ namespace Game.Items
 { 
     public class Item : MonoBehaviour, IRangeable
     {
-        //Sprite uiSprite;
-        //Sprite worldSprite;
-        //bool isDiscardable = false;
-        //bool inInventory = false;
+        Sprite sprite;
+        bool isDiscardable = false;
+        bool inInventory = false;
 
         public void Use()
         {
-            //
+            print("Used item!");
         }
 
         public void Discard()
         {
-            //
+            Destroy(gameObject);
         }
 
         public float GetTargetDistance()

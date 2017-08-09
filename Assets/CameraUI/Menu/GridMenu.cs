@@ -7,16 +7,9 @@ namespace Game.CameraUI
     public abstract class GridMenu : Menu
     {
         protected MaskableGraphic[,] menuGrid;
-        Vector2 selectIndexPointer = Vector2.zero;
+        protected Vector2 selectIndexPointer = Vector2.zero;
 
         protected abstract void AddGridMenuItem(int x, int y, int index);
-
-        protected void InitializeGridMenu(int sizeX, int sizeY, UnityAction populateAction = null)
-        {
-            menuGrid = new MaskableGraphic[sizeX, sizeY];
-            SetupMenu(populateAction);
-            selectedMenuItem = menuGrid[0, 0];
-        }
 
         protected override void SetSelectedItem()
         {
@@ -90,5 +83,11 @@ namespace Game.CameraUI
             }
         }
 
+        protected void InitializeGridMenu(int sizeX, int sizeY, UnityAction populateAction = null)
+        {
+            menuGrid = new MaskableGraphic[sizeX, sizeY];
+            SetupMenu(populateAction);
+            selectedMenuItem = menuGrid[0, 0];
+        }
     }
 }

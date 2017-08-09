@@ -17,13 +17,13 @@ namespace Game.CameraUI
         // Used for cursor animator
         protected const string SELECT_TRIGGER = "Select";
 
-        protected Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
         // Offset from cursor object to item in menu
-        [SerializeField] protected GameObject cursorHandler;
-        [SerializeField] protected AudioClip[] soundEffects;
-
+        protected Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
         protected Animator animator;
-        AudioSource audioSource;
+        [SerializeField] protected GameObject cursorHandler;
+
+        [SerializeField] protected AudioClip[] soundEffects;
+        protected AudioSource audioSource;
 
         protected enum CursorSounds
         {
