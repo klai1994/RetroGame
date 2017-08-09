@@ -7,7 +7,7 @@ using System;
 
 namespace Game.Items
 {
-    public class Inventory : Menu
+    public class Inventory : GridMenu
     {
 
         //private const int INVENTORY_SLOTS = 10;

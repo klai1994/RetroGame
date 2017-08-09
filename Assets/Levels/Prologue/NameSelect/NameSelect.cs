@@ -6,7 +6,7 @@ using System;
 
 namespace Game.Levels
 {
-    public class NameSelect : Menu
+    public class NameSelect : GridMenu
     {
         public delegate void BroadcastNameSelected();
         public event BroadcastNameSelected NotifyNameSelected;
@@ -20,7 +20,7 @@ namespace Game.Levels
 
         void Start()
         {
-            InitializeMenu(LETTER_GRID_X, LETTER_GRID_Y, PopulateLetterGrid);
+            InitializeGridMenu(LETTER_GRID_X, LETTER_GRID_Y, PopulateLetterGrid);
         }
 
         void Update()
@@ -61,7 +61,7 @@ namespace Game.Levels
 
         void SelectDefaultName()
         {
-            PlayAudio(Menu.CursorSounds.Default);
+            PlayAudio(GridMenu.CursorSounds.Default);
             userNameSelection.text = DEFAULT_NAME;
         }
 
@@ -69,19 +69,19 @@ namespace Game.Levels
         {
             if (userNameSelection.text.Length < MAX_NAME_LENGTH)
             {
-                PlayAudio(Menu.CursorSounds.Select);
+                PlayAudio(GridMenu.CursorSounds.Select);
                 userNameSelection.text += ((Text)selectedMenuItem).text;
                 animator.SetTrigger(SELECT_TRIGGER);
             }
             else
             {
-                PlayAudio(Menu.CursorSounds.CannotSelect);
+                PlayAudio(GridMenu.CursorSounds.CannotSelect);
             }
         }
 
         void BackSpace()
         {
-            PlayAudio(Menu.CursorSounds.CannotSelect);
+            PlayAudio(GridMenu.CursorSounds.CannotSelect);
 
             if (userNameSelection.text != "")
             {
@@ -94,13 +94,13 @@ namespace Game.Levels
             string selectedName = userNameSelection.text.Trim();
             if (selectedName == "")
             {
-                PlayAudio(Menu.CursorSounds.CannotSelect);
+                PlayAudio(GridMenu.CursorSounds.CannotSelect);
                 userNameSelection.text = "";
                 return;
             }
 
             Actors.PlayerData.PlayerName = selectedName;
-            PlayAudio(Menu.CursorSounds.Confirm);
+            PlayAudio(GridMenu.CursorSounds.Confirm);
 
             NotifyNameSelected();
             gameObject.transform.SetParent(Camera.main.transform);
