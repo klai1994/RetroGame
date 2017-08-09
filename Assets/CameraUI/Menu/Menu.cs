@@ -7,7 +7,7 @@ namespace Game.CameraUI
     [RequireComponent(typeof(AudioSource))]
     public abstract class Menu : MonoBehaviour
     {
-        [SerializeField] protected GameObject menuUIFrame;
+        [SerializeField] protected LayoutGroup menuUIFrame;
         [SerializeField] protected MaskableGraphic menuItemPrefab;
         protected MaskableGraphic selectedMenuItem;
 
@@ -19,10 +19,11 @@ namespace Game.CameraUI
 
         protected Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
         // Offset from cursor object to item in menu
-        protected Animator animator;
         [SerializeField] protected GameObject cursorHandler;
         [SerializeField] protected AudioClip[] soundEffects;
-        protected AudioSource audioSource;
+
+        protected Animator animator;
+        AudioSource audioSource;
 
         protected enum CursorSounds
         {
@@ -53,9 +54,26 @@ namespace Game.CameraUI
             audioSource = GetComponent<AudioSource>();
         }
 
-        protected abstract void MoveArrow();
+        protected void MoveArrow()
+        {
+            timePassedSinceKey = 0;
+            PlayAudio(GridMenu.CursorSounds.Move);
+            SetSelectedItem();
+            cursorHandler.transform.position = selectedMenuItem.transform.position + cursorOffset;
+        }
 
-        protected abstract void ProcessCursorInput();
+        protected void ProcessCursorInput()
+        {
+            if (timePassedSinceKey > GridMenu.KEY_DELAY)
+            {
+                SetSelection();
+            }
+            timePassedSinceKey += Time.deltaTime;
+        }
+
+        protected abstract void SetSelectedItem();
+
+        protected abstract void SetSelection();
 
         protected abstract void ProcessCommandInput();
 

@@ -1,101 +1,94 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Game.CameraUI {
-    [RequireComponent(typeof(AudioSource))]
+namespace Game.CameraUI
+{
     public abstract class GridMenu : Menu
     {
         protected MaskableGraphic[,] menuGrid;
-        // Points at item in the menu that the cursor is currently selecting
-        protected Vector2 selectIndex = Vector2.zero;
+        Vector2 selectIndexPointer = Vector2.zero;
 
-        protected override void MoveArrow()
+        protected abstract void AddGridMenuItem(int x, int y, int index);
+
+        protected void InitializeGridMenu(int sizeX, int sizeY, UnityAction populateAction = null)
         {
-            timePassedSinceKey = 0;
-            PlayAudio(GridMenu.CursorSounds.Move);
-
-            selectedMenuItem = menuGrid[(int)selectIndex.x, (int)selectIndex.y];
-            cursorHandler.transform.position = selectedMenuItem.transform.position + cursorOffset;
-        }
-
-        protected void InitializeGridMenu(int menuGridX, int menuGridY = 0, UnityAction populateAction = null)
-        {
-            menuGrid = new MaskableGraphic[menuGridX, menuGridY];
+            menuGrid = new MaskableGraphic[sizeX, sizeY];
             SetupMenu(populateAction);
             selectedMenuItem = menuGrid[0, 0];
         }
 
-        protected override void ProcessCursorInput()
+        protected override void SetSelectedItem()
         {
-            // Y values are reversed because the grid opens downwards
-            if (timePassedSinceKey > GridMenu.KEY_DELAY)
-            {
-                if (Input.GetKey(KeyCode.W))
-                {
-                    if (selectIndex.y > 0)
-                    {
-                        selectIndex.y -= 1;
-                    }
-                    else
-                    {
-                        selectIndex.y = menuGrid.GetLength(1) - 1;
-                    }
-                    MoveArrow();
-                }
-
-                else if (Input.GetKey(KeyCode.S))
-                {
-                    if (selectIndex.y < menuGrid.GetLength(1) - 1)
-                    {
-                        selectIndex.y += 1;
-                    }
-                    else
-                    {
-                        selectIndex.y = 0;
-                    }
-
-                    MoveArrow();
-                }
-
-                else if (Input.GetKey(KeyCode.D))
-                {
-                    if (selectIndex.x < menuGrid.GetLength(0) - 1)
-                    {
-                        selectIndex.x += 1;
-                    }
-                    else
-                    {
-                        selectIndex.x = 0;
-                        if (selectIndex.y < menuGrid.GetLength(1) - 1) selectIndex.y += 1;
-                    }
-
-                    MoveArrow();
-                }
-
-                else if (Input.GetKey(KeyCode.A))
-                {
-                    if (selectIndex.x > 0)
-                    {
-                        selectIndex.x -= 1;
-                    }
-                    else
-                    {
-                        selectIndex.x = menuGrid.GetLength(0) - 1;
-                        if (selectIndex.y > 0) selectIndex.y -= 1;
-                    }
-
-                    MoveArrow();
-                }
-            }
-            else
-            {
-                timePassedSinceKey += Time.deltaTime;
-            }
+            selectedMenuItem = menuGrid[(int)selectIndexPointer.x, (int)selectIndexPointer.y];
         }
 
-        protected abstract void AddGridMenuItem(int x, int y, int index);
+        protected override void SetSelection()
+        {
+            // Y values are reversed because the grid opens downwards
+            if (Input.GetKey(KeyCode.W))
+            {
+                if (selectIndexPointer.y > 0)
+                {
+                    selectIndexPointer.y -= 1;
+                }
+                else
+                {
+                    selectIndexPointer.y = menuGrid.GetLength(1) - 1;
+                }
+                MoveArrow();
+            }
+
+            else if (Input.GetKey(KeyCode.S))
+            {
+                if (selectIndexPointer.y < menuGrid.GetLength(1) - 1)
+                {
+                    selectIndexPointer.y += 1;
+                }
+                else
+                {
+                    selectIndexPointer.y = 0;
+                }
+
+                MoveArrow();
+            }
+
+            else if (Input.GetKey(KeyCode.D))
+            {
+                if (selectIndexPointer.x < menuGrid.GetLength(0) - 1)
+                {
+                    selectIndexPointer.x += 1;
+                }
+                else
+                {
+                    selectIndexPointer.x = 0;
+                    if (selectIndexPointer.y < menuGrid.GetLength(1) - 1)
+                    {
+                        selectIndexPointer.y += 1;
+                    }
+                }
+
+                MoveArrow();
+            }
+
+            else if (Input.GetKey(KeyCode.A))
+            {
+                if (selectIndexPointer.x > 0)
+                {
+                    selectIndexPointer.x -= 1;
+                }
+                else
+                {
+                    selectIndexPointer.x = menuGrid.GetLength(0) - 1;
+                    if (selectIndexPointer.y > 0)
+                    {
+                        selectIndexPointer.y -= 1;
+                    }
+                }
+
+                MoveArrow();
+            }
+        }
 
     }
 }
