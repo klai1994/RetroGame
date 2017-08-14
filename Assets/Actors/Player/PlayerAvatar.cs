@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Game.Actors
@@ -11,13 +9,13 @@ namespace Game.Actors
         Rigidbody2D rbody;
         Animator animator;
 
+        private const string ANIM_IS_WALKING = "isWalking";
+        private const string MOVEMENT_X = "movement_x";
+        private const string MOVEMENT_Y = "movement_y";
+
         private const string HORIZONTAL_AXIS = "Horizontal";
         private const string VERTICAL_AXIS = "Vertical";
-        private const string ANIM_IS_WALKING = "isWalking";
 
-        private const string INPUT_Y = "input_y";
-        private const string INPUT_X = "input_x";
-      
         bool startedDialogue;
         public bool InDialogue
         {
@@ -51,7 +49,7 @@ namespace Game.Actors
             animator = GetComponent<Animator>();
 
             // Starts the player facing down
-            animator.SetFloat(INPUT_Y, -1f);
+            animator.SetFloat(MOVEMENT_Y, -1f);
             startedDialogue = false;
         }
 
@@ -79,8 +77,8 @@ namespace Game.Actors
 
         private void SetAnimatorDirection(Vector2 direction)
         {
-            animator.SetFloat(INPUT_X, direction.x);
-            animator.SetFloat(INPUT_Y, direction.y);
+            animator.SetFloat(MOVEMENT_X, direction.x);
+            animator.SetFloat(MOVEMENT_Y, direction.y);
         }
 
         private void MovePlayer()

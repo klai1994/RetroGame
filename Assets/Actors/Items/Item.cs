@@ -7,9 +7,9 @@ namespace Game.Items
 { 
     public class Item : MonoBehaviour, IRangeable
     {
-        Sprite sprite;
-        bool isDiscardable = false;
-        bool inInventory = false;
+        //Sprite sprite;
+        //bool isDiscardable = false;
+        //bool inInventory = false;
 
         public void Use()
         {

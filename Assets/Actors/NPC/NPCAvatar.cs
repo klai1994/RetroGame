@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Actors
@@ -67,18 +66,23 @@ namespace Game.Actors
             return Vector2.Distance(target.transform.position, transform.position);
         }
 
+        private void SetAnimatorDirection(Vector2 moveDirection)
+        {
+            animator.SetFloat(MOVEMENT_X, moveDirection.x);
+            animator.SetFloat(MOVEMENT_Y, moveDirection.y);
+        }
+
         private void MoveToTarget()
         {
             if (GetTargetDistance() < maxChaseDistance && GetTargetDistance() > stoppingDistance)
             {
-                rbody.velocity = (target.transform.position - transform.position) * movementSpeed;
-                Vector2 moveDirection = rbody.velocity;
+                Vector2 moveDirection = (target.transform.position - transform.position).normalized;
 
                 if (moveDirection != Vector2.zero)
                 {
                     animator.SetBool(ANIM_IS_WALKING, true);
-                    animator.SetFloat(MOVEMENT_X, moveDirection.x);
-                    animator.SetFloat(MOVEMENT_Y, moveDirection.y);
+                    SetAnimatorDirection(moveDirection);
+                    rbody.MovePosition(rbody.position + moveDirection * movementSpeed);
                 }
             }
             else
