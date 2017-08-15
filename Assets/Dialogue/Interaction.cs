@@ -1,53 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 using Game.Actors;
 
 namespace Game.Dialogue
 {
-    public class Interaction : MonoBehaviour, IRangeable
+    [RequireComponent(typeof(ActorAvatar))]
+    public class Interaction : MonoBehaviour
     {
         [SerializeField] DialogueEventName[] eventNames;
         [SerializeField] float interactionDistance = 2.5f;
+        ActorAvatar avatar;
+        PlayerAvatarControl player;
         int interactionIndex = 0;
-        PlayerAvatar player;
 
-        Animator animator;
-        private const string MOVEMENT_X = "movement_x";
-        private const string MOVEMENT_Y = "movement_y";
-
-        // Use this for initialization
         void Start()
         {
-            PlayerAvatar.BroadcastPlayerInteraction += Interact;
-            player = PlayerAvatar.GetPlayerInstance();
-        }
-
-        public float GetTargetDistance()
-        {
-            return Vector2.Distance(player.transform.position, transform.position);
-        }
-
-        public void FacePlayer()
-        {
-            Vector3 direction = (player.transform.position - transform.position).normalized;
-
-            animator.SetFloat(MOVEMENT_X, direction.x);
-            animator.SetFloat(MOVEMENT_Y, direction.y);
+            PlayerAvatarControl.BroadcastPlayerInteraction += Interact;
+            player = PlayerAvatarControl.GetPlayerInstance();
+            avatar = GetComponent<ActorAvatar>();
         }
 
         public void Interact()
         {
-            if (GetTargetDistance() < interactionDistance && !player.InDialogue)
+            if (!player.InDialogue && avatar.GetDistance(player.gameObject) < interactionDistance)
             {
                 player.InDialogue = true;
-                player.FaceDirection(transform.position);
-
-                if (animator = GetComponent<Animator>())
-                {
-                    FacePlayer();
-                }
+                player.GetActorAvatar().FaceDirection(transform.position);
+                avatar.FaceDirection(player.GetActorAvatar().transform.position);
 
                 DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
 
@@ -58,9 +36,5 @@ namespace Game.Dialogue
             }
         }
 
-        void OnDrawGizmos()
-        {
-            Gizmos.DrawWireSphere(transform.position, interactionDistance);
-        }
     }
 }

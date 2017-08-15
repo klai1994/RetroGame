@@ -12,7 +12,7 @@ namespace Game.Levels
     {
         [SerializeField] Image fadePanel;
         [SerializeField] LetterboxManager letterBoxManager;
-        [SerializeField] Actors.NPCAvatar officer;
+        [SerializeField] Actors.NPCAI officer;
         [SerializeField] GameObject targetExit;
         NameSelect nameselect;
 

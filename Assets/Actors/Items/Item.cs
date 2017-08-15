@@ -5,7 +5,7 @@ using UnityEngine;
 using Game.Actors;
 namespace Game.Items
 { 
-    public class Item : MonoBehaviour, IRangeable
+    public class Item : MonoBehaviour
     {
         //Sprite sprite;
         //bool isDiscardable = false;
@@ -19,11 +19,6 @@ namespace Game.Items
         public void Discard()
         {
             Destroy(gameObject);
-        }
-
-        public float GetTargetDistance()
-        {
-            return Vector2.Distance(PlayerAvatar.GetPlayerInstance().transform.position, transform.position);
         }
 
     }
