@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Game.CameraUI;
+using Game.CameraUI.Dialogue;
 
 namespace Game.Actors
 {
@@ -8,7 +10,6 @@ namespace Game.Actors
         const string HORIZONTAL_AXIS = "Horizontal";
         const string VERTICAL_AXIS = "Vertical";
 
-        public bool InDialogue { get; set; }
         public delegate void PlayerInteracted();
         public static event PlayerInteracted BroadcastPlayerInteraction;
 
@@ -27,7 +28,6 @@ namespace Game.Actors
         // Use this for initialization
         void Awake()
         {
-            InDialogue = false;
             avatar = GetComponent<ActorAvatar>();
         }
 
@@ -39,16 +39,9 @@ namespace Game.Actors
                 BroadcastPlayerInteraction();
             }
 
-            if (!InDialogue)
+            if (UIController.PlayerIsFree())
             {
                 avatar.MoveAvatar(new Vector2(Input.GetAxisRaw(HORIZONTAL_AXIS), Input.GetAxisRaw(VERTICAL_AXIS)));
-            }
-            else
-            {
-                if (Dialogue.DialogueControlHandler.currentEvent == null)
-                {
-                    InDialogue = false;
-                }
             }
         }
 

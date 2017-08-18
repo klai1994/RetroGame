@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Dialogue
+namespace Game.CameraUI.Dialogue
 {
     /// <summary>
     /// This class provides the user the means to control progression of dialogue.

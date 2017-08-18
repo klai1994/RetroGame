@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-namespace Game.Dialogue
+namespace Game.CameraUI.Dialogue
 {
     public class DialogueEventAtlas : MonoBehaviour
     {

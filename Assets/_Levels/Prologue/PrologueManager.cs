@@ -2,9 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-
-using Game.Dialogue;
-using Game.Audio;
+using Game.CameraUI.Dialogue;
 
 namespace Game.Levels
 {

@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.UI;
 using System;
 
-namespace Game.Dialogue
+namespace Game.CameraUI.Dialogue
 {
     /// <summary>
     /// Attach this class to the SceneManager for general dialogue that may or may not use

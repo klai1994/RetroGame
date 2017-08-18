@@ -16,9 +16,9 @@ namespace Game.Actors
         const string VERTICAL_AXIS = "Vertical";
         const string ANIM_IS_WALKING = "isWalking";
         
-        const float MOVEMENT_SCALE = 0.10f;
         const string MOVEMENT_X = "movement_x";
         const string MOVEMENT_Y = "movement_y";
+        public static float MovementScale = 0.10f;
 
         [SerializeField] bool isIdle = false;
         [SerializeField] float idleTurnRate = 3f;
@@ -38,15 +38,18 @@ namespace Game.Actors
 
         public void MoveAvatar(Vector2 moveDirection)
         {
-            if (moveDirection != Vector2.zero)
+            if (CameraUI.UIController.PlayerIsFree())
             {
-                animator.SetBool(ANIM_IS_WALKING, true);
-                SetAnimatorDirection(moveDirection);
-                rbody.MovePosition(rbody.position + moveDirection * (movementSpeed * MOVEMENT_SCALE));
-            }
-            else
-            {
-                animator.SetBool(ANIM_IS_WALKING, false);
+                if (moveDirection != Vector2.zero)
+                {
+                    animator.SetBool(ANIM_IS_WALKING, true);
+                    SetAnimatorDirection(moveDirection);
+                    rbody.MovePosition(rbody.position + moveDirection * (movementSpeed * MovementScale));
+                }
+                else
+                {
+                    animator.SetBool(ANIM_IS_WALKING, false);
+                }
             }
         }
 
@@ -54,17 +57,9 @@ namespace Game.Actors
         {
             while (isIdle)
             {
-                if (!PlayerAvatarControl.GetPlayerInstance().InDialogue)
-                {
-                    animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
-                    animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
-                    yield return new WaitForSeconds(Random.Range(1, idleTurnRate));
-                }
-
-                else
-                {
-                    yield return new WaitForEndOfFrame();
-                }
+                animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
+                animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
+                yield return new WaitForSeconds(Random.Range(1, idleTurnRate));
             }
         }
 

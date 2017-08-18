@@ -1,42 +1,66 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Game.Actors;
 
 namespace Game.CameraUI
 {
     public class UIController : MonoBehaviour
     {
+        static bool characterFrozen;
+        static bool playerInDialogue = false;
+
         [SerializeField] GameObject inventory;
-        static ActorAvatar playerAvatar;
-        public static bool gamePaused;
+        float movementScale;
 
         void Start()
         {
-           playerAvatar = PlayerAvatarControl.GetPlayerInstance().GetActorAvatar();
+            movementScale = ActorAvatar.MovementScale;
         }
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.X) && gamePaused)
+            if (!playerInDialogue)
             {
-                gamePaused = false;
-                Time.timeScale = 1;
-                playerAvatar.ToggleAnimations();
-                inventory.SetActive(false);
+                if (Input.GetKeyDown(KeyCode.V))
+                {
+                    ToggleUI();
+                    inventory.SetActive(!inventory.activeInHierarchy);
+
+                    if (characterFrozen)
+                    {
+                        ActorAvatar.MovementScale = 0;
+                    }
+                    else
+                    {
+                        ActorAvatar.MovementScale = movementScale;
+                    }
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.I) && !gamePaused)
+            if (!PlayerIsFree() && Dialogue.DialogueControlHandler.currentEvent == null)
             {
-                PauseGame();
-                inventory.SetActive(true);
+                playerInDialogue = false;
             }
         }
 
-        public static void PauseGame()
+        public static void SetPlayerInDialogue(bool inDialogue)
         {
-            gamePaused = true;
-            Time.timeScale = 0;
-            playerAvatar.ToggleAnimations();
+            playerInDialogue = inDialogue;
         }
 
+        public static bool PlayerIsFree()
+        {
+            return !(playerInDialogue || characterFrozen);
+        }
+
+        private void ToggleUI()
+        {
+            characterFrozen = !characterFrozen;
+
+            foreach (ActorAvatar avatar in GameObject.FindObjectsOfType<ActorAvatar>())
+            {
+                avatar.ToggleAnimations();
+            }
+        }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿using UnityEngine;
 using LitJson;
 
-namespace Game.Dialogue
+namespace Game.CameraUI.Dialogue
 {
     public class JsonReader
     {
