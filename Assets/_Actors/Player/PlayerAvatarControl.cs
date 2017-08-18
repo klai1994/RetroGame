@@ -25,7 +25,7 @@ namespace Game.Actors
         }
 
         // Use this for initialization
-        void Start()
+        void Awake()
         {
             InDialogue = false;
             avatar = GetComponent<ActorAvatar>();

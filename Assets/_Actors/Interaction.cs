@@ -1,14 +1,13 @@
 ﻿using UnityEngine;
-using Game.Actors;
 
-namespace Game.Dialogue
+namespace Game.Actors
 {
-    [RequireComponent(typeof(ActorAvatar))]
+    [RequireComponent(typeof(Avatar))]
     public class Interaction : MonoBehaviour
     {
-        [SerializeField] DialogueEventName[] eventNames;
+        [SerializeField] Dialogue.DialogueEventName[] eventNames;
         [SerializeField] float interactionDistance = 2.5f;
-        ActorAvatar avatar;
+        Actor actor;
         PlayerAvatarControl player;
         int interactionIndex = 0;
 
@@ -16,18 +15,23 @@ namespace Game.Dialogue
         {
             PlayerAvatarControl.BroadcastPlayerInteraction += Interact;
             player = PlayerAvatarControl.GetPlayerInstance();
-            avatar = GetComponent<ActorAvatar>();
+            actor = GetComponent<Actor>();
         }
 
         public void Interact()
         {
-            if (!player.InDialogue && avatar.GetDistance(player.gameObject) < interactionDistance)
+            if (!player.InDialogue && !CameraUI.UIController.gamePaused 
+                && actor.GetDistance(player.gameObject) < interactionDistance)
             {
                 player.InDialogue = true;
                 player.GetActorAvatar().FaceDirection(transform.position);
-                avatar.FaceDirection(player.GetActorAvatar().transform.position);
 
-                DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
+                Dialogue.DialogueControlHandler.InitializeEvent(eventNames[interactionIndex]);
+
+                if (actor.GetType() == typeof(ActorAvatar))
+                {
+                    ((ActorAvatar)actor).FaceDirection(player.GetActorAvatar().transform.position);
+                }
 
                 if (interactionIndex < eventNames.Length - 1)
                 {

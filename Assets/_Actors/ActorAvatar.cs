@@ -1,11 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Actors
 {
     [RequireComponent(typeof(CameraUI.IsometricSpriteRenderer))]
-    public class ActorAvatar : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(Animator))]
+    public class ActorAvatar : Actor
     {
         [SerializeField] float movementSpeed = 1.5f;
         Rigidbody2D rbody;
@@ -73,9 +74,9 @@ namespace Game.Actors
             SetAnimatorDirection((target - transform.position).normalized);
         }
 
-        public float GetDistance(GameObject target)
+        public void ToggleAnimations()
         {
-            return Vector2.Distance(target.transform.position, transform.position);
+            animator.enabled = !animator.isActiveAndEnabled;
         }
 
         void SetAnimatorDirection(Vector2 direction)

@@ -1,9 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using Game.CameraUI;
-using System;
 
 namespace Game.Items
 {
@@ -30,32 +28,7 @@ namespace Game.Items
 
         protected override void ProcessCommandInput()
         {
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                UseItem();
-            }
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                DiscardItem();
-            }
-        }
-
-        void UseItem()
-        {
-            Item item = menuList[selectIndexPointer].GetComponent<Item>();
-            if (item)
-            {
-                item.Use();
-            }
-        }
-
-        void DiscardItem()
-        {
-            Item item = menuList[selectIndexPointer].GetComponent<Item>();
-            if (item)
-            {
-                item.Discard();
-            }
+            //
         }
 
         protected override void AddListItemToMenu(int index)
