@@ -45,15 +45,13 @@ namespace Game.CameraUI
 
         void GetHorizontalInput()
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.D))
             {
                 IncrementPointerIndex();
-
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.A))
             {
-            DecrementPointerIndex();
-
+                DecrementPointerIndex();
             }
         }
 

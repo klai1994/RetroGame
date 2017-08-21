@@ -18,9 +18,9 @@ namespace Game.CameraUI
         protected const string SELECT_TRIGGER = "Select";
 
         // Offset from cursor object to item in menu
-        protected Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
-        protected Animator animator;
+        [SerializeField] Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
         [SerializeField] protected GameObject cursorHandler;
+        protected Animator animator;
 
         [SerializeField] protected AudioClip[] soundEffects;
         protected AudioSource audioSource;
