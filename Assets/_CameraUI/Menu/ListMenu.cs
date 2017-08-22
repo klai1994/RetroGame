@@ -16,7 +16,7 @@ namespace Game.CameraUI
         }
         ListMenuConfig config;
 
-        protected abstract void AddListItemToMenu(int index);
+        protected abstract void AddListItemToMenu(MaskableGraphic itemToAdd, int index);
 
         protected void InitializeListMenu(int size, ListMenuConfig config, UnityAction populateAction = null)
         {
@@ -75,7 +75,7 @@ namespace Game.CameraUI
             }
             else
             {
-                selectIndexPointer = menuList.Length - 1;
+                selectIndexPointer = 0;
             }
             MoveArrow();
         }
@@ -88,7 +88,7 @@ namespace Game.CameraUI
             }
             else
             {
-                selectIndexPointer = 0;
+                selectIndexPointer = menuList.Length - 1;
             }
             MoveArrow();
         }

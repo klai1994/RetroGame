@@ -21,8 +21,11 @@ namespace Game.Actors
         // Update is called once per frame
         void Update()
         {
-            MoveToTarget();
-            DestroyAfterThreshold();
+            if (target)
+            {
+                MoveToTarget();
+                DestroyAfterThreshold();
+            }
         }
 
         void MoveToTarget()

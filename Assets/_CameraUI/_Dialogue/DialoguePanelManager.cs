@@ -13,7 +13,7 @@ namespace Game.CameraUI.Dialogue
     public class DialoguePanelManager : LetterboxManager
     {
         Sprite[] dialoguePortraits;
-        [SerializeField] GameObject dialoguePanel;
+        [SerializeField] GameObject dialogueUIFrame;
         [SerializeField] Image characterPortrait;
 
         AudioClip[] voices;
@@ -36,7 +36,7 @@ namespace Game.CameraUI.Dialogue
             if (dialogueStage < dialogueEventHolder.eventInfoList.Count)
             {
                 textSegmentEnded = false;
-                dialoguePanel.SetActive(true);
+                dialogueUIFrame.SetActive(true);
 
                 string portrait = dialogueEventHolder.eventInfoList[dialogueStage].characterPortrait;
                 if (portrait != "")
@@ -65,7 +65,7 @@ namespace Game.CameraUI.Dialogue
             else
             {
                 DialogueControlHandler.currentEvent = null;
-                dialoguePanel.SetActive(false);
+                dialogueUIFrame.SetActive(false);
             }
         }
 

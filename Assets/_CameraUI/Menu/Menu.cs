@@ -8,7 +8,7 @@ namespace Game.CameraUI
     public abstract class Menu : MonoBehaviour
     {
         [SerializeField] protected LayoutGroup menuUIFrame;
-        [SerializeField] protected MaskableGraphic menuItemPrefab;
+        [SerializeField] protected MaskableGraphic defaultMenuItemPrefab;
         protected MaskableGraphic selectedMenuItem;
 
         protected float timePassedSinceKey = 0;
@@ -16,6 +16,7 @@ namespace Game.CameraUI
         protected const float KEY_DELAY = 0.2f;
         // Used for cursor animator
         protected const string SELECT_TRIGGER = "Select";
+        protected const string CANNOT_SELECT_TRIGGER = "Cannot_Select";
 
         // Offset from cursor object to item in menu
         [SerializeField] Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
@@ -34,9 +35,9 @@ namespace Game.CameraUI
             Default = 4
         }
 
-        protected void PlaySelectAnim()
+        protected void PlayCursorAnim(string trigger)
         {
-            animator.SetTrigger(SELECT_TRIGGER);
+            animator.SetTrigger(trigger );
         }
 
         protected void PlayAudio(CursorSounds soundToPlay)

@@ -55,7 +55,7 @@ namespace Game.Levels
         protected override void AddGridMenuItem(int x, int y, int index)
         {
             // In this case index is used as a char
-            menuGrid[x, y] = Instantiate(menuItemPrefab, menuUIFrame.transform);
+            menuGrid[x, y] = Instantiate(defaultMenuItemPrefab, menuUIFrame.transform);
             ((Text)menuGrid[x, y]).text += (char)index;
         }
 
@@ -71,7 +71,7 @@ namespace Game.Levels
             {
                 PlayAudio(GridMenu.CursorSounds.Select);
                 userNameSelection.text += ((Text)selectedMenuItem).text;
-                animator.SetTrigger(SELECT_TRIGGER);
+                PlayCursorAnim(SELECT_TRIGGER);
             }
             else
             {
@@ -82,6 +82,7 @@ namespace Game.Levels
         void BackSpace()
         {
             PlayAudio(GridMenu.CursorSounds.CannotSelect);
+            PlayCursorAnim(CANNOT_SELECT_TRIGGER);
 
             if (userNameSelection.text != "")
             {
