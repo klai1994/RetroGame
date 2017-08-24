@@ -57,9 +57,16 @@ namespace Game.Actors
         {
             while (isIdle)
             {
-                animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
-                animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
-                yield return new WaitForSeconds(Random.Range(1, idleTurnRate));
+                if (CameraUI.UIController.PlayerIsFree())
+                {
+                    animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
+                    animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
+                    yield return new WaitForSeconds(Random.Range(1, idleTurnRate));
+                }
+                else
+                {
+                    yield return new WaitForEndOfFrame();
+                }
             }
         }
 

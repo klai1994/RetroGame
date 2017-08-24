@@ -1,20 +1,22 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Game.Actors;
 
 namespace Game.CameraUI
 {
     public class UIController : MonoBehaviour
     {
-        static bool characterFrozen;
-        static bool playerInDialogue = false;
-
         [SerializeField] GameObject inventory;
+        [SerializeField] AudioClip openMenuSound;
+        AudioSource audioSource;
+
+        static bool playerInDialogue = false;
+        static bool characterFrozen;
         float movementScale;
 
         void Start()
         {
             movementScale = ActorAvatar.MovementScale;
+            audioSource = GetComponent<AudioSource>();
         }
 
         void Update()
@@ -56,6 +58,7 @@ namespace Game.CameraUI
         private void ToggleUI()
         {
             characterFrozen = !characterFrozen;
+            audioSource.PlayOneShot(openMenuSound);
 
             foreach (ActorAvatar avatar in GameObject.FindObjectsOfType<ActorAvatar>())
             {

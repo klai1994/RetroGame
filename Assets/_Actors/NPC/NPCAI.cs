@@ -50,6 +50,8 @@ namespace Game.Actors
         {
             if (avatar.GetDistance(target) > destroyThreshold)
             {
+                Interaction interaction = GetComponent<Interaction>();
+                PlayerAvatarControl.BroadcastPlayerInteraction -= interaction.Interact;
                 Destroy(gameObject);
             }
         }
