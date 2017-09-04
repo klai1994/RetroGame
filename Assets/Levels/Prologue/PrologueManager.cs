@@ -9,9 +9,9 @@ namespace Game.Levels
     public class PrologueManager : MonoBehaviour
     {
         [SerializeField] Image fadePanel;
-        [SerializeField] LetterboxManager letterBoxManager;
-        [SerializeField] Actors.NPCAI officer;
         [SerializeField] GameObject targetExit;
+        Actors.NPCAI officer;
+        Letterbox letterbox;
         NameSelect nameselect;
 
         const int INTRO_SCENE_ID = 1;
@@ -24,6 +24,8 @@ namespace Game.Levels
 
         void Start()
         {
+            officer = FindObjectOfType<Actors.NPCAI>();
+            letterbox = FindObjectOfType<Letterbox>();
             nameselect = FindObjectOfType<NameSelect>();
             nameselect.NotifyNameSelected += StartPrologue;
         }
@@ -50,7 +52,7 @@ namespace Game.Levels
         public IEnumerator FadeIn()
         {
             yield return new WaitForSeconds(FADE_START_DELAY);
-            letterBoxManager.gameObject.SetActive(true);
+            letterbox.gameObject.SetActive(true);
             alphaFade = 1;
 
             while (fadePanel.color.a > 0)

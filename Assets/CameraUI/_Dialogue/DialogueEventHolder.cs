@@ -2,6 +2,10 @@
 
 namespace Game.CameraUI.Dialogue
 {
+    /// <summary>
+    /// This class is what .json dialogue event files are transformed into by LitJson. The list is the root node
+    /// for each file, and each DialogueEventInfo struct represents a child node to the root node of the file.
+    /// </summary>
     public class DialogueEventHolder
     {
         // Name must match root node in .json file

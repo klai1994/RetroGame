@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.CameraUI.Dialogue
 {
+    /// <summary>
+    /// This class holds a static reference to a collection of all the dialogue events that occur in the game.
+    /// </summary>
     public class DialogueEventAtlas : MonoBehaviour
     {
         static Dictionary<string, int> atlas = null;

@@ -5,23 +5,23 @@ namespace Game.CameraUI.Dialogue
     /// <summary>
     /// This class provides the user the means to control progression of dialogue.
     /// </summary>
-    [RequireComponent(typeof(LetterboxManager))]
+    [RequireComponent(typeof(Letterbox))]
     public class DialogueControlHandler : MonoBehaviour
     {
         public static DialogueEventHolder currentEvent;
-        private static LetterboxManager manager;
+        private static Letterbox letterbox;
         private static int dialogueStage;
 
         // Use this for initialization
         void Awake()
         {
-            manager = gameObject.GetComponent<LetterboxManager>();
+            letterbox = gameObject.GetComponent<Letterbox>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.C) && currentEvent != null && manager.GetTextSegmentEnded() == true)
+            if (Input.GetKeyDown(KeyCode.C) && currentEvent != null && letterbox.TextSegmentEnded)
             {
                 ProgressDialogue();
             }
@@ -41,7 +41,7 @@ namespace Game.CameraUI.Dialogue
 
         private static void ProgressDialogue()
         {
-            manager.ConfigurePanel(currentEvent, dialogueStage);
+            letterbox.ConfigureLetterbox(currentEvent, dialogueStage);
             dialogueStage++;
         }
     }

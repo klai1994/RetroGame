@@ -3,6 +3,10 @@ using LitJson;
 
 namespace Game.CameraUI.Dialogue
 {
+    /// <summary>
+    /// The JsonReader extracts the text from a specified dialogue event .json file and translates it to 
+    /// a DialogueEventHolder struct.
+    /// </summary>
     public class JsonReader
     {
         public static Object[] dialogueEvents = Resources.LoadAll<Object>("DialogueEvents");
