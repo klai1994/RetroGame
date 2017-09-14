@@ -1,8 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-
 using Game.CameraUI;
-using System;
 
 namespace Game.Levels
 {
@@ -12,100 +10,84 @@ namespace Game.Levels
         public event BroadcastNameSelected NotifyNameSelected;
 
         [SerializeField] Text userNameSelection;
+        int charIndex;
+
         const string DEFAULT_NAME = "Mason";
         const int MAX_NAME_LENGTH = 13;
-
-        const int LETTER_GRID_X = 7;
-        const int LETTER_GRID_Y = 8;
+        const int GRID_SIZE_X = 7;
+        const int GRID_SIZE_Y = 8;
 
         void Start()
         {
-            InitializeGridMenu(LETTER_GRID_X, LETTER_GRID_Y, PopulateLetterGrid);
+            InitializeGridMenu(GRID_SIZE_X, GRID_SIZE_Y, PopulateLetterGrid);
         }
 
         void Update()
         {
-            ProcessCursorInput();
+            ProcessKeyInput();
             ProcessCommandInput();
         }
 
-        protected override void ProcessCommandInput()
+        void ProcessCommandInput()
         {
+            // Select default name
             if (Input.GetKeyDown(KeyCode.V))
             {
-                SelectDefaultName();
+                PlayAudio(CursorSounds.Default);
+                userNameSelection.text = DEFAULT_NAME;
             }
 
+            // Select character
             if (Input.GetKeyDown(KeyCode.C))
             {
-                SelectCharacter();
+                if (userNameSelection.text.Length < MAX_NAME_LENGTH)
+                {
+                    PlayAudio(CursorSounds.Select);
+                    userNameSelection.text += ((Text)selectedMenuItem).text;
+                    PlayCursorAnim(SELECT_TRIGGER);
+                }
+                else
+                {
+                    PlayAudio(CursorSounds.CannotSelect);
+                }
             }
 
+            // Backspace
             if (Input.GetKeyDown(KeyCode.X))
             {
-                BackSpace();
+                PlayAudio(CursorSounds.CannotSelect);
+
+                if (userNameSelection.text != "")
+                {
+                    userNameSelection.text = userNameSelection.text.Substring(0, userNameSelection.text.Length - 1);
+                }
             }
 
+            // Complete name selection
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                ConfirmNameSelection();
-            }
-        }
+                string selectedName = userNameSelection.text.Trim();
+                if (selectedName == "")
+                {
+                    PlayAudio(CursorSounds.CannotSelect);
+                    userNameSelection.text = "";
+                    return;
+                }
 
-        protected override void AddGridMenuItem(int x, int y, int index)
-        {
-            // In this case index is used as a char
-            menuGrid[x, y] = Instantiate(defaultMenuItemPrefab, menuUIFrame.transform);
-            ((Text)menuGrid[x, y]).text += (char)index;
-        }
+                Actors.PlayerData.PlayerName = selectedName;
+                PlayAudio(CursorSounds.Confirm);
 
-        void SelectDefaultName()
-        {
-            PlayAudio(GridMenu.CursorSounds.Default);
-            userNameSelection.text = DEFAULT_NAME;
-        }
-
-        void SelectCharacter()
-        {
-            if (userNameSelection.text.Length < MAX_NAME_LENGTH)
-            {
-                PlayAudio(GridMenu.CursorSounds.Select);
-                userNameSelection.text += ((Text)selectedMenuItem).text;
-                PlayCursorAnim(SELECT_TRIGGER);
-            }
-            else
-            {
-                PlayAudio(GridMenu.CursorSounds.CannotSelect);
-            }
-        }
-
-        void BackSpace()
-        {
-            PlayAudio(GridMenu.CursorSounds.CannotSelect);
-            PlayCursorAnim(CANNOT_SELECT_TRIGGER);
-
-            if (userNameSelection.text != "")
-            {
-                userNameSelection.text = userNameSelection.text.Substring(0, userNameSelection.text.Length - 1);
-            }
-        }
-
-        void ConfirmNameSelection()
-        {
-            string selectedName = userNameSelection.text.Trim();
-            if (selectedName == "")
-            {
-                PlayAudio(GridMenu.CursorSounds.CannotSelect);
-                userNameSelection.text = "";
-                return;
+                NotifyNameSelected();
+                gameObject.transform.SetParent(Camera.main.transform);
+                Destroy(this);
             }
 
-            Actors.PlayerData.PlayerName = selectedName;
-            PlayAudio(GridMenu.CursorSounds.Confirm);
+        }
 
-            NotifyNameSelected();
-            gameObject.transform.SetParent(Camera.main.transform);
-            Destroy(this);
+        protected override void AddGridMenuItem(int x, int y)
+        {
+            base.AddGridMenuItem(x, y);
+            ((Text)menuGrid[x, y]).text += (char)charIndex;
         }
 
         void PopulateLetterGrid()
@@ -117,18 +99,18 @@ namespace Game.Levels
             const int LOWER_START = 97;
             const int LOWER_END = 122;
 
-            int charIndex = UPPER_START;
+            charIndex = UPPER_START;
 
-            for (int y = 0; y < LETTER_GRID_Y; y++)
+            for (int y = 0; y < GRID_SIZE_Y; y++)
             {
-                for (int x = 0; x < LETTER_GRID_X; x++)
+                for (int x = 0; x < GRID_SIZE_X; x++)
                 {
-                    // If uppercase letters filled in, complete last row with spaces
+                    // Complete last row with spaces
                     if (charIndex > UPPER_END && charIndex < LOWER_START)
                     {
-                        AddGridMenuItem(x, y, SPACE);
+                        AddGridMenuItem(x, y);
                         x++;
-                        AddGridMenuItem(x, y, SPACE);
+                        AddGridMenuItem(x, y);
                         charIndex = LOWER_START;
                         continue;
                     }
@@ -139,7 +121,7 @@ namespace Game.Levels
                         charIndex = SPACE;
                     }
 
-                    AddGridMenuItem(x, y, charIndex);
+                    AddGridMenuItem(x, y);
 
                     // Stop incrementing char index after lowercase letters completed
                     if (charIndex != SPACE)
