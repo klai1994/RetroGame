@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Game.Actors
 {
-    [RequireComponent(typeof(CameraUI.IsometricSpriteRenderer))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Animator))]
     public class ActorAvatar : Actor
@@ -15,7 +14,8 @@ namespace Game.Actors
         const string HORIZONTAL_AXIS = "Horizontal";
         const string VERTICAL_AXIS = "Vertical";
         const string ANIM_IS_WALKING = "isWalking";
-        
+
+        const int ORDER_SCALE = -5;
         const string MOVEMENT_X = "movement_x";
         const string MOVEMENT_Y = "movement_y";
         public static float MovementScale = 0.10f;
@@ -38,26 +38,28 @@ namespace Game.Actors
 
         public void MoveAvatar(Vector2 moveDirection)
         {
-            if (CameraUI.UIController.PlayerIsFree())
+            if (moveDirection != Vector2.zero && PlayerAvatarControl.PlayerIsFree)
             {
-                if (moveDirection != Vector2.zero)
-                {
-                    animator.SetBool(ANIM_IS_WALKING, true);
-                    SetAnimatorDirection(moveDirection);
-                    rbody.MovePosition(rbody.position + moveDirection * (movementSpeed * MovementScale));
-                }
-                else
-                {
-                    animator.SetBool(ANIM_IS_WALKING, false);
-                }
+                animator.SetBool(ANIM_IS_WALKING, true);
+                SetAnimatorDirection(moveDirection);
+                rbody.MovePosition(rbody.position + moveDirection * (movementSpeed * MovementScale));
+
+                // Ensures sprites display on top of eachother properly
+                SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+                renderer.sortingOrder = (int)(transform.position.y * ORDER_SCALE);
             }
+            else
+            {
+                animator.SetBool(ANIM_IS_WALKING, false);
+            }
+
         }
 
         public IEnumerator IdleActions()
         {
             while (isIdle)
             {
-                if (CameraUI.UIController.PlayerIsFree())
+                if (PlayerAvatarControl.PlayerIsFree)
                 {
                     animator.SetFloat(MOVEMENT_X, Random.Range(-1f, 1f));
                     animator.SetFloat(MOVEMENT_Y, Random.Range(-1f, 1f));
@@ -74,11 +76,6 @@ namespace Game.Actors
         {
             animator.SetBool(ANIM_IS_WALKING, false);
             SetAnimatorDirection((target - transform.position).normalized);
-        }
-
-        public void ToggleAnimations()
-        {
-            animator.enabled = !animator.isActiveAndEnabled;
         }
 
         void SetAnimatorDirection(Vector2 direction)

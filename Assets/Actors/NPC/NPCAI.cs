@@ -10,7 +10,6 @@ namespace Game.Actors
         [SerializeField] float maxChaseDistance = 5f;
         [SerializeField] float destroyThreshold = 20f;
         [SerializeField] float stoppingDistance = 2f;
-        bool isChasing = false;
 
         // Use this for initialization
         void Start()
@@ -33,15 +32,10 @@ namespace Game.Actors
             if (target && avatar.GetDistance(target) > stoppingDistance
                        && avatar.GetDistance(target) < maxChaseDistance)
             {
-                if (!isChasing)
-                {
-                    isChasing = true;
-                }
                 avatar.MoveAvatar((target.transform.position - transform.position).normalized);
             }
-            else if (isChasing)
+            else
             {
-                isChasing = false;
                 avatar.MoveAvatar(Vector2.zero);
             }
         }
@@ -50,8 +44,6 @@ namespace Game.Actors
         {
             if (avatar.GetDistance(target) > destroyThreshold)
             {
-                Interaction interaction = GetComponent<Interaction>();
-                PlayerAvatarControl.BroadcastPlayerInteraction -= interaction.Interact;
                 Destroy(gameObject);
             }
         }

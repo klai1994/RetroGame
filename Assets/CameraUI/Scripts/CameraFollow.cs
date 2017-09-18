@@ -5,32 +5,30 @@ namespace Game.CameraUI
     public class CameraFollow : MonoBehaviour
     {
         // Screen height divded by pixels per unit sprites for consistent camera size
-        [SerializeField] Transform target;
-        int initialZoom = 6;
-
-        public int InitialZoom
+        int zoom = 6;
+        public int Zoom
         {
-            get
-            {
-                return initialZoom;
-            }
-
+            get { return zoom; }
             set
             {
-                initialZoom = value;
+                zoom = value;
+                SetCameraZoom(value);
             }
         }
+
+        public Transform Target { get; set; }
 
         // Use this for initialization
         void Start()
         {
-            SetCameraZoom(InitialZoom);
+            Target = Actors.PlayerAvatarControl.GetPlayerInstance().transform;
+            SetCameraZoom(Zoom);
         }
        
         // Update is called once per frame
         void Update()
         {
-            if (target)
+            if (Target)
             {
                 SetCameraPosition();
             }
@@ -44,7 +42,7 @@ namespace Game.CameraUI
 
         private void SetCameraPosition()
         {
-            transform.position = target.transform.position + new Vector3(0.0f, 0.0f, -10.0f);
+            transform.position = Target.transform.position + new Vector3(0.0f, 0.0f, -10.0f);
         }
     }
 }

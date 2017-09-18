@@ -5,7 +5,7 @@ using System;
 
 namespace Game.CameraUI.Dialogue
 {
-    public class Letterbox : MonoBehaviour
+    public class LetterboxController : MonoBehaviour
     {
         [SerializeField] GameObject dialogueUIFrame;
         [SerializeField] Font font;
@@ -18,8 +18,10 @@ namespace Game.CameraUI.Dialogue
         AudioClip currentVoice;
         AudioSource audioSource;
 
-        bool dialogueSkippable = true;
+        public static bool EventOccuring { get; private set; }
         public bool TextSegmentEnded { get; private set; }
+        bool dialogueSkippable = true;
+
         public float textSpeed = 0.5f;
         public int voiceFrequency = 3;
 
@@ -37,12 +39,13 @@ namespace Game.CameraUI.Dialogue
 
             if (dialogueStage < dialogueEventHolder.eventInfoList.Count)
             {
-                TextSegmentEnded = false;
                 StartCoroutine(AnimateText(dialogueEventHolder.eventInfoList[dialogueStage].DialogueText));
+                EventOccuring = true;
             }
             else
             {
-                DialogueControlHandler.currentEvent = null;
+                DialogueInteractionHandler.currentEvent = null;
+                EventOccuring = false;
             }
 
             // While dialogue event is not finished
@@ -120,6 +123,7 @@ namespace Game.CameraUI.Dialogue
         // Makes text appear one character at a time and plays voice sound, randomized to sound more natural
         public IEnumerator AnimateText(string text)
         {
+            TextSegmentEnded = false;
             letterboxText.text = "";
 
             foreach (char letter in text)

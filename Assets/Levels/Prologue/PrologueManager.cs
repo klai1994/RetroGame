@@ -10,9 +10,11 @@ namespace Game.Levels
     {
         [SerializeField] Image fadePanel;
         [SerializeField] GameObject targetExit;
+
         Actors.NPCAI officer;
-        Letterbox letterbox;
+        LetterboxController letterbox;
         NameSelect nameselect;
+        DialogueInteractionHandler introHandler;
 
         const int INTRO_SCENE_ID = 1;
         const float FADE_INCREMENT = 0.2f;
@@ -24,15 +26,16 @@ namespace Game.Levels
 
         void Start()
         {
+            introHandler = FindObjectOfType<DialogueInteractionHandler>();
             officer = FindObjectOfType<Actors.NPCAI>();
-            letterbox = FindObjectOfType<Letterbox>();
+            letterbox = FindObjectOfType<LetterboxController>();
             nameselect = FindObjectOfType<NameSelect>();
             nameselect.NotifyNameSelected += StartPrologue;
         }
 
         void Update()
         {
-            if (sceneStarted == true && DialogueControlHandler.currentEvent == null)
+            if (sceneStarted == true && DialogueInteractionHandler.currentEvent == null)
             {
                 // Cues officer to leave scene.
                 officer.SetTarget(targetExit);
@@ -40,6 +43,11 @@ namespace Game.Levels
 
                 // Prevents coroutine from being called multiple times
                 sceneStarted = !sceneStarted;
+            }
+
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                introHandler.ProgressDialogue();
             }
         }
         
@@ -63,7 +71,7 @@ namespace Game.Levels
 
             }
 
-            DialogueControlHandler.InitializeEvent(DialogueEventName.Prologue);
+            introHandler.InitiateDialogue();
             sceneStarted = true;
         }
 
