@@ -11,18 +11,42 @@ namespace Game.CameraUI.Dialogue
         [SerializeField] Font font;
         [SerializeField] Text letterboxText;
         [SerializeField] Image characterPortrait;
-        [SerializeField] bool staticDialogue = false;
+        [SerializeField] bool staticDialogue;
 
         Sprite[] dialoguePortraits;
         AudioClip[] voices;
         AudioClip currentVoice;
         AudioSource audioSource;
 
-        public static bool EventOccuring { get; private set; }
-        public bool TextSegmentEnded { get; private set; }
-        bool dialogueSkippable = true;
+        static DialogueEventHolder currentEvent;
+        public static DialogueEventHolder CurrentEvent
+        {
+            get
+            {
+                return currentEvent;
+            }
+            set
+            {
+                currentEvent = value;
+                if (value != null)
+                {
+                    EventOccuring = true;
+                }
+                else
+                {
+                    dialogueLine = 0;
+                    EventOccuring = false;
+                }
 
-        public float textSpeed = 0.5f;
+            }
+        }
+
+        public static bool EventOccuring { get; private set; }
+        public static bool dialogueSkippable = true;
+        public bool TextSegmentEnded { get; private set; }
+
+        static int dialogueLine = 0;
+        public float textSpeed = 25f;
         public int voiceFrequency = 3;
 
         void Awake()
@@ -32,64 +56,68 @@ namespace Game.CameraUI.Dialogue
             voices = Resources.LoadAll<AudioClip>("Voices");
         }
 
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.C) && EventOccuring && TextSegmentEnded)
+            {
+                ConfigureLetterbox();
+            }
+        }
+
         // Handles populating elements of letterbox
-        public void ConfigureLetterbox(DialogueEventHolder dialogueEventHolder, int dialogueStage)
+        public void ConfigureLetterbox()
         {
             letterboxText.font = font;
-
-            if (dialogueStage < dialogueEventHolder.eventInfoList.Count)
-            {
-                StartCoroutine(AnimateText(dialogueEventHolder.eventInfoList[dialogueStage].DialogueText));
-                EventOccuring = true;
-            }
-            else
-            {
-                DialogueInteractionHandler.currentEvent = null;
-                EventOccuring = false;
-            }
+            TextSegmentEnded = false;
 
             // While dialogue event is not finished
-            if (dialogueStage < dialogueEventHolder.eventInfoList.Count)
+            if (dialogueLine < CurrentEvent.eventInfoList.Count)
             {
+                StartCoroutine(AnimateText(CurrentEvent.eventInfoList[dialogueLine].DialogueText));
+                DressDialogue(dialogueLine);
+
                 dialogueUIFrame.SetActive(true);
-
-                // If there is a portrait, sets and finds the correct one
-                string portraitFile = dialogueEventHolder.eventInfoList[dialogueStage].characterPortrait;
-
-                if (characterPortrait)
-                {
-                    if (portraitFile != "")
-                    {
-                        characterPortrait.gameObject.SetActive(true);
-                        characterPortrait.sprite = QueryForPortrait(portraitFile);
-                    }
-                    else
-                    {
-                        characterPortrait.gameObject.SetActive(false);
-                    }
-                }
-
-                // If there is a voice, sets and finds the correct one
-                string voice = dialogueEventHolder.eventInfoList[dialogueStage].voice;
-                if (audioSource)
-                {
-                    if (voice != "")
-                    {
-                        currentVoice = QueryForVoice(voice);
-                        audioSource.clip = currentVoice;
-                    }
-                    else
-                    {
-                        currentVoice = null;
-                    }
-                }
-
+                dialogueLine++;
             }
             else
             {
+                CurrentEvent = null;
+
                 if (!staticDialogue)
                 {
                     dialogueUIFrame.SetActive(false);
+                }
+            }
+        }
+
+        // If there is a portrait or voice to go with the dialogue stage, find and set them up
+        void DressDialogue(int dialogueStage)
+        {
+            string portraitFile = CurrentEvent.eventInfoList[dialogueStage].characterPortrait;
+            if (characterPortrait)
+            {
+                if (portraitFile != "")
+                {
+                    characterPortrait.gameObject.SetActive(true);
+                    characterPortrait.sprite = QueryForPortrait(portraitFile);
+                }
+                else
+                {
+                    characterPortrait.gameObject.SetActive(false);
+                }
+            }
+
+            string voice = CurrentEvent.eventInfoList[dialogueStage].voice;
+            if (audioSource)
+            {
+                if (voice != "")
+                {
+                    currentVoice = QueryForVoice(voice);
+                    audioSource.clip = currentVoice;
+                }
+                else
+                {
+                    currentVoice = null;
                 }
             }
         }
@@ -123,13 +151,15 @@ namespace Game.CameraUI.Dialogue
         // Makes text appear one character at a time and plays voice sound, randomized to sound more natural
         public IEnumerator AnimateText(string text)
         {
-            TextSegmentEnded = false;
             letterboxText.text = "";
+            // textSpeed is measured in milliseconds
+            float textDelay = textSpeed / 1000;
 
             foreach (char letter in text)
             {
                 if (Input.GetKey(KeyCode.X) && dialogueSkippable)
                 {
+                    letterboxText.text = text;
                     break;
                 }
 
@@ -143,11 +173,10 @@ namespace Game.CameraUI.Dialogue
                 }
 
                 letterboxText.text += letter;
-                yield return new WaitForSeconds(textSpeed);
+                yield return new WaitForSeconds(textDelay);
             }
-
-            letterboxText.text = text;
             TextSegmentEnded = true;
+
         }
 
     }

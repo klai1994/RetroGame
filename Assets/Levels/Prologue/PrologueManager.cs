@@ -35,7 +35,7 @@ namespace Game.Levels
 
         void Update()
         {
-            if (sceneStarted == true && DialogueInteractionHandler.currentEvent == null)
+            if (sceneStarted == true && !LetterboxController.EventOccuring)
             {
                 // Cues officer to leave scene.
                 officer.SetTarget(targetExit);
@@ -44,14 +44,9 @@ namespace Game.Levels
                 // Prevents coroutine from being called multiple times
                 sceneStarted = !sceneStarted;
             }
-
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                introHandler.ProgressDialogue();
-            }
         }
         
-        private void StartPrologue()
+        void StartPrologue()
         {
             StartCoroutine(FadeIn());
         }

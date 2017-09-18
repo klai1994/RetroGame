@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Game.Actors;
+using System.Collections.Generic;
 
 namespace Game.CameraUI.Dialogue
 {
@@ -8,18 +9,26 @@ namespace Game.CameraUI.Dialogue
     {
         [SerializeField] DialogueEventName[] eventNames;
         [SerializeField] float interactionDistance = 2.5f;
+        DialogueEventName selectedEvent;
 
-        public static DialogueEventHolder currentEvent;
+        int eventIndex;
+        public int EventIndex
+        {
+            get { return eventIndex; }
+            set
+            {
+                eventIndex = value;
+                selectedEvent = eventNames[value];
+            }
+        }
+
         LetterboxController letterbox;
-
         Actor actor;
         PlayerAvatarControl player;
 
-        int eventIndex = 0;
-        int dialogueLine = 0;
-
         void Start()
         {
+            EventIndex = 0;
             actor = GetComponent<Actor>();
             player = PlayerAvatarControl.GetPlayerInstance();
             letterbox = FindObjectOfType<LetterboxController>();
@@ -28,58 +37,40 @@ namespace Game.CameraUI.Dialogue
             {
                 player.BroadcastPlayerInteraction += Interact;
             }
-
-        }
-
-        // Used for interactable dialogue in overworld, otherwise call InitiateDialogue and ProgressDialogue directly
-        void Interact()
-        {
-            if (actor.GetDistance(player.gameObject) < interactionDistance)
-            {
-                if (PlayerAvatarControl.PlayerIsFree)
-                {
-                    player.GetActorAvatar().FaceDirection(transform.position);
-                    // If interactable object is an avatar, face player
-                    if (actor.GetType() == typeof(ActorAvatar))
-                    {
-                        ((ActorAvatar)actor).FaceDirection(player.GetActorAvatar().transform.position);
-                    }
-                    InitiateDialogue();
-
-                }
-                else
-                {
-                    ProgressDialogue();
-                }
-            }
-
         }
 
         void OnDestroy()
         {
-            player.BroadcastPlayerInteraction -= Interact;
+            if (player)
+            {
+                player.BroadcastPlayerInteraction -= Interact;
+            }
+        }
+
+        // Used for interactable dialogue in overworld, otherwise call InitiateDialogue directly
+        void Interact()
+        {
+            if (PlayerAvatarControl.PlayerIsFree && actor.GetDistance(player.gameObject) < interactionDistance)
+            {
+                player.GetActorAvatar().FaceDirection(transform.position);
+                // If interactable object is an avatar, face player
+                if (actor.GetType() == typeof(ActorAvatar))
+                {
+                    ((ActorAvatar)actor).FaceDirection(player.GetActorAvatar().transform.position);
+                }
+                InitiateDialogue();
+            }
         }
 
         public void InitiateDialogue()
         {
-            DialogueEventName dialogueScene = eventNames[eventIndex];
-            currentEvent = JsonReader.GetDialogueEvent(dialogueScene);
-            dialogueLine = 0;
-            letterbox.ConfigureLetterbox(currentEvent, dialogueLine);
-            dialogueLine++;
+            LetterboxController.CurrentEvent = JsonReader.GetDialogueEvent(selectedEvent);
+            letterbox.ConfigureLetterbox();
 
-            if (eventIndex < eventNames.Length - 1)
+            // Goes to next dialogue event to be prompted on the next initializaion
+            if (EventIndex < eventNames.Length - 1)
             {
-                eventIndex++;
-            }
-        }
-
-        public void ProgressDialogue()
-        {
-            if (letterbox.TextSegmentEnded)
-            {
-                letterbox.ConfigureLetterbox(currentEvent, dialogueLine);
-                dialogueLine++;
+                EventIndex++;
             }
         }
 

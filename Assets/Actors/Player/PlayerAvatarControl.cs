@@ -12,7 +12,22 @@ namespace Game.Actors
         const string HORIZONTAL_AXIS = "Horizontal";
         const string VERTICAL_AXIS = "Vertical";
 
-        public static bool PlayerIsFree { get; set; }
+        static bool playerIsFree;
+        public static bool PlayerIsFree
+        {
+            get
+            {
+                if (!FindObjectOfType<PlayerAvatarControl>())
+                {
+                    playerIsFree = true;
+                }
+                return playerIsFree;
+            }
+            set
+            {
+                playerIsFree = value;
+            }
+        }
 
         ActorAvatar avatar;
         static PlayerAvatarControl playerInstance;
@@ -42,7 +57,6 @@ namespace Game.Actors
             {
                 BroadcastPlayerInteraction();
             }
-
             avatar.MoveAvatar(new Vector2(Input.GetAxisRaw(HORIZONTAL_AXIS), Input.GetAxisRaw(VERTICAL_AXIS)));
          
         }
