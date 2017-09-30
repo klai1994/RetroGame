@@ -5,8 +5,9 @@ using System;
 
 namespace Game.CameraUI.Dialogue
 {
-    public class LetterboxController : MonoBehaviour
+    public class DialogueSystem : MonoBehaviour
     {
+        public static DialogueSystem dialogueSystem;
         [SerializeField] GameObject dialogueUIFrame;
         [SerializeField] Font font;
         [SerializeField] Text letterboxText;
@@ -18,8 +19,8 @@ namespace Game.CameraUI.Dialogue
         AudioClip currentVoice;
         AudioSource audioSource;
 
-        static DialogueEventHolder currentEvent;
-        public static DialogueEventHolder CurrentEvent
+        DialogueEventHolder currentEvent;
+        public DialogueEventHolder CurrentEvent
         {
             get
             {
@@ -40,17 +41,25 @@ namespace Game.CameraUI.Dialogue
 
             }
         }
+        public bool EventOccuring { get; private set; }
+        public bool dialogueSkippable = true;
 
-        public static bool EventOccuring { get; private set; }
-        public static bool dialogueSkippable = true;
         public bool TextSegmentEnded { get; private set; }
-
-        static int dialogueLine = 0;
+        int dialogueLine = 0;
         public float textSpeed = 25f;
         public int voiceFrequency = 3;
 
         void Awake()
         {
+            if (dialogueSystem == null)
+            {
+                dialogueSystem = this;
+            }
+            else if (dialogueSystem != this)
+            {
+                Debug.LogError("There is more than once instance of DialogueSystem!");
+            }
+
             audioSource = GetComponent<AudioSource>();
             dialoguePortraits = Resources.LoadAll<Sprite>("DialoguePortraits");
             voices = Resources.LoadAll<AudioClip>("Voices");
@@ -64,8 +73,14 @@ namespace Game.CameraUI.Dialogue
             }
         }
 
+        public void InitiateDialogue(DialogueEventName dialogueEvent)
+        {
+            CurrentEvent = JsonReader.GetDialogueEvent(dialogueEvent);
+            ConfigureLetterbox();
+        }
+
         // Handles populating elements of letterbox
-        public void ConfigureLetterbox()
+        void ConfigureLetterbox()
         {
             letterboxText.font = font;
             TextSegmentEnded = false;
@@ -123,7 +138,7 @@ namespace Game.CameraUI.Dialogue
         }
 
         // Checks resources folder for portrait in dialogue
-        private Sprite QueryForPortrait(string portraitFileName)
+        Sprite QueryForPortrait(string portraitFileName)
         {
             foreach (Sprite portrait in dialoguePortraits)
             {
@@ -136,7 +151,7 @@ namespace Game.CameraUI.Dialogue
         }
         
         // Checks resources folder for voice audio in dialogue
-        private AudioClip QueryForVoice(string voiceFileName)
+        AudioClip QueryForVoice(string voiceFileName)
         {
             foreach (AudioClip voice in voices)
             {
@@ -149,7 +164,7 @@ namespace Game.CameraUI.Dialogue
         }
 
         // Makes text appear one character at a time and plays voice sound, randomized to sound more natural
-        public IEnumerator AnimateText(string text)
+        IEnumerator AnimateText(string text)
         {
             letterboxText.text = "";
             // textSpeed is measured in milliseconds

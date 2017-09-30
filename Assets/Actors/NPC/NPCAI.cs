@@ -7,6 +7,7 @@ namespace Game.Actors
     {
         ActorAvatar avatar;
         [SerializeField] GameObject target;
+
         [SerializeField] float maxChaseDistance = 5f;
         [SerializeField] float destroyThreshold = 20f;
         [SerializeField] float stoppingDistance = 2f;
@@ -55,7 +56,7 @@ namespace Game.Actors
 
         public void Untarget()
         {
-            this.target = gameObject;
+            target = gameObject;
         }
 
     }

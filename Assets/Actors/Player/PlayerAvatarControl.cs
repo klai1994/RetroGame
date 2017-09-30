@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Game.CameraUI.Dialogue;
+using Game.Combat;
 
 namespace Game.Actors
 {
@@ -51,9 +52,9 @@ namespace Game.Actors
         // Update is called once per frame
         void Update()
         {
-            PlayerIsFree = !(LetterboxController.EventOccuring);
+            PlayerIsFree = !(DialogueSystem.dialogueSystem.EventOccuring || BattleSystem.battleSystem.BattleOccuring);
 
-            if (Input.GetKeyDown(KeyCode.C))
+            if (Input.GetKeyDown(KeyCode.C) && BroadcastPlayerInteraction != null)
             {
                 BroadcastPlayerInteraction();
             }

@@ -34,6 +34,8 @@ namespace Game.Actors
             {
                 StartCoroutine(IdleActions());
             }
+
+            InitializeInteractions();
         }
 
         public void MoveAvatar(Vector2 moveDirection)
