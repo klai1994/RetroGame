@@ -7,6 +7,8 @@ namespace Game.Actors
     public class Actor : MonoBehaviour
     {
         [SerializeField] DialogueEventName[] eventNames;
+        [SerializeField] Combat.CombatData combatData;
+
         [SerializeField] float interactionDistance = 2.5f;
         [SerializeField] bool canBattle = false;
         [SerializeField] bool canInteractWith = false;
@@ -36,7 +38,8 @@ namespace Game.Actors
         {
             if (canBattle)
             {
-                Combat.BattleSystem.battleSystem.StartNewBattle();
+                Combat.BattleSystem.battleSystem.StartNewBattle(combatData);
+                Destroy(gameObject);
             }
         }
 

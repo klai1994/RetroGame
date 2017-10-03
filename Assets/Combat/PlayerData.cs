@@ -1,8 +1,7 @@
-﻿namespace Game.Actors
-{
-    public static class PlayerData
+﻿namespace Game
+{ 
+    public class PlayerData
     {
-        
         static string playerName;
         public static string PlayerName
         {

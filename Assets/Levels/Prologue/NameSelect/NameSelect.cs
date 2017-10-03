@@ -74,7 +74,7 @@ namespace Game.Levels
                     return;
                 }
 
-                Actors.PlayerData.PlayerName = selectedName;
+                PlayerData.PlayerName = selectedName;
                 PlayAudio(CursorSounds.Confirm);
 
                 NotifyNameSelected();

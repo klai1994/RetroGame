@@ -41,7 +41,7 @@ namespace Game.CameraUI.Dialogue
         {
             get
             {
-                return dialogueText.Replace("@", Game.Actors.PlayerData.PlayerName);
+                return dialogueText.Replace("@", PlayerData.PlayerName);
             }
         }
     }
