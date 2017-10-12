@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Game.CameraUI.Dialogue;
+using Game.Combat;
 
 namespace Game.Actors
 {
@@ -7,7 +8,7 @@ namespace Game.Actors
     public class Actor : MonoBehaviour
     {
         [SerializeField] DialogueEventName[] eventNames;
-        [SerializeField] Combat.CombatData combatData;
+        [SerializeField] CombatData combatData;
 
         [SerializeField] float interactionDistance = 2.5f;
         [SerializeField] bool canBattle = false;
@@ -31,14 +32,14 @@ namespace Game.Actors
 
         void Start()
         {
-            InitializeInteractions();
+            Init();
         }
 
         void OnCollisionEnter2D(Collision2D collision)
         {
             if (canBattle)
             {
-                Combat.BattleSystem.battleSystem.StartNewBattle(combatData);
+                BattleSystem.battleSystem.StartNewBattle(combatData);
                 Destroy(gameObject);
             }
         }
@@ -52,7 +53,7 @@ namespace Game.Actors
         }
 
         // Ensures subclasses can subscribe to the player input broadcast delegate
-        protected void InitializeInteractions()
+        protected void Init()
         {
             if (canInteractWith)
             {

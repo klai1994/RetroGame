@@ -1,20 +1,20 @@
-﻿namespace Game
-{ 
-    public class PlayerData
+﻿using Game.Combat;
+using UnityEngine;
+
+namespace Game
+{
+    public static class PlayerData
     {
-        static string playerName;
-        public static string PlayerName
+        const float STARTING_HEALTH = 60;
+        const float INITIAL_DAMAGE = 5;
+
+        static CombatData playerCombatData;
+        public static CombatData PlayerCombatData { get { return playerCombatData; } private set { } }
+
+        public static void CreateNewPlayer(string name)
         {
-            get
-            {
-                return playerName;
-            }
-
-            set
-            {
-                playerName = value;
-            }
+            playerCombatData = ScriptableObject.CreateInstance<CombatData>();
+            PlayerCombatData.Init(name, INITIAL_DAMAGE, STARTING_HEALTH);
         }
-
     }
 }

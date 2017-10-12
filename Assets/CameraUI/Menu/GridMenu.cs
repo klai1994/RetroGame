@@ -34,7 +34,7 @@ namespace Game.CameraUI
         const float KEY_DELAY = 0.2f;
         float timePassedSinceKey = 0;
 
-        protected void InitializeGridMenu(int sizeX, int sizeY, UnityAction populateAction = null)
+        protected void Init(int sizeX, int sizeY, UnityAction populateAction = null)
         {
             animator = GetComponentInChildren<Animator>();
             audioSource = GetComponent<AudioSource>();

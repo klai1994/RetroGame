@@ -7,7 +7,6 @@ namespace Game.Combat
     {
         public static BattleSystem battleSystem;
         [SerializeField] GameObject battleUIFrame;
-        [SerializeField] CombatData playerCombatData;
         [SerializeField] GameObject enemyParent;
 
         bool battleOccuring;
@@ -36,7 +35,9 @@ namespace Game.Combat
         [SerializeField] Text playerHealth;
         [SerializeField] Text enemyHealth;
 
-        CombatData enemyData;
+        const string PLAYER_TAG = "Player";
+        CombatData playerInCombatData;
+        CombatData enemyInCombatData;
 
         void Awake()
         {
@@ -48,33 +49,42 @@ namespace Game.Combat
             {
                 Debug.LogWarning("There is more than once instance of BattleSystem!");
             }
-
         }
 
         void Update()
         {
             if (BattleOccuring)
             {
-                enemyHealth.text = string.Format("Enemy: {0}/{1}", enemyData.CurrentHealth, enemyData.MaxHealth);
-                playerHealth.text = string.Format("{0}: {1}/{2}", PlayerData.PlayerName, 60, 60);
+                enemyHealth.text = string.Format("{0}\n\n{1}/{2}",
+                    enemyInCombatData.ActorName, enemyInCombatData.CurrentHealth, enemyInCombatData.MaxHealth);
+                playerHealth.text = string.Format("{0}\n\n{1}/{2}",
+                    playerInCombatData.ActorName, playerInCombatData.CurrentHealth, playerInCombatData.MaxHealth);
 
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    enemyData.CurrentHealth -= 5;
+                    enemyInCombatData.CurrentHealth -= playerInCombatData.BaseDamage;
+                    playerInCombatData.CurrentHealth -= enemyInCombatData.BaseDamage;
                 }
 
-                if (enemyData.IsDead)
+                if (enemyInCombatData.IsDead)
                 {
+                    PlayerData.PlayerCombatData.CurrentHealth = playerInCombatData.CurrentHealth;
                     BattleOccuring = false;
                 }
             }
 
         }
 
-        public void StartNewBattle(CombatData data)
+        public void StartNewBattle(CombatData enemyData)
         {
             BattleOccuring = true;
-            enemyData = Instantiate(data, enemyParent.transform);
+
+            playerInCombatData = PlayerData.PlayerCombatData;
+            enemyInCombatData = ScriptableObject.Instantiate(enemyData);
+            enemyInCombatData.Init(enemyData.ActorName, enemyData.BaseDamage, enemyData.MaxHealth);
+
+            GameObject enemy = Instantiate(new GameObject(), enemyParent.transform);
+            enemy.AddComponent<Image>().sprite = enemyData.CombatSprite;
 
         }
     }

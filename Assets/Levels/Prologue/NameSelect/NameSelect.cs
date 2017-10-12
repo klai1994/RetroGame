@@ -19,7 +19,7 @@ namespace Game.Levels
 
         void Start()
         {
-            InitializeGridMenu(GRID_SIZE_X, GRID_SIZE_Y, PopulateLetterGrid);
+            Init(GRID_SIZE_X, GRID_SIZE_Y, PopulateLetterGrid);
         }
 
         void Update()
@@ -74,7 +74,7 @@ namespace Game.Levels
                     return;
                 }
 
-                PlayerData.PlayerName = selectedName;
+                PlayerData.CreateNewPlayer(selectedName);
                 PlayAudio(CursorSounds.Confirm);
 
                 NotifyNameSelected();

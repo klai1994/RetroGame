@@ -55,7 +55,7 @@ namespace Game.Levels
             yield return new WaitForSeconds(FADE_START_DELAY);
             letterbox.gameObject.SetActive(true);
             alphaFade = 1;
-
+            
             while (fadePanel.color.a > 0)
             {
                 alphaFade -= FADE_INCREMENT;
