@@ -11,8 +11,7 @@ namespace Game.Actors
         [SerializeField] CombatData combatData;
 
         [SerializeField] float interactionDistance = 2.5f;
-        [SerializeField] bool canBattle = false;
-        [SerializeField] bool canInteractWith = false;
+        bool canInteractWith = false;
 
         PlayerAvatarControl player;
         int eventIndex;
@@ -37,7 +36,7 @@ namespace Game.Actors
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            if (canBattle)
+            if (combatData != null)
             {
                 BattleSystem.battleSystem.StartNewBattle(combatData);
                 Destroy(gameObject);
@@ -46,26 +45,31 @@ namespace Game.Actors
 
         void OnDestroy()
         {
-            if (canInteractWith)
-            {
-                player.BroadcastPlayerInteraction -= Interact;
-            }
+            player.BroadcastPlayerInteraction -= Interact;
         }
 
         // Ensures subclasses can subscribe to the player input broadcast delegate
         protected void Init()
         {
+            player = PlayerAvatarControl.GetPlayerInstance();
+            canInteractWith = eventNames.Length > 0;
+
             if (canInteractWith)
             {
-                player = PlayerAvatarControl.GetPlayerInstance();
-                EventIndex = 0;
-                player.BroadcastPlayerInteraction += Interact;
+                AddInteraction(eventNames);
             }
         }
 
         public float GetDistance(GameObject target)
         {
             return Vector2.Distance(target.transform.position, transform.position);
+        }
+
+        public void AddInteraction(DialogueEventName[] eventNames)
+        {
+            player.BroadcastPlayerInteraction -= Interact;
+            EventIndex = 0;
+            player.BroadcastPlayerInteraction += Interact;
         }
 
         // Used for interactable dialogue in overworld, otherwise call DialogueSystem.InitiateDialogue directly

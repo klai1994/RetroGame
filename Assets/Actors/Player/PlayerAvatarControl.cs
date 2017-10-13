@@ -26,6 +26,19 @@ namespace Game.Actors
             }
             set
             {
+                Rigidbody2D rbody = GetPlayerInstance().GetComponent<Rigidbody2D>();
+
+                if (value == true)
+                {
+                    rbody.constraints = RigidbodyConstraints2D.None;
+                    rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                }
+                else
+                {
+                    rbody.constraints = RigidbodyConstraints2D.FreezePositionX 
+                        | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+                }
+
                 playerIsFree = value;
             }
         }

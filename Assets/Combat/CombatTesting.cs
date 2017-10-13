@@ -1,11 +1,18 @@
 ﻿using UnityEngine;
+using Game.Actors;
+using Game.CameraUI.Dialogue;
 
-namespace Game {
+namespace Game.Combat {
     public class CombatTesting : MonoBehaviour {
+
+        public CombatData testData;
 
         void Start()
         {
-            PlayerData.CreateNewPlayer("Test Boi");    
+            PlayerData.CreateNewPlayer("Combat Tester");
+
+            // Test starting a battle from a script
+            // BattleSystem.battleSystem.StartNewBattle(testData);
         }
 
     }

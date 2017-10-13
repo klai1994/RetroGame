@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Game.Combat
@@ -71,6 +72,11 @@ namespace Game.Combat
                     PlayerData.PlayerCombatData.CurrentHealth = playerInCombatData.CurrentHealth;
                     BattleOccuring = false;
                 }
+
+                if (playerInCombatData.IsDead)
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
             }
 
         }
@@ -84,7 +90,9 @@ namespace Game.Combat
             enemyInCombatData.Init(enemyData.ActorName, enemyData.BaseDamage, enemyData.MaxHealth);
 
             GameObject enemy = Instantiate(new GameObject(), enemyParent.transform);
-            enemy.AddComponent<Image>().sprite = enemyData.CombatSprite;
+            Image enemyImage = enemy.AddComponent<Image>();
+            enemyImage.sprite = enemyData.CombatSprite;
+            enemyImage.preserveAspect = true;
 
         }
     }
