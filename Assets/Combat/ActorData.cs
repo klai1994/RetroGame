@@ -33,7 +33,7 @@ namespace Game.Combat
             {
                 if (actorName != null)
                 {
-                    Debug.LogWarning(("Actor name changing from {0} to {1}!", actorName, value));
+                    Debug.LogWarning($"Actor name changing from {actorName} to {value}!");
                 }
                 actorName = value;
                 

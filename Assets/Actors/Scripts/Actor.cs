@@ -45,7 +45,10 @@ namespace Game.Actors
 
         void OnDestroy()
         {
-            player.BroadcastPlayerInteraction -= Interact;
+            if (player)
+            {
+                player.BroadcastPlayerInteraction -= Interact;
+            }
         }
 
         // Ensures subclasses can subscribe to the player input broadcast delegate

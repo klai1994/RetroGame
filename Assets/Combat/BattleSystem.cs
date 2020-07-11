@@ -70,7 +70,7 @@ namespace Game.Combat
 
                 if (enemyInCombatData.IsDead)
                 {
-                    PlayerData.PlayerCombatData.CurrentHealth = playerInCombatData.CurrentHealth;
+                    PlayerData.GetPlayerData().CurrentHealth = playerInCombatData.CurrentHealth;
                     BattleOccuring = false;
                 }
 
@@ -86,7 +86,7 @@ namespace Game.Combat
         {
             BattleOccuring = true;
 
-            playerInCombatData = PlayerData.PlayerCombatData;
+            playerInCombatData = PlayerData.GetPlayerData();
             enemyInCombatData = ScriptableObject.Instantiate(enemyData);
             enemyInCombatData.Init(enemyData.ActorName, enemyData.BaseDamage, enemyData.MaxHealth);
 

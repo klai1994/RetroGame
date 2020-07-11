@@ -9,12 +9,19 @@ namespace Game
         const float INITIAL_DAMAGE = 5;
 
         static PlayerData playerData;
-        public static PlayerData PlayerCombatData { get { return playerData; } private set { } }
 
-        public static void CreateNewPlayer(string name)
+        public static PlayerData GetPlayerData()
         {
-            playerData = ScriptableObject.CreateInstance<PlayerData>();
-            PlayerCombatData.Init(name, INITIAL_DAMAGE, STARTING_HEALTH);
+            if (playerData == null)
+            {
+                playerData = ScriptableObject.CreateInstance<PlayerData>();
+            }
+            return playerData;
+        }
+
+        public static void Init(string name)
+        {
+            playerData.Init(name, INITIAL_DAMAGE, STARTING_HEALTH);
         }
     }
 }

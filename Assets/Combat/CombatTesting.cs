@@ -9,7 +9,7 @@ namespace Game.Combat {
 
         void Start()
         {
-            PlayerData.CreateNewPlayer("Combat Tester");
+            PlayerData.Init("Combat Tester");
 
             // Test starting a battle from a script
             // BattleSystem.battleSystem.StartNewBattle(testData);

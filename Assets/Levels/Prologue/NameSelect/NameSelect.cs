@@ -74,7 +74,7 @@ namespace Game.Levels
                     return;
                 }
 
-                PlayerData.CreateNewPlayer(selectedName);
+                PlayerData.Init(selectedName);
                 PlayAudio(CursorSounds.Confirm);
 
                 NotifyNameSelected();
