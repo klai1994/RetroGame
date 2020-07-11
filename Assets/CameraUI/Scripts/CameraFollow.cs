@@ -6,11 +6,9 @@ namespace Game.CameraUI
     {
         // Screen height divded by pixels per unit sprites for consistent camera size
         const int DEFAULT_ZOOM = 6;
-        int zoom;
-
+    
         public int Zoom
         {
-            get { return zoom; }
             set
             {
                 Camera.main.orthographicSize = Screen.height / 16 / value;

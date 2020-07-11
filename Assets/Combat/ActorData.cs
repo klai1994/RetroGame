@@ -7,8 +7,8 @@ namespace Game.Combat
     [CreateAssetMenu(menuName = "Combat/CombatData")]
     public class ActorData : ScriptableObject
     {
-        [SerializeField] Sprite combatSprite;
-        [SerializeField] string actorName;
+        [SerializeField] Sprite combatSprite = null;
+        [SerializeField] string actorName = null;
         bool isDead = false;
 
         [SerializeField] float baseDamage;

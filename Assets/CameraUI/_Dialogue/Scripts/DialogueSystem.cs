@@ -8,11 +8,11 @@ namespace Game.CameraUI.Dialogue
     public class DialogueSystem : MonoBehaviour
     {
         public static DialogueSystem dialogueSystem;
-        [SerializeField] GameObject dialogueUIFrame;
-        [SerializeField] Font font;
-        [SerializeField] Text letterboxText;
-        [SerializeField] Image characterPortrait;
-        [SerializeField] bool staticDialogue;
+        [SerializeField] GameObject dialogueUIFrame = null;
+        [SerializeField] Font font = null;
+        [SerializeField] Text letterboxText = null;
+        [SerializeField] Image characterPortrait = null;
+        [SerializeField] bool staticDialogue = false;
 
         Sprite[] dialoguePortraits;
         AudioClip[] voices;

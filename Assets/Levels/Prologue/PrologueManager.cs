@@ -8,8 +8,8 @@ namespace Game.Levels
 {
     public class PrologueManager : MonoBehaviour
     {
-        [SerializeField] Image fadePanel;
-        [SerializeField] GameObject targetExit;
+        [SerializeField] Image fadePanel = null;
+        [SerializeField] GameObject targetExit = null;
 
         Actors.NPCAI officer;
         DialogueSystem letterbox;

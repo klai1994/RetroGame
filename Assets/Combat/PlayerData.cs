@@ -19,7 +19,7 @@ namespace Game
             return playerData;
         }
 
-        public static void Init(string name)
+        public void Init(string name)
         {
             playerData.Init(name, INITIAL_DAMAGE, STARTING_HEALTH);
         }

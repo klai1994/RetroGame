@@ -8,8 +8,8 @@ namespace Game.Combat
     public class BattleSystem : MonoBehaviour
     {
         public static BattleSystem battleSystem;
-        [SerializeField] GameObject battleUIFrame;
-        [SerializeField] GameObject enemyParent;
+        [SerializeField] GameObject battleUIFrame = null;
+        [SerializeField] GameObject enemyParent = null;
 
         bool battleOccuring;
         public bool BattleOccuring
@@ -34,8 +34,8 @@ namespace Game.Combat
             }
         }
 
-        [SerializeField] Text playerHealth;
-        [SerializeField] Text enemyHealth;
+        [SerializeField] Text playerHealth = null;
+        [SerializeField] Text enemyHealth = null;
 
         const string PLAYER_TAG = "Player";
         ActorData playerInCombatData;

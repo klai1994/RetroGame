@@ -8,10 +8,10 @@ namespace Game.CameraUI
     [RequireComponent(typeof(Animator))]
     public abstract class GridMenu : MonoBehaviour
     {
-        [SerializeField] LayoutGroup menuUIFrame;
-        [SerializeField] Graphic defaultMenuItemPrefab;
-        [SerializeField] GameObject cursorHandler;
-        [SerializeField] AudioClip[] soundEffects;
+        [SerializeField] LayoutGroup menuUIFrame = null;
+        [SerializeField] Graphic defaultMenuItemPrefab = null;
+        [SerializeField] GameObject cursorHandler = null;
+        [SerializeField] AudioClip[] soundEffects = null;
         [SerializeField] Vector3 cursorOffset = new Vector3(-30f, -5f, 0);
 
         protected enum CursorSounds

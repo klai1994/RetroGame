@@ -9,7 +9,7 @@ namespace Game.Levels
         public delegate void BroadcastNameSelected();
         public event BroadcastNameSelected NotifyNameSelected;
 
-        [SerializeField] Text userNameSelection;
+        [SerializeField] Text userNameSelection = null;
         int charIndex;
 
         const string DEFAULT_NAME = "Mason";
@@ -74,7 +74,7 @@ namespace Game.Levels
                     return;
                 }
 
-                PlayerData.Init(selectedName);
+                PlayerData.GetPlayerData().Init(selectedName);
                 PlayAudio(CursorSounds.Confirm);
 
                 NotifyNameSelected();
