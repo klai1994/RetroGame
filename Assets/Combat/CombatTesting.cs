@@ -5,7 +5,7 @@ using Game.CameraUI.Dialogue;
 namespace Game.Combat {
     public class CombatTesting : MonoBehaviour {
 
-        public CombatData testData;
+        public ActorData testData;
 
         void Start()
         {

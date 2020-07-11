@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game.Actors;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -37,8 +38,8 @@ namespace Game.Combat
         [SerializeField] Text enemyHealth;
 
         const string PLAYER_TAG = "Player";
-        CombatData playerInCombatData;
-        CombatData enemyInCombatData;
+        ActorData playerInCombatData;
+        ActorData enemyInCombatData;
 
         void Awake()
         {
@@ -81,7 +82,7 @@ namespace Game.Combat
 
         }
 
-        public void StartNewBattle(CombatData enemyData)
+        public void StartNewBattle(ActorData enemyData)
         {
             BattleOccuring = true;
 

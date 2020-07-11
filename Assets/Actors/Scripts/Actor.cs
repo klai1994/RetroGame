@@ -8,7 +8,7 @@ namespace Game.Actors
     public class Actor : MonoBehaviour
     {
         [SerializeField] DialogueEventName[] eventNames;
-        [SerializeField] CombatData combatData;
+        [SerializeField] ActorData actorData;
 
         [SerializeField] float interactionDistance = 2.5f;
         bool canInteractWith = false;
@@ -36,9 +36,9 @@ namespace Game.Actors
 
         void OnCollisionEnter2D(Collision2D collision)
         {
-            if (combatData != null)
+            if (actorData != null)
             {
-                BattleSystem.battleSystem.StartNewBattle(combatData);
+                BattleSystem.battleSystem.StartNewBattle(actorData);
                 Destroy(gameObject);
             }
         }

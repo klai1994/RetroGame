@@ -5,14 +5,15 @@ namespace Game.CameraUI
     public class CameraFollow : MonoBehaviour
     {
         // Screen height divded by pixels per unit sprites for consistent camera size
-        int zoom = 6;
+        const int DEFAULT_ZOOM = 6;
+        int zoom;
+
         public int Zoom
         {
             get { return zoom; }
             set
             {
-                zoom = value;
-                SetCameraZoom(value);
+                Camera.main.orthographicSize = Screen.height / 16 / value;
             }
         }
 
@@ -22,7 +23,7 @@ namespace Game.CameraUI
         void Start()
         {
             Target = Actors.PlayerAvatarControl.GetPlayerInstance().transform;
-            SetCameraZoom(Zoom);
+            Zoom = DEFAULT_ZOOM;
         }
        
         // Update is called once per frame
@@ -30,19 +31,9 @@ namespace Game.CameraUI
         {
             if (Target)
             {
-                SetCameraPosition();
+                transform.position = Target.transform.position + new Vector3(0.0f, 0.0f, -10.0f);
             }
         }
 
-        public void SetCameraZoom(int zoomLevel)
-        {
-            int cameraZoom = Screen.height / 16 / zoomLevel;
-            Camera.main.orthographicSize = cameraZoom;
-        }
-
-        private void SetCameraPosition()
-        {
-            transform.position = Target.transform.position + new Vector3(0.0f, 0.0f, -10.0f);
-        }
     }
 }
