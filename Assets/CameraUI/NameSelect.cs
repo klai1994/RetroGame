@@ -104,29 +104,23 @@ namespace Game.Levels
             {
                 for (int x = 0; x < GRID_SIZE_X; x++)
                 {
-                    // Complete last row with spaces
-                    if (charIndex > UPPER_END && charIndex < LOWER_START)
-                    {
-                        AddGridMenuItem(x, y);
-                        x++;
-                        AddGridMenuItem(x, y);
-                        charIndex = LOWER_START;
-                        continue;
-                    }
 
-                    // Begin printing spaces after lowercase letters complete
-                    else if (charIndex > LOWER_END)
+                    // Skip ASCII keys between uppercase and lowercase letters
+                    if (charIndex == (UPPER_END + 1))
                     {
-                        charIndex = SPACE;
+                        charIndex = LOWER_START;
                     }
 
                     AddGridMenuItem(x, y);
 
-                    // Stop incrementing char index after lowercase letters completed
-                    if (charIndex != SPACE)
+                    // Begin printing spaces after lowercase letters complete
+                    if (charIndex > LOWER_END)
                     {
-                        charIndex++;
+                        charIndex = SPACE;
                     }
+
+                    charIndex++;
+
                 }
             }
         }

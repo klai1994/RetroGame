@@ -63,14 +63,6 @@ namespace Game.CameraUI
             audioSource.PlayOneShot(soundEffects[(int)soundToPlay]);
         }
 
-        void MoveArrow()
-        {
-            timePassedSinceKey = 0;
-            PlayAudio(CursorSounds.Move);
-            selectedMenuItem = menuGrid[(int)selectIndexPointer.x, (int)selectIndexPointer.y];
-            cursorHandler.transform.position = selectedMenuItem.transform.position + cursorOffset;
-        }
-
         protected void ProcessKeyInput()
         {
             int xMax = menuGrid.GetLength(0) - 1;
@@ -143,6 +135,14 @@ namespace Game.CameraUI
                 }
             }
             timePassedSinceKey += Time.deltaTime;
+        }
+
+        void MoveArrow()
+        {
+            timePassedSinceKey = 0;
+            PlayAudio(CursorSounds.Move);
+            selectedMenuItem = menuGrid[(int)selectIndexPointer.x, (int)selectIndexPointer.y];
+            cursorHandler.transform.position = selectedMenuItem.transform.position + cursorOffset;
         }
 
     }
