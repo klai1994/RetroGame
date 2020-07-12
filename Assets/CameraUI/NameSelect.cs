@@ -9,10 +9,9 @@ namespace Game.Levels
         public delegate void BroadcastNameSelected();
         public event BroadcastNameSelected NotifyNameSelected;
 
-        [SerializeField] Text userNameSelection = null;
+        [SerializeField] Text nameSelection = null;
         int charIndex;
-
-        const string DEFAULT_NAME = "Mason";
+       
         const int MAX_NAME_LENGTH = 13;
         const int GRID_SIZE_X = 7;
         const int GRID_SIZE_Y = 8;
@@ -33,17 +32,17 @@ namespace Game.Levels
             // Select default name
             if (Input.GetKeyDown(KeyCode.V))
             {
-                PlayAudio(CursorSounds.Default);
-                userNameSelection.text = DEFAULT_NAME;
+                PlayAudio(CursorSounds.Confirm);
+                nameSelection.text = "";
             }
 
             // Select character
             if (Input.GetKeyDown(KeyCode.C))
             {
-                if (userNameSelection.text.Length < MAX_NAME_LENGTH)
+                if (nameSelection.text.Length < MAX_NAME_LENGTH)
                 {
                     PlayAudio(CursorSounds.Select);
-                    userNameSelection.text += ((Text)selectedMenuItem).text;
+                    nameSelection.text += ((Text)selectedMenuItem).text;
                     PlayCursorAnim(SELECT_TRIGGER);
                 }
                 else
@@ -57,20 +56,20 @@ namespace Game.Levels
             {
                 PlayAudio(CursorSounds.CannotSelect);
 
-                if (userNameSelection.text != "")
+                if (nameSelection.text != "")
                 {
-                    userNameSelection.text = userNameSelection.text.Substring(0, userNameSelection.text.Length - 1);
+                    nameSelection.text = nameSelection.text.Substring(0, nameSelection.text.Length - 1);
                 }
             }
 
             // Complete name selection
             if (Input.GetKeyDown(KeyCode.Return))
             {
-                string selectedName = userNameSelection.text.Trim();
+                string selectedName = nameSelection.text.Trim();
                 if (selectedName == "")
                 {
                     PlayAudio(CursorSounds.CannotSelect);
-                    userNameSelection.text = "";
+                    nameSelection.text = "";
                     return;
                 }
 

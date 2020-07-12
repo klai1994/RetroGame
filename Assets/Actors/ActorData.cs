@@ -33,14 +33,13 @@ namespace Game.Combat
             {
                 if (actorName != null)
                 {
-                    Debug.LogWarning($"Actor name changing from {actorName} to {value}!");
+                    Debug.LogWarning(string.Format("Actor name changing from {0} to {1}!", actorName, value));
                 }
                 actorName = value;
                 
             }
         }
         public bool IsDead { get { return isDead; } private set { } }
-
         public float BaseDamage { get { return baseDamage; } set { baseDamage = value; } }
         public float MaxHealth
         {

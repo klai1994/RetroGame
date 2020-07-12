@@ -38,6 +38,13 @@ namespace Game.Actors
             Init();
         }
 
+        void Update()
+        {
+            // Ensures sprites display on top of eachother properly
+            SpriteRenderer renderer = GetComponent<SpriteRenderer>(); 
+            renderer.sortingOrder = (int)(transform.position.y * ORDER_SCALE);
+        }
+
         public void MoveAvatar(Vector2 moveDirection)
         {
             if (moveDirection != Vector2.zero && PlayerAvatarControl.PlayerIsFree)
@@ -45,10 +52,6 @@ namespace Game.Actors
                 animator.SetBool(ANIM_IS_WALKING, true);
                 SetAnimatorDirection(moveDirection);
                 rbody.MovePosition(rbody.position + moveDirection * (movementSpeed * MovementScale));
-
-                // Ensures sprites display on top of eachother properly
-                SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-                renderer.sortingOrder = (int)(transform.position.y * ORDER_SCALE);
             }
             else
             {

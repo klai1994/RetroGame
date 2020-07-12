@@ -46,11 +46,11 @@ namespace Game.Levels
         
         void StartPrologue()
         {
-            StartCoroutine(FadeIn());
+            StartCoroutine(FadeIn(DialogueEventName.Prologue));
         }
 
         // Delays fade, then fades in panel and music, finally starting introduction
-        public IEnumerator FadeIn()
+        public IEnumerator FadeIn(DialogueEventName eventName)
         {
             yield return new WaitForSeconds(FADE_START_DELAY);
             letterbox.gameObject.SetActive(true);
@@ -64,7 +64,7 @@ namespace Game.Levels
 
             }
 
-            letterbox.InitiateDialogue(DialogueEventName.Prologue);
+            letterbox.InitiateDialogue(eventName);
             sceneStarted = true;
         }
 
@@ -82,6 +82,7 @@ namespace Game.Levels
             }
 
             yield return new WaitForSeconds(FADE_START_DELAY);
+            nameselect.NotifyNameSelected -= StartPrologue;
             SceneManager.LoadScene(INTRO_SCENE_ID);
         }
 
