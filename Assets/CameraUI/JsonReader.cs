@@ -35,6 +35,7 @@ namespace Game.CameraUI.Dialogue
     {
         public string characterPortrait;
         public string dialogueText;
+        public string nameText;
         public string voice;
 
         public string DialogueText

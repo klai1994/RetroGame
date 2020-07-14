@@ -2,17 +2,23 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Text;
 
 namespace Game.CameraUI.Dialogue
 {
     public class DialogueSystem : MonoBehaviour
     {
+        const string DIALOGUE_BOX_KEY = "DialogueBox";
+        const string LETTER_BOX_KEY = "LetterBox";
+        const string NAME_BOX_KEY = "NameBox";
+        const string PORTRAIT_KEY = "PortraitBox";
         public static DialogueSystem dialogueSystem;
-        [SerializeField] GameObject dialogueUIFrame = null;
+       
         [SerializeField] Font font = null;
-        [SerializeField] Text letterboxText = null;
-        [SerializeField] Image characterPortrait = null;
-        [SerializeField] bool staticDialogue = false;
+        GameObject dialogueUIFrame;
+        Text nameText;
+        Text letterboxText;
+        Image characterPortrait;
 
         Sprite[] dialoguePortraits;
         AudioClip[] voices;
@@ -29,6 +35,8 @@ namespace Game.CameraUI.Dialogue
             set
             {
                 currentEvent = value;
+
+                // If currentEvent has a value, there is one occuring. Otherwise, there is not.
                 if (value != null)
                 {
                     EventOccuring = true;
@@ -45,9 +53,10 @@ namespace Game.CameraUI.Dialogue
         public bool dialogueSkippable = true;
 
         public bool TextSegmentEnded { get; private set; }
-        int dialogueLine = 0;
         public float textSpeed = 25f;
         public int voiceFrequency = 3;
+     
+        int dialogueLine = 0;
 
         void Awake()
         {
@@ -60,7 +69,19 @@ namespace Game.CameraUI.Dialogue
                 Debug.LogError("There is more than once instance of DialogueSystem!");
             }
 
-            audioSource = GetComponent<AudioSource>();
+            // Grab the UI components in the scene
+            dialogueUIFrame = GameObject.FindGameObjectWithTag(DIALOGUE_BOX_KEY);
+            nameText = GameObject.FindGameObjectWithTag(NAME_BOX_KEY).GetComponent<Text>();
+            letterboxText = GameObject.FindGameObjectWithTag(LETTER_BOX_KEY).GetComponent<Text>();
+            characterPortrait = GameObject.FindGameObjectWithTag(PORTRAIT_KEY).GetComponent<Image>();
+            audioSource = dialogueUIFrame.GetComponent<AudioSource>();
+
+            // Prepare UI for scene
+            letterboxText.font = font;
+            nameText.font = font;
+            dialogueUIFrame.SetActive(false);
+
+            // Grab the portraits and voice files from the resources folder
             dialoguePortraits = Resources.LoadAll<Sprite>("DialoguePortraits");
             voices = Resources.LoadAll<AudioClip>("Voices");
         }
@@ -82,52 +103,46 @@ namespace Game.CameraUI.Dialogue
         // Handles populating elements of letterbox
         void ConfigureLetterbox()
         {
-            letterboxText.font = font;
             TextSegmentEnded = false;
 
             // While dialogue event is not finished
             if (dialogueLine < CurrentEvent.eventInfoList.Count)
             {
-                StartCoroutine(AnimateText(CurrentEvent.eventInfoList[dialogueLine].DialogueText));
-                DressDialogue(dialogueLine);
-
                 dialogueUIFrame.SetActive(true);
+                DressDialogue(dialogueLine);
+                StartCoroutine(AnimateText(CurrentEvent.eventInfoList[dialogueLine].DialogueText));
+
                 dialogueLine++;
             }
             else
             {
                 CurrentEvent = null;
-
-                if (!staticDialogue)
-                {
-                    dialogueUIFrame.SetActive(false);
-                }
+                dialogueUIFrame.SetActive(false);
             }
         }
 
         // If there is a portrait or voice to go with the dialogue stage, find and set them up
         void DressDialogue(int dialogueStage)
         {
+            nameText.text = currentEvent.eventInfoList[dialogueStage].nameText;
             string portraitFile = CurrentEvent.eventInfoList[dialogueStage].characterPortrait;
-            if (characterPortrait)
+
+            if (portraitFile != null && portraitFile != "")
             {
-                if (portraitFile != "")
-                {
-                    characterPortrait.gameObject.SetActive(true);
-                    characterPortrait.sprite = QueryForPortrait(portraitFile);
-                }
-                else
-                {
-                    characterPortrait.gameObject.SetActive(false);
-                }
+                characterPortrait.sprite = QueryForPortrait(portraitFile);
+                characterPortrait.gameObject.SetActive(true);
+            }
+            else
+            {
+                characterPortrait.gameObject.SetActive(false);
             }
 
-            string voice = CurrentEvent.eventInfoList[dialogueStage].voice;
+            string voiceFile = CurrentEvent.eventInfoList[dialogueStage].voice;
             if (audioSource)
             {
-                if (voice != "")
+                if (voiceFile != null && voiceFile != "")
                 {
-                    currentVoice = QueryForVoice(voice);
+                    currentVoice = QueryForVoice(voiceFile);
                     audioSource.clip = currentVoice;
                 }
                 else
@@ -135,6 +150,7 @@ namespace Game.CameraUI.Dialogue
                     currentVoice = null;
                 }
             }
+
         }
 
         // Checks resources folder for portrait in dialogue

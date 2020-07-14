@@ -1,14 +1,36 @@
 {
   "eventInfoList": [
     {
-      "characterPortrait": "",
-      "dialogueText": "I hate to tell you this, @, but... neither me nor my dialogue will make it to the final game. *sniff*",
-      "voice": ""
+      "dialogueText": "<Nat's description here> stands over you."
     },
-	{
-      "characterPortrait": "",
-      "dialogueText": "hail satan",
-      "voice": ""
+    {
+      "dialogueText": "It is dreadfully cold."
+    },
+    {
+      "dialogueText": "You feel as though you embody winter, as if touching anything would freeze the object to ice."
+    },
+    {
+      "dialogueText": "You look up at them, meeting their gaze."
+    },
+    {
+      "dialogueText": "..."
+    },
+    {
+      "dialogueText": "You keep eye contact for a moment before they break the silence."
+    },
+    {
+      "dialogueText": "\"I don't know how to tell you this, @, but you didn't make it.\"",
+      "nameText": "Natalia"
+    },
+    {
+      "dialogueText": "Your guest allows you a moment to digest the news. You didn't make it."
+    },
+    {
+      "dialogueText": "What, exactly, does that mean? You're about to ask, before they speak once more."
+    },
+    {
+      "dialogueText": "\"What are your pronouns?\"",
+      "nameText": "Natalia"
     }
-	]
+  ]
 }
