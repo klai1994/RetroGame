@@ -88,7 +88,7 @@ namespace Game.CameraUI.Dialogue
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.C) && EventOccuring && TextSegmentEnded)
+            if (Input.GetKeyUp(KeyCode.C) && EventOccuring && TextSegmentEnded)
             {
                 ConfigureLetterbox();
             }
