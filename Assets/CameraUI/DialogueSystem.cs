@@ -96,8 +96,12 @@ namespace Game.CameraUI.Dialogue
 
         public void InitiateDialogue(DialogueEventName dialogueEvent)
         {
-            CurrentEvent = JsonReader.GetDialogueEvent(dialogueEvent);
-            ConfigureLetterbox();
+            if (!EventOccuring)
+            {
+                // Recall that populating CurrentEvent sets EventOcurring to true
+                CurrentEvent = JsonReader.GetDialogueEvent(dialogueEvent);
+                ConfigureLetterbox();
+            }
         }
 
         // Handles populating elements of letterbox

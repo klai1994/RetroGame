@@ -36,7 +36,7 @@ namespace Game.Levels
             if (sceneStarted == true && !DialogueSystem.dialogueSystem.EventOccuring)
             {
                 // Cues officer to leave scene.
-                officer.SetTarget(targetExit);
+                officer.target = targetExit;
                 StartCoroutine(FadeOut());
 
                 // Prevents coroutine from being called multiple times

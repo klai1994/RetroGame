@@ -14,6 +14,8 @@ namespace Game.Actors
         bool canInteractWith = false;
 
         PlayerAvatarControl player;
+
+        // The index of text events for this particular actor
         int eventIndex;
         public int EventIndex
         {
@@ -59,7 +61,9 @@ namespace Game.Actors
 
             if (canInteractWith)
             {
-                AddInteraction(eventNames);
+                player.BroadcastPlayerInteraction -= Interact;
+                EventIndex = 0;
+                player.BroadcastPlayerInteraction += Interact;
             }
         }
 
@@ -68,23 +72,18 @@ namespace Game.Actors
             return Vector2.Distance(target.transform.position, transform.position);
         }
 
-        public void AddInteraction(DialogueEventName[] eventNames)
-        {
-            player.BroadcastPlayerInteraction -= Interact;
-            EventIndex = 0;
-            player.BroadcastPlayerInteraction += Interact;
-        }
-
         // Used for interactable dialogue in overworld, otherwise call DialogueSystem.InitiateDialogue directly
         void Interact()
         {
+
+            ActorAvatar playerAvatar = player.GetComponent<ActorAvatar>();
             if (PlayerAvatarControl.PlayerIsFree && GetDistance(player.gameObject) < interactionDistance)
             {
-                player.GetActorAvatar().FaceDirection(transform.position);
+                playerAvatar.FaceDirection(transform.position);
                 // If interactable object is an avatar, face player
                 if (GetType() == typeof(ActorAvatar))
                 {
-                    ((ActorAvatar)this).FaceDirection(player.GetActorAvatar().transform.position);
+                    ((ActorAvatar)this).FaceDirection(playerAvatar.transform.position);
                 }
 
                 DialogueSystem.dialogueSystem.InitiateDialogue(eventNames[EventIndex]);

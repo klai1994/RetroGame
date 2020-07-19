@@ -10,6 +10,9 @@ namespace Game.Actors
         public delegate void BroadcastInteraction();
         public event BroadcastInteraction BroadcastPlayerInteraction;
 
+        ActorAvatar avatar;
+        static PlayerAvatarControl playerInstance;
+
         const string HORIZONTAL_AXIS = "Horizontal";
         const string VERTICAL_AXIS = "Vertical";
 
@@ -18,16 +21,19 @@ namespace Game.Actors
         {
             get
             {
+                // If there is no PlayerAvatarControl in the scene, it is true by default.
                 if (!FindObjectOfType<PlayerAvatarControl>())
                 {
                     playerIsFree = true;
                 }
+
                 return playerIsFree;
             }
             set
             {
                 Rigidbody2D rbody = GetPlayerInstance().GetComponent<Rigidbody2D>();
 
+                // Locks player's avatar if value is false.
                 if (value == true)
                 {
                     rbody.constraints = RigidbodyConstraints2D.None;
@@ -35,16 +41,13 @@ namespace Game.Actors
                 }
                 else
                 {
-                    rbody.constraints = RigidbodyConstraints2D.FreezePositionX 
+                    rbody.constraints = RigidbodyConstraints2D.FreezePositionX
                         | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
                 }
 
                 playerIsFree = value;
             }
         }
-
-        ActorAvatar avatar;
-        static PlayerAvatarControl playerInstance;
 
         public static PlayerAvatarControl GetPlayerInstance()
         {
@@ -72,12 +75,6 @@ namespace Game.Actors
                 BroadcastPlayerInteraction();
             }
             avatar.MoveAvatar(new Vector2(Input.GetAxisRaw(HORIZONTAL_AXIS), Input.GetAxisRaw(VERTICAL_AXIS)));
-         
-        }
-
-        public ActorAvatar GetActorAvatar()
-        {
-            return avatar;
         }
 
     }

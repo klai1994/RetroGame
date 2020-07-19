@@ -11,11 +11,7 @@ namespace Game.Actors
         Rigidbody2D rbody;
         Animator animator;
 
-        const string HORIZONTAL_AXIS = "Horizontal";
-        const string VERTICAL_AXIS = "Vertical";
         const string ANIM_IS_WALKING = "isWalking";
-
-        const int ORDER_SCALE = -5;
         const string MOVEMENT_X = "movement_x";
         const string MOVEMENT_Y = "movement_y";
         public static float MovementScale = 0.10f;
@@ -35,14 +31,14 @@ namespace Game.Actors
                 StartCoroutine(IdleActions());
             }
 
-            Init();
+            base.Init();
         }
 
         void Update()
         {
             // Ensures sprites display on top of eachother properly
             SpriteRenderer renderer = GetComponent<SpriteRenderer>(); 
-            renderer.sortingOrder = (int)(transform.position.y * ORDER_SCALE);
+            renderer.sortingOrder = (int)(-transform.position.y);
         }
 
         public void MoveAvatar(Vector2 moveDirection)
@@ -79,6 +75,7 @@ namespace Game.Actors
 
         public void FaceDirection(Vector3 target)
         {
+            // Set a target or create a new vector to face its direction. Ensures the actor is not walking to keep its direction.
             animator.SetBool(ANIM_IS_WALKING, false);
             SetAnimatorDirection((target - transform.position).normalized);
         }

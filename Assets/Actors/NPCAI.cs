@@ -6,8 +6,9 @@ namespace Game.Actors
     public class NPCAI : MonoBehaviour
     {
         ActorAvatar avatar;
-        [SerializeField] GameObject target;
-
+        Vector3 startingPosition;
+        public GameObject target;
+        
         [SerializeField] float maxChaseDistance = 5f;
         [SerializeField] float destroyThreshold = 20f;
         [SerializeField] float stoppingDistance = 2f;
@@ -16,6 +17,7 @@ namespace Game.Actors
         void Start()
         {
             avatar = GetComponent<ActorAvatar>();
+            startingPosition = transform.position;
         }
 
         // Update is called once per frame
@@ -24,7 +26,7 @@ namespace Game.Actors
             if (target)
             {
                 MoveToTarget();
-                DestroyAfterThreshold();
+                ResetAfterThreshold();
             }
         }
 
@@ -41,20 +43,15 @@ namespace Game.Actors
             }
         }
 
-        void DestroyAfterThreshold()
+        void ResetAfterThreshold()
         {
             if (avatar.GetDistance(target) > destroyThreshold)
             {
-                Destroy(gameObject);
+                transform.position = startingPosition;
             }
         }
 
-        public void SetTarget(GameObject target)
-        {
-            this.target = target;
-        }
-
-        public void Untarget()
+        public void ResetTarget()
         {
             target = gameObject;
         }
