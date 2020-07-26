@@ -5,7 +5,7 @@ namespace Game.Actors
 {
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Animator))]
-    public class ActorAvatar : Actor
+    public class ActorAvatar : ActorInteraction
     {
         [SerializeField] float movementSpeed = 1.5f;
         Rigidbody2D rbody;

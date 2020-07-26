@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Combat
 {
     [CreateAssetMenu(menuName = "Combat/CombatData")]
-    public class ActorData : ScriptableObject
+    public class ActorStats : ScriptableObject
     {
         [SerializeField] Sprite combatSprite = null;
         [SerializeField] string actorName = null;

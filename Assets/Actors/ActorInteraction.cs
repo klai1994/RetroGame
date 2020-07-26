@@ -5,10 +5,10 @@ using Game.Combat;
 namespace Game.Actors
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Actor : MonoBehaviour
+    public class ActorInteraction : MonoBehaviour
     {
         [SerializeField] DialogueEventName[] eventNames = null;
-        [SerializeField] ActorData actorData = null;
+        [SerializeField] ActorStats actorData = null;
 
         [SerializeField] float interactionDistance = 2.5f;
         bool canInteractWith = false;
