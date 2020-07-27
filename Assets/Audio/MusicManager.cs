@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Game.Audio
                 musicManager = FindObjectOfType<MusicManager>();
                 if (!musicManager)
                 {
-                    Debug.Log("No music manager found.");
+                    Debug.LogError("No music manager found.");
                 }
             }
             DontDestroyOnLoad(musicManager);
@@ -31,7 +32,6 @@ namespace Game.Audio
         void Start()
         {
             audioSource = GetComponent<AudioSource>();
-
             AudioClip[] musicList = Resources.LoadAll<AudioClip>("Music");
             musicAtlas = new Dictionary<string, AudioClip>();
 
@@ -49,8 +49,8 @@ namespace Game.Audio
         // To start music without fade simply set fadeSpeed to maxVolume
         public void PlayMusic(MusicName musicName, float fadeSpeed)
         {
-            audioSource.clip = musicAtlas[musicName.ToString()];
             SetVolume(0);
+            audioSource.clip = musicAtlas[musicName.ToString()];
             audioSource.Play();
             StartCoroutine(FadeInMusic(fadeSpeed));
         }
@@ -66,14 +66,13 @@ namespace Game.Audio
             while (audioSource.volume <= maxVolume)
             {
                 audioSource.volume += fadeSpeed * Time.deltaTime;
-
                 if (audioSource.volume > maxVolume)
                 {
                     audioSource.volume = maxVolume;
                     break;
                 }
+                yield return new WaitForSeconds(0);
             }
-            yield return new WaitForSeconds(0);
         }
 
         IEnumerator FadeMusicOut(float fadeSpeed)

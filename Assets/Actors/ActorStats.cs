@@ -30,7 +30,7 @@ namespace Game.Combat
             }
             set
             {
-                if (actorName != null)
+                if (actorName != null && actorName != value)
                 {
                     Debug.LogWarning(string.Format("Actor name changing from {0} to {1}!", actorName, value));
                 }

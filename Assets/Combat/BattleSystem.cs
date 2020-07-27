@@ -7,14 +7,12 @@ namespace Game.Combat
 {
     public class BattleSystem : MonoBehaviour
     {
-        const string BATTLE_FRAME_KEY = "BattleBox";
-        const string ENEMY_FRAME_KEY = "EnemyBox";
-        const string PLAYER_HEALTH_KEY = "PlayerHealthBox";
+        [SerializeField] GameObject battleUIFrame = null;
+        [SerializeField] Text enemyHealth = null;
+        [SerializeField] Text playerHealth = null;
+        [SerializeField] GameObject enemyParent = null;
 
         public static BattleSystem battleSystem;
-        GameObject battleUIFrame;
-        GameObject enemyParent;
-
         bool battleOccuring;
         public bool BattleOccuring
         {
@@ -38,9 +36,6 @@ namespace Game.Combat
             }
         }
 
-        [SerializeField] Text enemyHealth = null;
-        Text playerHealth;
-
         /* Player and enemy stats are implemented in a more abstract fashion, being ScriptableObjects rather than GameObjects.
          * For enemy combat data, create a prefab with the ActorStats ScriptableObject in the project window. */
         ActorStats playerInCombatData;
@@ -51,16 +46,12 @@ namespace Game.Combat
             if (battleSystem == null)
             {
                 battleSystem = this;
+                battleOccuring = false;
             }
             else if (battleSystem != this)
             {
                 Debug.LogWarning("There is more than once instance of BattleSystem!");
             }
-
-            enemyParent = GameObject.FindGameObjectWithTag(ENEMY_FRAME_KEY);
-            battleUIFrame = GameObject.FindGameObjectWithTag(BATTLE_FRAME_KEY);
-            playerHealth = GameObject.FindGameObjectWithTag(PLAYER_HEALTH_KEY).GetComponent<Text>();
-            BattleOccuring = false;
         }
 
         void Update()

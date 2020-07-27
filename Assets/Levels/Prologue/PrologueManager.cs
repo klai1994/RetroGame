@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Game.CameraUI.Dialogue;
+using Game.Audio;
 
 namespace Game.Levels
 {
@@ -14,11 +15,12 @@ namespace Game.Levels
         Actors.NPCAI officer;
         DialogueSystem letterbox;
         NameSelect nameselect;
+        MusicManager musicManager;
 
         const int INTRO_SCENE_ID = 1;
         const float FADE_INCREMENT = 0.2f;
         const float FADE_START_DELAY = 5f;
-        const float MUSIC_FADE = 0.1f;
+        const float MUSIC_FADE = 0.01f;
 
         bool sceneStarted = false;
         float alphaFade;
@@ -29,6 +31,7 @@ namespace Game.Levels
             letterbox = FindObjectOfType<DialogueSystem>();
             nameselect = FindObjectOfType<NameSelect>();
             nameselect.NotifyNameSelected += StartPrologue;
+            musicManager = MusicManager.Instance();
         }
 
         void Update()
@@ -37,6 +40,7 @@ namespace Game.Levels
             {
                 // Cues officer to leave scene.
                 officer.target = targetExit;
+                musicManager.StopMusic(MUSIC_FADE);
                 StartCoroutine(FadeOut());
 
                 // Prevents coroutine from being called multiple times
@@ -46,6 +50,7 @@ namespace Game.Levels
         
         void StartPrologue()
         {
+            musicManager.PlayMusic(MusicName.LightIntro, MUSIC_FADE);
             StartCoroutine(FadeIn(DialogueEventName.Prologue));
         }
 

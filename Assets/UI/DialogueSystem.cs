@@ -8,17 +8,13 @@ namespace Game.CameraUI.Dialogue
 {
     public class DialogueSystem : MonoBehaviour
     {
-        const string DIALOGUE_BOX_KEY = "DialogueBox";
-        const string LETTER_BOX_KEY = "LetterBox";
-        const string NAME_BOX_KEY = "NameBox";
-        const string PORTRAIT_KEY = "PortraitBox";
         public static DialogueSystem dialogueSystem;
        
         [SerializeField] Font font = null;
-        GameObject dialogueUIFrame;
-        Text nameText;
-        Text letterboxText;
-        Image characterPortrait;
+        [SerializeField] GameObject dialogueUIFrame = null;
+        [SerializeField] Text nameText = null;
+        [SerializeField] Text letterboxText = null;
+        [SerializeField] Image characterPortrait = null;
 
         Sprite[] dialoguePortraits;
         AudioClip[] voices;
@@ -69,17 +65,9 @@ namespace Game.CameraUI.Dialogue
                 Debug.LogError("There is more than once instance of DialogueSystem!");
             }
 
-            // Grab the UI components in the scene
-            dialogueUIFrame = GameObject.FindGameObjectWithTag(DIALOGUE_BOX_KEY);
-            nameText = GameObject.FindGameObjectWithTag(NAME_BOX_KEY).GetComponent<Text>();
-            letterboxText = GameObject.FindGameObjectWithTag(LETTER_BOX_KEY).GetComponent<Text>();
-            characterPortrait = GameObject.FindGameObjectWithTag(PORTRAIT_KEY).GetComponent<Image>();
             audioSource = dialogueUIFrame.GetComponent<AudioSource>();
-
-            // Prepare UI for scene
             letterboxText.font = font;
             nameText.font = font;
-            dialogueUIFrame.SetActive(false);
 
             // Grab the portraits and voice files from the resources folder
             dialoguePortraits = Resources.LoadAll<Sprite>("DialoguePortraits");
