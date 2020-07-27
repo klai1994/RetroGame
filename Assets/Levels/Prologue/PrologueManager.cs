@@ -18,7 +18,7 @@ namespace Game.Levels
         MusicManager musicManager;
 
         const int INTRO_SCENE_ID = 1;
-        const float FADE_INCREMENT = 0.2f;
+        const float FADE_INCREMENT = 0.25f;
         const float FADE_START_DELAY = 5f;
         const float MUSIC_FADE = 0.01f;
 
@@ -63,9 +63,9 @@ namespace Game.Levels
             
             while (fadePanel.color.a > 0)
             {
-                alphaFade -= FADE_INCREMENT;
+                alphaFade -= FADE_INCREMENT * Time.deltaTime;
                 fadePanel.color = new Color(0, 0, 0, alphaFade);
-                yield return new WaitForSeconds(1f);
+                yield return null;
 
             }
 
@@ -81,9 +81,9 @@ namespace Game.Levels
 
             while (fadePanel.color.a < 1)
             {
-                alphaFade += FADE_INCREMENT;
+                alphaFade += FADE_INCREMENT * Time.deltaTime;
                 fadePanel.color = new Color(0, 0, 0, alphaFade);
-                yield return new WaitForSeconds(1f);
+                yield return null;
             }
 
             yield return new WaitForSeconds(FADE_START_DELAY);

@@ -71,7 +71,7 @@ namespace Game.Audio
                     audioSource.volume = maxVolume;
                     break;
                 }
-                yield return new WaitForSeconds(0);
+                yield return null;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Game.Audio
                 {
                     break;
                 }
-                yield return new WaitForSeconds(0);
+                yield return null;
             }
         }
 
