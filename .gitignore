@@ -1,6 +1,9 @@
 Library/
 Temp/
 Obj/
+Logs/
+Packages/
+ProjectSettings/
 
 Assets/Utility/Tiled2Unity
 # Auto-generated VS solution and project files
@@ -412,3 +415,4 @@ builds/v0.02/Prototype_Data/Managed/UnityEngine.XR.LegacyInputHelpers.dll
 builds/v0.02/Prototype_Data/Managed/UnityEngine.XRModule.dll
 builds/v0.02/Prototype_Data/Resources/unity default resources
 builds/v0.02/Prototype_Data/Resources/unity_builtin_extra
+builds/v0.02.7z
