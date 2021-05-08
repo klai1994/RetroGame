@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using Game.CameraUI.Dialogue;
-using Game.Combat;
 
 namespace Game.Actors
 {
@@ -8,7 +7,6 @@ namespace Game.Actors
     public class ActorInteraction : MonoBehaviour
     {
         [SerializeField] DialogueEventName[] eventNames = null;
-        [SerializeField] ActorStats actorData = null;
 
         [SerializeField] float interactionDistance = 2.5f;
         bool canInteractWith = false;
@@ -34,15 +32,6 @@ namespace Game.Actors
         void Start()
         {
             Init();
-        }
-
-        void OnCollisionEnter2D(Collision2D collision)
-        {
-            if (actorData != null)
-            {
-                BattleSystem.battleSystem.StartNewBattle(actorData);
-                Destroy(gameObject);
-            }
         }
 
         void OnDestroy()

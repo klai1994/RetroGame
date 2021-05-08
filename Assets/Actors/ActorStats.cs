@@ -1,27 +1,16 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.Combat
+namespace Game
 {
-    [CreateAssetMenu(menuName = "Combat/CombatData")]
     public class ActorStats : ScriptableObject
     {
-        [SerializeField] Sprite combatSprite = null;
         [SerializeField] string actorName = null;
-        bool isDead = false;
-
-        [SerializeField] float baseDamage;
-        [SerializeField] float maxHealth;
-        float currentHealth;
-        public void Init(string actorName, float baseDamage, float maxHealth)
+        public virtual void Init(string actorName)
         {
-            BaseDamage = baseDamage;
-            MaxHealth = maxHealth;
             ActorName = actorName;
-            currentHealth = maxHealth;
         }
-
-        public Sprite CombatSprite { get { return combatSprite; } private set { } }
+       
         public string ActorName
         {
             get
@@ -38,46 +27,6 @@ namespace Game.Combat
                 
             }
         }
-        public bool IsDead { get { return isDead; } private set { } }
-        public float BaseDamage { get { return baseDamage; } set { baseDamage = value; } }
-        public float MaxHealth
-        {
-            get
-            {
-                return maxHealth;
-            }
-            set
-            {
-                if (value > 0)
-                {
-                    maxHealth = value;
-                }
-            }
-        }
-        public float CurrentHealth
-        {
-            get
-            {
-                return currentHealth;
-            }
-            set
-            {
-                if (value <= 0)
-                {
-                    isDead = true;
-                    currentHealth = 0;
-                }
-                else
-                {
-                    currentHealth = value;
-                }
-            }
-        }
-
-        public float GetHealthPercentage()
-        {
-            return maxHealth / currentHealth;
-        }
-    
+       
     }
 }
