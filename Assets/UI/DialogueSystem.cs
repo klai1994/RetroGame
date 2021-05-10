@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using System.Text;
 
 namespace Game.CameraUI.Dialogue
 {
@@ -20,8 +19,11 @@ namespace Game.CameraUI.Dialogue
         AudioClip[] voices;
         AudioClip currentVoice;
         AudioSource audioSource;
-
         DialogueEventHolder currentEvent;
+
+        public delegate void EventEndedEventHandler(object sender, EventArgs e);
+        public event EventEndedEventHandler eventEnded;
+
         public DialogueEventHolder CurrentEvent
         {
             get
@@ -40,14 +42,15 @@ namespace Game.CameraUI.Dialogue
                 else
                 {
                     dialogueLine = 0;
+                    eventEnded?.Invoke(this, EventArgs.Empty);
                     EventOccuring = false;
                 }
 
             }
         }
-        public bool EventOccuring { get; private set; }
-        public bool dialogueSkippable = true;
+        public bool EventOccuring { get; private set;  }
 
+        public bool dialogueSkippable = true;
         public bool TextSegmentEnded { get; private set; }
         public float textSpeed = 25f;
         public int voiceFrequency = 3;

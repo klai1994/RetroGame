@@ -17,7 +17,7 @@ namespace Game
 
         public override void Init(string name)
         {
-            Init(name);
+            base.Init(name);
         }
     }
 }
